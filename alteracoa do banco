@@ -1,0 +1,1 @@
+ALTER TABLE reserva.auditoriausuarioaluno ADD acoes text NULL;
