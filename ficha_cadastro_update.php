@@ -144,7 +144,7 @@ $localidades = pg_fetch_all($result);
                         <label for="exampleInputEmail1">Nome:</label>
                          <!-- line old -->
                          <!-- <input required <?php echo ($matriculado_sge == 'true') ? 'readonly' : 'readonly' ?> class="form-control " type="text" name="vch_nome" id="vch_nome" value="<?php echo $aluno['ed47_v_nome'] ?>" onkeyup="this.value = this.value.toUpperCase();" /> -->
-                        <input required  class="form-control " type="text" name="vch_nome" id="vch_nome" value="<?php echo $aluno['ed47_v_nome'] ?>" onkeyup="this.value = this.value.toUpperCase();" />
+                        <input required  class="form-control " onchange="salvaNomeDoCampoModificado(this)" type="text" name="vch_nome" id="vch_nome" value="<?php echo $aluno['ed47_v_nome'] ?>" onkeyup="this.value = this.value.toUpperCase();" />
                     </div>
                 </div>
             </div>
@@ -152,11 +152,11 @@ $localidades = pg_fetch_all($result);
                 <div class="row">
                     <div class="col-md-3">
                         <label for="sdt_nascimento">Data Nascimento:</label>
-                        <input required   class="form-control" type="text" name="sdt_nascimento" id="sdt_nascimento" value="<?php echo $datando ?>">
+                        <input required   class="form-control" onchange="salvaNomeDoCampoModificado(this)" type="text" name="sdt_nascimento" id="sdt_nascimento" value="<?php echo $datando ?>">
                     </div>
                     <div class="col-md-3">
                         <label for="cp_sexo">Sexo:</label>
-                        <select required  class="browser-default custom-select" name="vch_sexo" id="cp_sexo">
+                        <select required  class="browser-default custom-select" onchange="salvaNomeDoCampoModificado(this)" name="vch_sexo" id="cp_sexo">
                             <option selected></option>
                             <option value="M">Masculino</option>
                             <option value="F">Feminino</option>
@@ -192,7 +192,7 @@ $localidades = pg_fetch_all($result);
                 <div class="row">
                     <div class="col-md-12">
                         <label>Nome da Mãe:</label>
-                        <input   class="form-control " type="text" name="vch_mae" id="vch_mae" value="<?php echo $aluno['ed47_v_mae'] ?>" onkeyup="this.value = this.value.toUpperCase();">
+                        <input   class="form-control " onchange="salvaNomeDoCampoModificado(this)" type="text" name="vch_mae" id="vch_mae" value="<?php echo $aluno['ed47_v_mae'] ?>" onkeyup="this.value = this.value.toUpperCase();">
                     </div>
                 </div>
             </div>
@@ -200,7 +200,7 @@ $localidades = pg_fetch_all($result);
                 <div class="row">
                     <div class="col-md-12">
                         <label for="exampleInputEmail1">Responsável:</label>
-                        <input  class="form-control " type="text" name="vch_responsavel" id="vch_responsavel" value="<?php echo $aluno['ed47_c_nomeresp'] ?>" onkeyup="this.value = this.value.toUpperCase();">
+                        <input  class="form-control "  onchange="salvaNomeDoCampoModificado(this)"  type="text" name="vch_responsavel" id="vch_responsavel" value="<?php echo $aluno['ed47_c_nomeresp'] ?>" onkeyup="this.value = this.value.toUpperCase();">
                     </div>
                 </div>
             </div>
@@ -208,7 +208,7 @@ $localidades = pg_fetch_all($result);
                 <div class="row">
                     <div class="col-md-12">
                         <label for="exampleInputEmail1">Email do responsável:</label>
-                        <input   class="form-control " type="text" name="vch_email_responsavel" id="vch_responsavel" value="<?php echo $aluno['email_resp'] ?>" >
+                        <input   class="form-control "  onchange="salvaNomeDoCampoModificado(this)"  type="text" name="vch_email_responsavel" id="vch_responsavel" value="<?php echo $aluno['email_resp'] ?>" >
                     </div>
                 </div>
             </div>
@@ -216,7 +216,7 @@ $localidades = pg_fetch_all($result);
                 <div class="row">
                     <div class="col-md-5">
                         <label for="exampleInputEmail">CPF do Responsável:</label>
-                        <input  class="form-control" type="text" name="vch_cpf" id="vch_cpf" value="<?php echo $aluno['ed47_v_cpf'] ?>">
+                        <input  class="form-control" type="text"  onchange="salvaNomeDoCampoModificado(this)"  name="vch_cpf" id="vch_cpf" value="<?php echo $aluno['ed47_v_cpf'] ?>">
 
                     </div>
                 </div>
@@ -227,7 +227,7 @@ $localidades = pg_fetch_all($result);
                 <div class="row">
                     <div class="col-md-5">
                         <label for="examleInputEmail1" class="labelNome">Telefone:</label>
-                        <input  value="<?php echo $aluno['ed47_v_telef'] ?>" name="vch_telefone" id="vch_telefone" class="form-control" type="text">
+                        <input  value="<?php echo $aluno['ed47_v_telef'] ?>"  onchange="salvaNomeDoCampoModificado(this)"  name="vch_telefone" id="vch_telefone" class="form-control" type="text">
                     </div>
 
                 </div>
@@ -262,14 +262,14 @@ $localidades = pg_fetch_all($result);
                 <div class="row">
                     <div class="col-md-9">
                         <label for="exampleInputEmail1">Endereço:</label>
-                        <input required value="<?php echo $aluno['ed47_v_ender'] ?>" name="vch_endereco" class="form-control" id="ender" type="text" readonly>
+                        <input required value="<?php echo $aluno['ed47_v_ender'] ?>"   name="vch_endereco" class="form-control" id="ender" type="text" readonly>
                         <label for="exampleInputEmail1" class="labelNome">Complemento</label>
-                        <input  value="<?php echo $aluno['ed47_v_compl'] ?>" vch_complemento class="form-control" type="text" >
+                        <input  value="<?php echo $aluno['ed47_v_compl'] ?>" onchange="salvaNomeDoCampoModificado(this)" name="vch_complemento" class="form-control" type="text" >
 
                     </div>
                     <div class="col-md-3">
                         <label for="exampleInputEmail1" class="labelNome">Número:</label>
-                        <input required value="<?php echo $aluno['ed47_c_numero'] ?>" name="vch_numero" class="form-control .form-control-nome" type="text">
+                        <input required value="<?php echo $aluno['ed47_c_numero'] ?>"  onchange="salvaNomeDoCampoModificado(this)" name="vch_numero" class="form-control .form-control-nome" type="text">
                         <label for="" class="labelNome">Cep:</label>
                         <input name="vch_cep" value="<?php echo $aluno['ed47_v_cep'] ?>" class="form-control" id="vch_cep" type="text" readonly>
                     </div>
@@ -384,7 +384,7 @@ $localidades = pg_fetch_all($result);
                 </div>
             </div>
 
-            <input type="text" name="vch_acoes" value='acoes'>
+            <input type="text" name="vch_acoes" id="vch_acoes" value='acoes'>
         </form>
     </div>
     <br>
@@ -393,6 +393,35 @@ $localidades = pg_fetch_all($result);
     <br>
 
     <script type="text/javascript">
+      
+        function salvaNomeDoCampoModificado(element){
+          if (typeof(window.acoes) =="undefined"){
+                window.acoes = [];
+          }
+       
+          let acao = $(element).attr('name');
+         
+          if(acoes.indexOf(acao)== -1){
+            acoes.push(acao) 
+          } 
+          
+          let sAcoes='';
+          if(acoes.length >= 1 ){
+              for(let i = 0 ; i <= acoes.length;i++ ){
+                 sAcoes += acoes[i]+',';
+              }
+          }
+          
+            $('#vch_acoes').val(sAcoes);      
+     
+              
+                  
+        } 
+
+
+
+
+
         function validaForm() {
 
             //valida data de nascimento

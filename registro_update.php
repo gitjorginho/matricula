@@ -7,16 +7,19 @@ require_once ('conexao.php');
 
 $conexao = new Conexao();
 $conn = $conexao->conn();
-//var_dump($_POST);
+// var_dump($_POST);
+// die('fsdf');
+
 $codigo_aluno       =$_POST['vch_codigo'];
 $nome_aluno         =strtoupper($_POST['vch_nome']);
 $sexo_aluno         =$_POST['vch_sexo'];
 $data_nascimento    = dateToDatabase($_POST['sdt_nascimento']);
 $nome_mae           =$_POST['vch_mae'];
 $nome_responsavel   =$_POST['vch_responsavel'];
-$email_responsavel   =$_POST['vch_email_responsavel'];
+$email_responsavel  =$_POST['vch_email_responsavel'];
 $cpf_responsavel    =$_POST['vch_cpf'];
 $endereco           =$_POST['vch_endereco'];
+$complemento        =$_POST['vch_complemento'];
 $bairro             =$_POST['vch_bairro'];
 $localidade         =$_POST['vch_localidade'];
 $telefone           =$_POST['vch_telefone'];
@@ -25,6 +28,8 @@ $cidade             =$_POST['vch_cidade'];
 $serie              =$_POST['vch_serie'];
 $escola             =$_POST['escola'];
 $numero             =$_POST['vch_numero'];
+
+
 $acoes              =$_POST['vch_acoes'];
 
 $_SESSION['vch_serie'] = $serie;
@@ -47,6 +52,7 @@ $telefone = trim($telefone);
 		ed47_v_nome='$nome_aluno', 
 		ed47_v_telef='$telefone' , 
 		ed47_v_ender='$endereco',
+		ed47_v_compl='$complemento',
 		ed47_v_bairro='$bairro',
 		ed47_v_cep='$cep',
 		ed47_c_nomeresp='$nome_responsavel',
