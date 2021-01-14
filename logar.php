@@ -24,14 +24,13 @@ if((isset($_POST['login'])) && (isset($_POST['senha']))){
         $email = $testaUsuario ['email'];
         $id_usuario = $testaUsuario ['id_usuario'];
         // Verifica se o usuário tem um perfil atribuido no Sistema para o Acesso Restrito
-        $sql_perfil = "select * from configuracoes.db_permherda where id_usuario = 
-        '$id_usuario' and (id_perfil = 18 or id_perfil = 81)";
+        $sql_perfil = "select * from configuracoes.db_permherda where id_usuario =  '$id_usuario' and (id_perfil = 18 or id_perfil = 81)";
         // 
     
         $resultperf = pg_query($conn, $sql_perfil);
         $testaPerfil  = pg_fetch_assoc($result);
 
-        if (pg_num_rows($resultperf) > 0){
+        if (pg_num_rows($resultperf) == 0){
             $_SESSION['login']  = $usuario;
             $_SESSION['email']  = $email;
             $_SESSION['nome']   = $nome;
