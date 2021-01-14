@@ -19,7 +19,7 @@
                     $bancoDeDados = "sge2020";
                 }else{
                     $servidor = "172.31.99.76";
-                    $bancoDeDados = "sge_hom";
+                    $bancoDeDados = "sge2020_hom";
                 }
                 
                 $porta = 5432;
