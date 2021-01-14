@@ -31,7 +31,7 @@ if((isset($_POST['login'])) && (isset($_POST['senha']))){
         $resultperf = pg_query($conn, $sql_perfil);
         $testaPerfil  = pg_fetch_assoc($result);
 
-        if (pg_num_rows($resultperf) == 0){
+        if (pg_num_rows($resultperf) > 0){
             $_SESSION['login']  = $usuario;
             $_SESSION['email']  = $email;
             $_SESSION['nome']   = $nome;
