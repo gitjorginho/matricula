@@ -80,16 +80,5 @@ header("Content-Type: text/html;  charset=ISO-8859-1", true);
             <a id="btncp" class="nav-item nav-link btn-lg btn-success disabled">Comprovante</a>
         </nav>
     </div>
-    <?php
-    if (@$banner_passo == 0) {
-    ?>
-        <div class="guia_status">
-            <div class="guia_status_center" >
-                <img  style="margin-top: 5px;" src="<?php echo @$img_banner_passo ?>" class="img-responsive imgBanner" width="450" />
-            </div>
-
-        </div>
-    <?php
-    }
-    ?>
+    
     <div class="conteiner1">

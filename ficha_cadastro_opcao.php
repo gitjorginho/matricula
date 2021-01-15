@@ -41,7 +41,7 @@ $hoje = mktime(0, 0, 0, $mescorte, $diacorte, $anocorte);
 // Descobre a unix timestamp da data de nascimento do fulano
 $nascimento = mktime(0, 0, 0, $mes, $dia, $ano);
 
-// Depois apenas fazemos o cï¿½lculo jï¿½ citado :)
+// Depois apenas fazemos o calculo já citado :)
 $idade = floor((((($hoje - $nascimento) / 60) / 60) / 24) / 365.25);
 //grupo 1
 if ($idade == 1) {
@@ -179,6 +179,7 @@ $turma_selecionada  = isset($_SESSION['turma']) ? $_SESSION['turma'] : '';
         }
             
     }
+
 </script>            
 <div class="centr">
     <div class="form-group">
@@ -223,7 +224,7 @@ $turma_selecionada  = isset($_SESSION['turma']) ? $_SESSION['turma'] : '';
        
         <div class="form-group">
             <div class="card-body">
-                <input class="btn btn-secondary col-md-2" type="button" onclick="window.location.href='ficha_cadastro_endereco.php'" value="Voltar">
+                <input class="btn btn-secondary col-md-2" type="button" onclick="window.location.href='ficha_cadastro_documento.php'" value="Voltar">
                 <div class="d-md-none" style="margin:10px;"></div>
                 <button type="button" id="ProsseguirOpcao" class="btn btn-success col-md-2" onClick="Javascript:GravarForm(document.Form);"> Prosseguir</button>
             </div>

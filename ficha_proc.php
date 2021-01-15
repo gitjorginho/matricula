@@ -184,10 +184,41 @@ $serie_origem = 'null';
     
     $_SESSION['codigo'] = $idAlunoReserva;
 
-    //verifica se todas a query foi correta
-if($resultInsertAuditoria and $resultInsertEscolaReserva and $resultInsertAlunoReserva){
-    pg_query($conexao->conn(),"COMMIT") or die("Transaction commit failed\n");
+    $arrDadosDoc = $_SESSION['documentos'];
+    //die(var_dump($_SESSION['documentos'])); 
+
+   
+   //$resultInsertDocumento  
+   foreach($arrDadosDoc as $documento ){
+      
+      $seFrenteVerso = explode('-',$documento['nome_documento']);
+      if ($seFrenteVerso[2] == 'FRETE' ){
+         $ctipoDocumento = 'F';
+      }else if ($seFrenteVerso[2] == 'VERSO'){
+        $ctipoDocumento = 'V';
+      }else{
+        $ctipoDocumento = 'U';
+      }
+
+      $sqlInsertDocumentos = "INSERT INTO reserva.documentoalunoreserva
+      (id_alunoreserva, id_documentoreserva, nome_documento, caminho_documento,tipo_documento)
+      VALUES($idAlunoReserva, {$documento['id_documentoreserva']} , '{$documento['nome_documento']}', '{$documento['caminho_documento']}', '$ctipoDocumento');
+      "; 
+
     
+      $resultInsertDocumento = pg_query($conexao->conn(),$sqlInsertDocumentos);
+   }
+
+
+    
+
+
+
+
+    //verifica se todas a query foi correta
+if($resultInsertAuditoria and $resultInsertEscolaReserva and $resultInsertAlunoReserva and $resultInsertDocumento){
+    pg_query($conexao->conn(),"COMMIT") or die("Transaction commit failed\n");
+    die('sim');
     enviarEmailCadastro();
  
     header('Location:comprovante.php');

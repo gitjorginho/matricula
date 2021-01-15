@@ -306,11 +306,9 @@ if ($codigo_bairro != '') {
 
 
     function pegarValores() {
-
         let valor = $('#resposta :selected').val();
-
         let localidade = $('#resposta :selected').attr('data-localidade');
-        
+       
 
         $('#loading').show();
         $('#cp_localidades').attr('disabled', 'disabled');
