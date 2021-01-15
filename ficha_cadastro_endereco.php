@@ -310,7 +310,7 @@ if ($codigo_bairro != '') {
         let valor = $('#resposta :selected').val();
 
         let localidade = $('#resposta :selected').attr('data-localidade');
-        console.log(localidade);
+        
 
         $('#loading').show();
         $('#cp_localidades').attr('disabled', 'disabled');
