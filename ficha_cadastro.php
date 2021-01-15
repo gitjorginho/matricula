@@ -293,7 +293,10 @@ $radio = isset($_SESSION['radio']) ? $_SESSION['radio'] : '';
         </div>
     </div>
 
-    <script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnii").removeClass("disabled").addClass("active");
+        });
         function letras(){
             tecla = event.keyCode;
             if (tecla >= 48 && tecla <= 57){

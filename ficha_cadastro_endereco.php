@@ -27,7 +27,7 @@ if (isset($_POST['vch_endereco'])) {
         $_SESSION['passo'] = $passo;
     }
     $_SESSION = array_merge($_SESSION, $_POST);
-    header('Location: ficha_cadastro_opcao.php');
+    header('Location: ficha_cadastro_documento.php');
     //header('Location: ficha_proc.php');
 }
 
@@ -163,7 +163,6 @@ if ($codigo_bairro != '') {
             <div class="card-body">
                 <a class="btn btn-secondary col-md-2" href="ficha_cadastro.php">Voltar</a>
                 <div class="d-md-none" style="margin:10px;"></div>
-                <!--<input id="btn_submit" class="btn btn-success col-md-2" type="submit" value="Prosseguir">-->
                 <button type="button" id="ProsseguirEndereco" class="btn btn-success col-md-2" onClick="Javascript:GravarForm(document.Form);"> Prosseguir</button>
             </div>
         </div>
@@ -204,6 +203,7 @@ if ($codigo_bairro != '') {
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#btndp").removeClass("disabled").addClass("active");
         $("#myInput").on("keyup", function () {
             var value = $(this).val().toLowerCase();
             $("#myList li").filter(function () {

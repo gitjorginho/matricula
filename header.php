@@ -71,8 +71,17 @@ header("Content-Type: text/html;  charset=ISO-8859-1", true);
         
         </div>
     </div>
+    <div class="btn-success">
+        <nav class="nav nav-pills nav-justified">
+            <a id="btnii" class="nav-item nav-link btn-lg btn-success disabled">Informações Iniciais</a>
+            <a id="btndp" class="nav-item nav-link btn-lg btn-success disabled">Dados Pessoais</a>
+            <a id="btndn" class="nav-item nav-link btn-lg btn-success disabled">Documentos Necessários</a>
+            <a id="btnop" class="nav-item nav-link btn-lg btn-success disabled">Opções</a>
+            <a id="btncp" class="nav-item nav-link btn-lg btn-success disabled">Comprovante</a>
+        </nav>
+    </div>
     <?php
-    if (@$banner_passo == 1) {
+    if (@$banner_passo == 0) {
     ?>
         <div class="guia_status">
             <div class="guia_status_center" >
