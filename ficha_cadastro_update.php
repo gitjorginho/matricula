@@ -244,9 +244,8 @@ $localidades = pg_fetch_all($result);
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12">
-                        <input <?php //echo ($matriculado_sge == 'true') ? 'readonly' : 'readonly' 
-                                ?> class="form-control" type="text" id="cp_texto" autocomplete="off">
-                        <select onclick="pegarValores()" id="resposta" style="width: 500px; margin-left: 0px;display: none" name="vch_endereco" multiple="multiple"></select>
+                        <input  class="form-control" type="text" id="cp_texto" autocomplete="off">
+                        <select onclick="pegarValores()" id="resposta" style="width: 640px; margin-left: 0px;display: none;font-size: 10px" name="vch_endereco" multiple="multiple"></select>
                     </div>
                 </div>
             </div>
@@ -384,7 +383,7 @@ $localidades = pg_fetch_all($result);
                 </div>
             </div>
 
-            <input type="text" name="vch_acoes" id="vch_acoes" value='acoes'>
+            <input type="hidden"  name="vch_acoes" id="vch_acoes" value='acoes'>
         </form>
     </div>
     <br>
@@ -398,9 +397,8 @@ $localidades = pg_fetch_all($result);
           if (typeof(window.acoes) =="undefined"){
                 window.acoes = [];
           }
-       
           let acao = $(element).attr('name');
-         
+       
           if(acoes.indexOf(acao)== -1){
             acoes.push(acao) 
           } 
@@ -501,8 +499,10 @@ $localidades = pg_fetch_all($result);
         });
 
         function pegarValores() {
+            
             let valor = $('#resposta :selected').val();
 
+            let localidade = $('#resposta :selected').attr('data-localidade');
             $.ajax({
                     url: "pesq.php",
                     type: 'get',
@@ -519,7 +519,7 @@ $localidades = pg_fetch_all($result);
                     $('#vch_cep').val(endereco.cep);
                     $('#ender').val(endereco.endereco);
                     let codigo_bairro = endereco.codigo_bairro;
-                    carregar_localidade(codigo_bairro)
+                    carregar_localidade(codigo_bairro, localidade);
 
                 })
                 .fail(function(jqXHR, textStatus, msg) {
@@ -530,7 +530,7 @@ $localidades = pg_fetch_all($result);
 
         //carregar localidade
 
-        function carregar_localidade(codigo_bairro) {
+        function carregar_localidade(codigo_bairro, set_localidade) {
             $.ajax({
                     url: "pesq.php",
                     type: 'get',
@@ -543,6 +543,7 @@ $localidades = pg_fetch_all($result);
                 })
                 .done(function(msg) {
                     $('#cp_localidades').html(msg);
+                    $('#cp_localidades').val(set_localidade);
 
                 })
                 .fail(function(jqXHR, textStatus, msg) {

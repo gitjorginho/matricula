@@ -28,8 +28,6 @@ $cidade             =$_POST['vch_cidade'];
 $serie              =$_POST['vch_serie'];
 $escola             =$_POST['escola'];
 $numero             =$_POST['vch_numero'];
-
-
 $acoes              =$_POST['vch_acoes'];
 
 $_SESSION['vch_serie'] = $serie;
