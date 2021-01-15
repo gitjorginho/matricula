@@ -111,7 +111,7 @@ $localidades = pg_fetch_all($result);
     <h3 class="text-center">Dados Cadastrais</h3>
     <br>
     <div class="card-body">
-        <form method="post" action="registro_update.php" onsubmit="//return validaForm()">
+        <form method="post" action="registro_update.php">
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-2">
@@ -141,21 +141,21 @@ $localidades = pg_fetch_all($result);
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12">
-                        <label for="exampleInputEmail1">Nome:</label>
+                        <label for="" id="labelNome">Nome do aluno:</label>
                          <!-- line old -->
                          <!-- <input required <?php echo ($matriculado_sge == 'true') ? 'readonly' : 'readonly' ?> class="form-control " type="text" name="vch_nome" id="vch_nome" value="<?php echo $aluno['ed47_v_nome'] ?>" onkeyup="this.value = this.value.toUpperCase();" /> -->
-                        <input required  class="form-control " onchange="salvaNomeDoCampoModificado(this)" type="text" name="vch_nome" id="vch_nome" value="<?php echo $aluno['ed47_v_nome'] ?>" onkeyup="this.value = this.value.toUpperCase();" />
+                        <input   class="form-control " onchange="salvaNomeDoCampoModificado(this)" type="text" name="vch_nome" id="vch_nome" value="<?php echo $aluno['ed47_v_nome'] ?>" onkeyup="this.value = this.value.toUpperCase();" />
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-3">
-                        <label for="sdt_nascimento">Data Nascimento:</label>
+                        <label for="sdt_nascimento" id="labelDataNascimento" >Data Nascimento:</label>
                         <input required   class="form-control" onchange="salvaNomeDoCampoModificado(this)" type="text" name="sdt_nascimento" id="sdt_nascimento" value="<?php echo $datando ?>">
                     </div>
                     <div class="col-md-3">
-                        <label for="cp_sexo">Sexo:</label>
+                        <label for="cp_sexo" id="labelSexo">Sexo:</label>
                         <select required  class="browser-default custom-select" onchange="salvaNomeDoCampoModificado(this)" name="vch_sexo" id="cp_sexo">
                             <option selected></option>
                             <option value="M">Masculino</option>
@@ -207,7 +207,7 @@ $localidades = pg_fetch_all($result);
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12">
-                        <label for="exampleInputEmail1">Email do responsável:</label>
+                        <label for="exampleInputEmail1" id="labelEmail">Email do responsável:</label>
                         <input   class="form-control "  onchange="salvaNomeDoCampoModificado(this)"  type="text" name="vch_email_responsavel" id="vch_responsavel" value="<?php echo $aluno['email_resp'] ?>" >
                     </div>
                 </div>
@@ -364,8 +364,7 @@ $localidades = pg_fetch_all($result);
                         <!-- <button type="submit" class="btn btn-success col btn-block" href="">
                             Imprimir Comprovante Lista de Espera
                         </button> -->
-                        <button type="submit" class="btn btn-success col btn-block" href="">
-                            Salvar e Imprimir Comprovante Lista de Espera
+                        <button type="submit" class="btn btn-success col btn-block" href=""  onclick="return valida()" >                               Salvar e Imprimir Comprovante Lista de Espera
                         </button>
                     </div>
                     <div class="col-2"></div>
@@ -390,6 +389,32 @@ $localidades = pg_fetch_all($result);
     <br>
     <br>
     <br>
+
+
+
+     <!-- Botão para acionar modal -->
+     <button id="msg" type="button" style="display: none" class="btn btn-primary" data-toggle="modal" data-target="#modalExemplo">
+        Abrir modal de demonstração
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Portal Lista de Espera </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="msg_text"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal" data-backdrop="static">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script type="text/javascript">
       
@@ -417,25 +442,266 @@ $localidades = pg_fetch_all($result);
         } 
 
 
+        function valida() {
 
+            //######################################################################            
+            // 1º Valida o preenchimento do nome do Aluno
+            //######################################################################
+            let nome = $('#vch_nome').val().trim();
+            let nome_completo = nome.split(' ');
+            // Retorna a idade do aluno 
+            let idade = calculaIdade(document.getElementById('sdt_nascimento').value);
+            
+            if (nome === '') {
+                $("#msg").trigger("click");
+                $("#msg_text").text("Nome do aluno precisa ser preenchido!");
+                document.getElementById('labelNome').style.color = 'red';
+                document.getElementById('vch_nome').style.borderColor = 'red';
+                return false;
+            }
+        
+            if (nome_completo.length == 1) {
+                $("#msg").trigger("click");
+                $("#msg_text").text("Nome do aluno está incompleto!");
+                document.getElementById('labelNome').style.color = 'red';
+                document.getElementById('vch_nome').style.borderColor = 'red';
+                return false;
+            }
+        
+            //######################################################################        
+            // 2º Valida o preenchimento da data de nascimento
+            //######################################################################            
+            if ($('#sdt_nascimento').val().trim() === '') {
+                $("#msg").trigger("click");
+                $("#msg_text").text("Data de nascimento precisa ser preenchida!");
+                document.getElementById('labelDataNascimento').style.color = 'red';
+                document.getElementById('sdt_nascimento').style.borderColor = 'red';
+                return false;
+            } 
+        
+            if (compareDates($('#sdt_nascimento').val())) {
+                 $("#msg").trigger("click");
+                 $("#msg_text").text("Data de nascimento não pode ser maior que a data atual!");
+                 document.getElementById('labelDataNascimento').style.color = 'red';
+                 document.getElementById('sdt_nascimento').style.borderColor = 'red';
+                 return false;
+             }
 
-
-        function validaForm() {
-
-            //valida data de nascimento
+        
             if (validaDat($('#sdt_nascimento').val())) {
-                alert('Data de nascimento incorreta.');
+                $("#msg").trigger("click");
+                $("#msg_text").text("Data de nascimento está incorreta!");
+                document.getElementById('labelDataNascimento').style.color = 'red';
+                document.getElementById('sdt_nascimento').style.borderColor = 'red';
+                ;
                 return false;
             }
 
-            //valida data ver se atual
-            if (compareDates($('#sdt_nascimento').val())) {
-                alert('Data de nascimento não pode ser maior que data atual.');
+       
+              //DATA DE NASCIMENTO MAIOR QUE 100
+            datanasc = $('#sdt_nascimento').val();
+            dianasc = datanasc.substr(0, 2);
+            mesnasc = datanasc.substr(3, 2);
+            anonasc = datanasc.substr(6, 4);
+
+            if (anonasc < 1921) {
+                $("#msg").trigger("click");
+                $("#msg_text").text("Ano da data de nascimento deve ser maior que 1920!");
+                document.getElementById('labelDataNascimento').style.color = 'red';
+                document.getElementById('sdt_nascimento').style.borderColor = 'red';
                 return false;
+            }    
+        
+
+        //     //######################################################################        
+        //     // 3º Valida a seleção do Sexo
+        //     //######################################################################            
+
+            if ($('#cp_sexo').val().trim() === '') {
+                $("#msg").trigger("click");
+                $("#msg_text").text("Informe o sexo do aluno!");
+                document.getElementById('labelSexo').style.color = 'red';
+                document.getElementById('cp_sexo').style.borderColor = 'red';
+                return false;
+            }
+
+
+            //######################################################################        
+            // 4º Valida a seleção da série
+            //######################################################################            
+
+            // if ($('#cp_serie').val().trim() === '') {
+            //     $("#msg").trigger("click");
+            //     $("#msg_text").text("Informe a série desejada a cursar!");
+            //     document.getElementById('labelSerie').style.color = 'red';
+            //     document.getElementById('cp_serie').style.borderColor = 'red';
+            //     return false;
+            // }
+        
+            //  //######################################################################        
+            // // 5º Responde se é orgão público
+            // //######################################################################            
+
+            // if ((document.getElementById('radioSim').checked === false) && (document.getElementById('radioNao').checked === false)) {
+            //     $("#msg").trigger("click");
+            //     $("#msg_text").text("É necessário responder se o cadastro é realizado por órgão público que acolhe o aluno!");
+            //     return false;
+            // }
+            // if (document.getElementById('radioSim').checked) {
+            //     if ($('#vch_orgaopublico').val().trim() === '') {
+            //         $("#msg").trigger("click");
+            //         $("#msg_text").text("Informe a descrição do órgão público!");
+            //         document.getElementById('labelOrgaoPublico').style.color = 'red';
+            //         document.getElementById('vch_orgaopublico').style.borderColor = 'red';
+            //         return false;
+            //     }
+            // } else {
+
+            //     // 6º Não é órgão público. Necessário informar o nome da Mãe 
+            //     //######################################################################
+
+            //     nome = $('#vch_mae').val().trim();
+            //     nome_completo = nome.split(' ');
+
+            //     if (nome === '') {
+            //         $("#msg").trigger("click");
+            //         $("#msg_text").text("Nome da mãe deve ser preenchido!");
+            //         document.getElementById('labelNomeMae').style.color = 'red';
+            //         document.getElementById('vch_mae').style.borderColor = 'red';
+            //         return false;
+            //     }
+
+            //     if (nome_completo.length == 1) {
+            //         $("#msg").trigger("click");
+            //         $("#msg_text").text("Nome da mãe está incompleto!");
+            //         document.getElementById('labelNomeMae').style.color = 'red';
+            //         document.getElementById('vch_mae').style.borderColor = 'red';
+            //         return false;
+            //     }
+
+            //     // 7º Não é órgão público. Necessário informar o nome do Responsável
+            //     //######################################################################            
+
+            //     nome = $('#vch_responsavel').val().trim();
+            //     nome_completo = nome.split(' ');
+
+            //     if ((nome === '') && (idade <18) ) {
+            //         $("#msg").trigger("click");
+            //         $("#msg_text").text("Nome do Responsável deve ser preenchido!");
+            //         document.getElementById('labelNomeResponsavel').style.color = 'red';
+            //         document.getElementById('vch_responsavel').style.borderColor = 'red';
+            //         return false;
+            //     }
+
+            //     if ((nome_completo.length == 1) && (idade <18)) {
+            //         $("#msg").trigger("click");
+            //         $("#msg_text").text("Nome do Responsável está incompleto!");
+            //         document.getElementById('labelNomeResponsavel').style.color = 'red';
+            //         document.getElementById('vch_responsavel').style.borderColor = 'red';
+            //         return false;
+            //     }
+            // }
+        
+        
+        //     //######################################################################    
+        //     // 8º Valida e-mail 
+        //     //###################################################################### 
+
+            let Email = document.getElementById('vch_email').value;
+            if (Email !== '') {
+                result = validEmail(Email);
+                if (result == false) {
+                    $("#msg").trigger("click");
+                    $("#msg_text").text("E-mail incorreto!");
+                    document.getElementById('labelEmail').style.color = 'red';
+                    document.getElementById('vch_email').style.borderColor = 'red';
+                    return false;
+                }
+            }
+
+        
+        
+        }
+       
+
+        
+       
+        
+      
+
+
+      
+        //     //######################################################################    
+        //     // 8º Valida e-mail 
+        //     //###################################################################### 
+
+        //     let Email = document.getElementById('vch_email').value;
+        //     if (Email !== '') {
+        //         result = validEmail(Email);
+        //         if (result == false) {
+        //             $("#msg").trigger("click");
+        //             $("#msg_text").text("E-mail incorreto!");
+        //             document.getElementById('labelEmail').style.color = 'red';
+        //             document.getElementById('vch_email').style.borderColor = 'red';
+        //             return false;
+        //         }
+        //     }
+
+        //     //######################################################################    
+        //     // 9º Valida o CPF 
+        //     //###################################################################### 
+
+        //     let cpf_value = $('#vch_cpf').val();
+
+        //     if (cpf_value != '') {
+        //         if (!validarCPF(cpf_value)) {
+        //             $("#msg").trigger("click");
+        //             $("#msg_text").text("CPF inválido!");
+        //             document.getElementById('labelCpf').style.color = 'red';
+        //             document.getElementById('vch_cpf').style.borderColor = 'red';
+        //             return false;
+        //         }
+        //     }
+
+        // }
+
+
+        // function validaForm() {
+        //     //valida data de nascimento
+        //     if (validaDat($('#sdt_nascimento').val())) {
+        //         alert('Data de nascimento incorreta.');
+        //         return false;
+        //     }
+        //     //valida data ver se atual
+        //     if (compareDates($('#sdt_nascimento').val())) {
+        //         alert('Data de nascimento não pode ser maior que data atual.');
+        //         return false;
+        //     }
+        // }
+        function calculaIdade(dataNasc){
+            var dataAtual = new Date();
+            var anoAtual = dataAtual.getFullYear();
+            var anoNascParts = dataNasc.split('/');
+            var diaNasc =anoNascParts[0];
+            var mesNasc =anoNascParts[1];
+            var anoNasc =anoNascParts[2];
+            var idade = anoAtual - anoNasc;
+            var mesAtual = dataAtual.getMonth() + 1;
+            //se mês atual for menor que o nascimento, nao fez aniversario ainda; (26/10/2009)
+        if(mesAtual < mesNasc){
+            idade--;
+        }else {
+            //se estiver no mes do nasc, verificar o dia
+            if(mesAtual == mesNasc){
+                if(dataAtual.getDate() < diaNasc ){
+                //se a data atual for menor que o dia de nascimento ele ainda nao fez aniversario
+                idade--;
+                }
             }
         }
+       }
 
-
+     
 
         function compareDates(date) {
             let parts = date.split('/') // separa a data pelo caracter '/'
