@@ -207,7 +207,7 @@ $localidades = pg_fetch_all($result);
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12">
-                        <label for="exampleInputEmail1">Email do responsável:</label>
+                        <label for="exampleInputEmail1" id="labelEmail">Email do responsável:</label>
                         <input   class="form-control "  onchange="salvaNomeDoCampoModificado(this)"  type="text" name="vch_email_responsavel" id="vch_responsavel" value="<?php echo $aluno['email_resp'] ?>" >
                     </div>
                 </div>
@@ -513,7 +513,7 @@ $localidades = pg_fetch_all($result);
             }    
         
 
-          //     //######################################################################        
+        //     //######################################################################        
         //     // 3º Valida a seleção do Sexo
         //     //######################################################################            
 
@@ -524,6 +524,7 @@ $localidades = pg_fetch_all($result);
                 document.getElementById('cp_sexo').style.borderColor = 'red';
                 return false;
             }
+
 
             //######################################################################        
             // 4º Valida a seleção da série
@@ -537,71 +538,87 @@ $localidades = pg_fetch_all($result);
             //     return false;
             // }
         
-             //######################################################################        
-            // 5º Responde se é orgão público
-            //######################################################################            
+            //  //######################################################################        
+            // // 5º Responde se é orgão público
+            // //######################################################################            
 
-            if ((document.getElementById('radioSim').checked === false) && (document.getElementById('radioNao').checked === false)) {
-                $("#msg").trigger("click");
-                $("#msg_text").text("É necessário responder se o cadastro é realizado por órgão público que acolhe o aluno!");
-                return false;
-            }
-            if (document.getElementById('radioSim').checked) {
-                if ($('#vch_orgaopublico').val().trim() === '') {
-                    $("#msg").trigger("click");
-                    $("#msg_text").text("Informe a descrição do órgão público!");
-                    document.getElementById('labelOrgaoPublico').style.color = 'red';
-                    document.getElementById('vch_orgaopublico').style.borderColor = 'red';
-                    return false;
-                }
-            } else {
+            // if ((document.getElementById('radioSim').checked === false) && (document.getElementById('radioNao').checked === false)) {
+            //     $("#msg").trigger("click");
+            //     $("#msg_text").text("É necessário responder se o cadastro é realizado por órgão público que acolhe o aluno!");
+            //     return false;
+            // }
+            // if (document.getElementById('radioSim').checked) {
+            //     if ($('#vch_orgaopublico').val().trim() === '') {
+            //         $("#msg").trigger("click");
+            //         $("#msg_text").text("Informe a descrição do órgão público!");
+            //         document.getElementById('labelOrgaoPublico').style.color = 'red';
+            //         document.getElementById('vch_orgaopublico').style.borderColor = 'red';
+            //         return false;
+            //     }
+            // } else {
 
-                // 6º Não é órgão público. Necessário informar o nome da Mãe 
-                //######################################################################
+            //     // 6º Não é órgão público. Necessário informar o nome da Mãe 
+            //     //######################################################################
 
-                nome = $('#vch_mae').val().trim();
-                nome_completo = nome.split(' ');
+            //     nome = $('#vch_mae').val().trim();
+            //     nome_completo = nome.split(' ');
 
-                if (nome === '') {
-                    $("#msg").trigger("click");
-                    $("#msg_text").text("Nome da mãe deve ser preenchido!");
-                    document.getElementById('labelNomeMae').style.color = 'red';
-                    document.getElementById('vch_mae').style.borderColor = 'red';
-                    return false;
-                }
+            //     if (nome === '') {
+            //         $("#msg").trigger("click");
+            //         $("#msg_text").text("Nome da mãe deve ser preenchido!");
+            //         document.getElementById('labelNomeMae').style.color = 'red';
+            //         document.getElementById('vch_mae').style.borderColor = 'red';
+            //         return false;
+            //     }
 
-                if (nome_completo.length == 1) {
-                    $("#msg").trigger("click");
-                    $("#msg_text").text("Nome da mãe está incompleto!");
-                    document.getElementById('labelNomeMae').style.color = 'red';
-                    document.getElementById('vch_mae').style.borderColor = 'red';
-                    return false;
-                }
+            //     if (nome_completo.length == 1) {
+            //         $("#msg").trigger("click");
+            //         $("#msg_text").text("Nome da mãe está incompleto!");
+            //         document.getElementById('labelNomeMae').style.color = 'red';
+            //         document.getElementById('vch_mae').style.borderColor = 'red';
+            //         return false;
+            //     }
 
-                // 7º Não é órgão público. Necessário informar o nome do Responsável
-                //######################################################################            
+            //     // 7º Não é órgão público. Necessário informar o nome do Responsável
+            //     //######################################################################            
 
-                nome = $('#vch_responsavel').val().trim();
-                nome_completo = nome.split(' ');
+            //     nome = $('#vch_responsavel').val().trim();
+            //     nome_completo = nome.split(' ');
 
-                if ((nome === '') && (idade <18) ) {
-                    $("#msg").trigger("click");
-                    $("#msg_text").text("Nome do Responsável deve ser preenchido!");
-                    document.getElementById('labelNomeResponsavel').style.color = 'red';
-                    document.getElementById('vch_responsavel').style.borderColor = 'red';
-                    return false;
-                }
+            //     if ((nome === '') && (idade <18) ) {
+            //         $("#msg").trigger("click");
+            //         $("#msg_text").text("Nome do Responsável deve ser preenchido!");
+            //         document.getElementById('labelNomeResponsavel').style.color = 'red';
+            //         document.getElementById('vch_responsavel').style.borderColor = 'red';
+            //         return false;
+            //     }
 
-                if ((nome_completo.length == 1) && (idade <18)) {
-                    $("#msg").trigger("click");
-                    $("#msg_text").text("Nome do Responsável está incompleto!");
-                    document.getElementById('labelNomeResponsavel').style.color = 'red';
-                    document.getElementById('vch_responsavel').style.borderColor = 'red';
-                    return false;
-                }
-            }
+            //     if ((nome_completo.length == 1) && (idade <18)) {
+            //         $("#msg").trigger("click");
+            //         $("#msg_text").text("Nome do Responsável está incompleto!");
+            //         document.getElementById('labelNomeResponsavel').style.color = 'red';
+            //         document.getElementById('vch_responsavel').style.borderColor = 'red';
+            //         return false;
+            //     }
+            // }
         
         
+        //     //######################################################################    
+        //     // 8º Valida e-mail 
+        //     //###################################################################### 
+
+            let Email = document.getElementById('vch_email').value;
+            if (Email !== '') {
+                result = validEmail(Email);
+                if (result == false) {
+                    $("#msg").trigger("click");
+                    $("#msg_text").text("E-mail incorreto!");
+                    document.getElementById('labelEmail').style.color = 'red';
+                    document.getElementById('vch_email').style.borderColor = 'red';
+                    return false;
+                }
+            }
+
         
         
         }
@@ -613,70 +630,7 @@ $localidades = pg_fetch_all($result);
       
 
 
-        //     //######################################################################        
-        //     // 5º Responde se é orgão público
-        //     //######################################################################            
-
-        //     if ((document.getElementById('radioSim').checked === false) && (document.getElementById('radioNao').checked === false)) {
-        //         $("#msg").trigger("click");
-        //         $("#msg_text").text("É necessário responder se o cadastro é realizado por órgão público que acolhe o aluno!");
-        //         return false;
-        //     }
-        //     if (document.getElementById('radioSim').checked) {
-        //         if ($('#vch_orgaopublico').val().trim() === '') {
-        //             $("#msg").trigger("click");
-        //             $("#msg_text").text("Informe a descrição do órgão público!");
-        //             document.getElementById('labelOrgaoPublico').style.color = 'red';
-        //             document.getElementById('vch_orgaopublico').style.borderColor = 'red';
-        //             return false;
-        //         }
-        //     } else {
-
-        //         // 6º Não é órgão público. Necessário informar o nome da Mãe 
-        //         //######################################################################
-
-        //         nome = $('#vch_mae').val().trim();
-        //         nome_completo = nome.split(' ');
-
-        //         if (nome === '') {
-        //             $("#msg").trigger("click");
-        //             $("#msg_text").text("Nome da mãe deve ser preenchido!");
-        //             document.getElementById('labelNomeMae').style.color = 'red';
-        //             document.getElementById('vch_mae').style.borderColor = 'red';
-        //             return false;
-        //         }
-
-        //         if (nome_completo.length == 1) {
-        //             $("#msg").trigger("click");
-        //             $("#msg_text").text("Nome da mãe está incompleto!");
-        //             document.getElementById('labelNomeMae').style.color = 'red';
-        //             document.getElementById('vch_mae').style.borderColor = 'red';
-        //             return false;
-        //         }
-
-        //         // 7º Não é órgão público. Necessário informar o nome do Responsável
-        //         //######################################################################            
-
-        //         nome = $('#vch_responsavel').val().trim();
-        //         nome_completo = nome.split(' ');
-
-        //         if ((nome === '') && (idade <18) ) {
-        //             $("#msg").trigger("click");
-        //             $("#msg_text").text("Nome do Responsável deve ser preenchido!");
-        //             document.getElementById('labelNomeResponsavel').style.color = 'red';
-        //             document.getElementById('vch_responsavel').style.borderColor = 'red';
-        //             return false;
-        //         }
-
-        //         if ((nome_completo.length == 1) && (idade <18)) {
-        //             $("#msg").trigger("click");
-        //             $("#msg_text").text("Nome do Responsável está incompleto!");
-        //             document.getElementById('labelNomeResponsavel').style.color = 'red';
-        //             document.getElementById('vch_responsavel').style.borderColor = 'red';
-        //             return false;
-        //         }
-        //     }
-
+      
         //     //######################################################################    
         //     // 8º Valida e-mail 
         //     //###################################################################### 
