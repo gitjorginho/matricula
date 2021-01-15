@@ -73,4 +73,4 @@ $_SESSION['documentos'] = $arrDocumentoAluno;
 //var_dump($_SESSION['documentos']);
 
 
-//header('Location:ficha_cadastro_opcao.php');
+header('Location:ficha_cadastro_opcao.php');

@@ -188,26 +188,33 @@ $serie_origem = 'null';
     //die(var_dump($_SESSION['documentos'])); 
 
    
-   //$resultInsertDocumento  
+   $bResultInsertDocumento  = true; 
    foreach($arrDadosDoc as $documento ){
       
       $seFrenteVerso = explode('-',$documento['nome_documento']);
-      if ($seFrenteVerso[2] == 'FRETE' ){
+      if ($seFrenteVerso[2] == 'FRENTE' ){
          $ctipoDocumento = 'F';
       }else if ($seFrenteVerso[2] == 'VERSO'){
-        $ctipoDocumento = 'V';
+         $ctipoDocumento = 'V';
       }else{
-        $ctipoDocumento = 'U';
+         $ctipoDocumento = 'U';
       }
+       
+      $enderecoServidor = 'https://listadeesperaseduc.camacari.ba.gov.br/';
 
       $sqlInsertDocumentos = "INSERT INTO reserva.documentoalunoreserva
       (id_alunoreserva, id_documentoreserva, nome_documento, caminho_documento,tipo_documento)
-      VALUES($idAlunoReserva, {$documento['id_documentoreserva']} , '{$documento['nome_documento']}', '{$documento['caminho_documento']}', '$ctipoDocumento');
+      VALUES($idAlunoReserva, {$documento['id_documentoreserva']} , '{$documento['nome_documento']}', '$enderecoServidor{$documento['caminho_documento']}', '$ctipoDocumento');
       "; 
-
     
       $resultInsertDocumento = pg_query($conexao->conn(),$sqlInsertDocumentos);
-   }
+      
+      //se alguma insercao deu errado marca a variaVEL FALSE  
+      if($resultInsertDocumento == false){
+          $bResultInsertDocumento = false;
+      }
+     
+    }
 
 
     
@@ -216,9 +223,9 @@ $serie_origem = 'null';
 
 
     //verifica se todas a query foi correta
-if($resultInsertAuditoria and $resultInsertEscolaReserva and $resultInsertAlunoReserva and $resultInsertDocumento){
+if($resultInsertAuditoria and $resultInsertEscolaReserva and $resultInsertAlunoReserva and $bResultInsertDocumento ){
     pg_query($conexao->conn(),"COMMIT") or die("Transaction commit failed\n");
-    die('sim');
+    
     enviarEmailCadastro();
  
     header('Location:comprovante.php');
