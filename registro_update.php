@@ -19,6 +19,7 @@ $email_responsavel  =$_POST['vch_email_responsavel'];
 $cpf_responsavel    =$_POST['vch_cpf'];
 $endereco           =$_POST['vch_endereco'];
 $complemento        =$_POST['vch_complemento'];
+$orgaopublico 		=$_POST['vch_orgaopublico'];
 $bairro             =$_POST['vch_bairro'];
 $localidade         =$_POST['vch_localidade'];
 $telefone           =$_POST['vch_telefone'];
@@ -59,7 +60,8 @@ $telefone = trim($telefone);
 		municipio='$cidade', 
 		email_resp='$email_responsavel',
 		ed47_v_cpf='$cpf_responsavel',
-		ed47_i_localidade='$localidade' 
+		ed47_i_localidade='$localidade', 
+		vch_orgaopublico='$orgaopublico' 
 		WHERE id_alunoreserva = $codigo_aluno ";
 		$result = pg_query($conn,$sql_update_aluno);
 		 

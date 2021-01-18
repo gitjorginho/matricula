@@ -118,10 +118,9 @@ where dr.id_documentoreserva  not in(
 $result = pg_query($conn,$sql_documento);
 $documentos =  pg_fetch_all($result);
 
-
 ?>
 
-<div class="centr">
+<div class="">
 
 
     <br>
@@ -195,7 +194,7 @@ $documentos =  pg_fetch_all($result);
 
                     <div class="col-md-3">
                         <label for="cp_serie">Série:</label>
-                        <select required class="custom-select" id="cp_serie" name="vch_serie" readonly>
+                        <select  class="custom-select" id="cp_serie" name="vch_serie" >
                             <option selected></option>
                             <?php
                             foreach ($serie as $serie_selec) {
@@ -210,10 +209,50 @@ $documentos =  pg_fetch_all($result);
 
                 </div>
             </div>
+            <!-- <div class="row">
+                <div class="col-md-12">
+                    <label id="labelQuestionamento" for="vch_email" title="Aluno acolhido pelo poder público."><b>O cadastro é realizado por órgão público?</b></label>
+                </div>
+            </div> -->
+            <!-- <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2">
+                        <input type="radio" class="form-check" id="radioNao"  name="radio" value="0" <?php
+                            if ($radio == 0) {
+                                echo'checked';
+                            } else {
+                                echo'';
+                            }
+                            ?> onchange="habilitarRadio(this)">
+                        <label for="male">Não</label><br>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="radio" class="form-check" id="radioSim" name="radio" value="1" <?php
+                        if ($radio == 1) {
+                            echo'checked';
+                        } else {
+                            echo'';
+                        }
+                        ?> onchange="habilitarRadio(this)">
+                        <label for="female">Sim</label><br>
+                    </div>    
+                </div>
+            </div>     -->
+            <!--<br>-->
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label id="labelOrgaoPublico" for="vch_orgaopublico">Descrição do orgão público:</label><span id="spanAsteristicoOrgao"></span>
+                        <!--<input autocomplete="off" class="form-control" type="text" id="vch_orgaopublico" name="vch_orgaopublico" id="vch_orgaopublico" value="<?php echo $vch_orgaopublico ?>" onkeyup="this.value = this.value.toUpperCase();" disabled onKeyPress="mudarCorCampo('labelOrgaoPublico', 'vch_orgaopublico')">-->
+                        <input autocomplete="off" class="form-control" value="<?php echo $aluno['vch_orgaopublico'] ?>" type="text" id="vch_orgaopublico" name="vch_orgaopublico" id="vch_orgaopublico" value="<?php echo $vch_orgaopublico ?>"  onKeyPress="mudarCorCampo('labelOrgaoPublico', 'vch_orgaopublico');return letras();">
+                    </div>
+                </div>
+            </div>
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12">
                         <label>Nome da Mãe:</label>
+                        <!-- <span id="spanAsteristicoMae">*</span> -->
                         <input   class="form-control " onchange="salvaNomeDoCampoModificado(this)" type="text" name="vch_mae" id="vch_mae" value="<?php echo $aluno['ed47_v_mae'] ?>" onkeyup="this.value = this.value.toUpperCase();">
                     </div>
                 </div>
@@ -222,6 +261,7 @@ $documentos =  pg_fetch_all($result);
                 <div class="row">
                     <div class="col-md-12">
                         <label for="exampleInputEmail1">Responsável:</label>
+                        <!-- <span id="spanAsteristicoResp">*</span> -->
                         <input  class="form-control "  onchange="salvaNomeDoCampoModificado(this)"  type="text" name="vch_responsavel" id="vch_responsavel" value="<?php echo $aluno['ed47_c_nomeresp'] ?>" onkeyup="this.value = this.value.toUpperCase();">
                     </div>
                 </div>
@@ -229,7 +269,7 @@ $documentos =  pg_fetch_all($result);
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12">
-                        <label for="exampleInputEmail1" id="labelEmail">Email do responsável:</label>
+                        <label for="exampleInputEmail1" id="labelEmail">Email do Aluno:</label>
                         <input   class="form-control "  onchange="salvaNomeDoCampoModificado(this)"  type="text" name="vch_email_responsavel" id="vch_responsavel" value="<?php echo $aluno['email_resp'] ?>" >
                     </div>
                 </div>
@@ -237,7 +277,7 @@ $documentos =  pg_fetch_all($result);
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-5">
-                        <label for="exampleInputEmail">CPF do Responsável:</label>
+                        <label for="exampleInputEmail">CPF do Aluno:</label>
                         <input  class="form-control" type="text"  onchange="salvaNomeDoCampoModificado(this)"  name="vch_cpf" id="vch_cpf" value="<?php echo $aluno['ed47_v_cpf'] ?>">
 
                     </div>
@@ -612,77 +652,77 @@ $documentos =  pg_fetch_all($result);
             // 4º Valida a seleção da série
             //######################################################################            
 
-            // if ($('#cp_serie').val().trim() === '') {
-            //     $("#msg").trigger("click");
-            //     $("#msg_text").text("Informe a série desejada a cursar!");
-            //     document.getElementById('labelSerie').style.color = 'red';
-            //     document.getElementById('cp_serie').style.borderColor = 'red';
-            //     return false;
-            // }
+            if ($('#cp_serie').val().trim() === '') {
+                $("#msg").trigger("click");
+                $("#msg_text").text("Informe a série desejada a cursar!");
+                document.getElementById('labelSerie').style.color = 'red';
+                document.getElementById('cp_serie').style.borderColor = 'red';
+                return false;
+            }
         
-            //  //######################################################################        
-            // // 5º Responde se é orgão público
-            // //######################################################################            
+             //######################################################################        
+            // 5º Responde se é orgão público
+            //######################################################################            
 
-            // if ((document.getElementById('radioSim').checked === false) && (document.getElementById('radioNao').checked === false)) {
-            //     $("#msg").trigger("click");
-            //     $("#msg_text").text("É necessário responder se o cadastro é realizado por órgão público que acolhe o aluno!");
-            //     return false;
-            // }
-            // if (document.getElementById('radioSim').checked) {
-            //     if ($('#vch_orgaopublico').val().trim() === '') {
-            //         $("#msg").trigger("click");
-            //         $("#msg_text").text("Informe a descrição do órgão público!");
-            //         document.getElementById('labelOrgaoPublico').style.color = 'red';
-            //         document.getElementById('vch_orgaopublico').style.borderColor = 'red';
-            //         return false;
-            //     }
-            // } else {
+            if ((document.getElementById('radioSim').checked === false) && (document.getElementById('radioNao').checked === false)) {
+                $("#msg").trigger("click");
+                $("#msg_text").text("É necessário responder se o cadastro é realizado por órgão público que acolhe o aluno!");
+                return false;
+            }
+            if (document.getElementById('radioSim').checked) {
+                if ($('#vch_orgaopublico').val().trim() === '') {
+                    $("#msg").trigger("click");
+                    $("#msg_text").text("Informe a descrição do órgão público!");
+                    document.getElementById('labelOrgaoPublico').style.color = 'red';
+                    document.getElementById('vch_orgaopublico').style.borderColor = 'red';
+                    return false;
+                }
+            } else {
 
-            //     // 6º Não é órgão público. Necessário informar o nome da Mãe 
-            //     //######################################################################
+                // 6º Não é órgão público. Necessário informar o nome da Mãe 
+                //######################################################################
 
-            //     nome = $('#vch_mae').val().trim();
-            //     nome_completo = nome.split(' ');
+                nome = $('#vch_mae').val().trim();
+                nome_completo = nome.split(' ');
 
-            //     if (nome === '') {
-            //         $("#msg").trigger("click");
-            //         $("#msg_text").text("Nome da mãe deve ser preenchido!");
-            //         document.getElementById('labelNomeMae').style.color = 'red';
-            //         document.getElementById('vch_mae').style.borderColor = 'red';
-            //         return false;
-            //     }
+                if (nome === '') {
+                    $("#msg").trigger("click");
+                    $("#msg_text").text("Nome da mãe deve ser preenchido!");
+                    document.getElementById('labelNomeMae').style.color = 'red';
+                    document.getElementById('vch_mae').style.borderColor = 'red';
+                    return false;
+                }
 
-            //     if (nome_completo.length == 1) {
-            //         $("#msg").trigger("click");
-            //         $("#msg_text").text("Nome da mãe está incompleto!");
-            //         document.getElementById('labelNomeMae').style.color = 'red';
-            //         document.getElementById('vch_mae').style.borderColor = 'red';
-            //         return false;
-            //     }
+                if (nome_completo.length == 1) {
+                    $("#msg").trigger("click");
+                    $("#msg_text").text("Nome da mãe está incompleto!");
+                    document.getElementById('labelNomeMae').style.color = 'red';
+                    document.getElementById('vch_mae').style.borderColor = 'red';
+                    return false;
+                }
 
-            //     // 7º Não é órgão público. Necessário informar o nome do Responsável
-            //     //######################################################################            
+                // 7º Não é órgão público. Necessário informar o nome do Responsável
+                //######################################################################            
 
-            //     nome = $('#vch_responsavel').val().trim();
-            //     nome_completo = nome.split(' ');
+                nome = $('#vch_responsavel').val().trim();
+                nome_completo = nome.split(' ');
 
-            //     if ((nome === '') && (idade <18) ) {
-            //         $("#msg").trigger("click");
-            //         $("#msg_text").text("Nome do Responsável deve ser preenchido!");
-            //         document.getElementById('labelNomeResponsavel').style.color = 'red';
-            //         document.getElementById('vch_responsavel').style.borderColor = 'red';
-            //         return false;
-            //     }
+                if ((nome === '') && (idade <18) ) {
+                    $("#msg").trigger("click");
+                    $("#msg_text").text("Nome do Responsável deve ser preenchido!");
+                    document.getElementById('labelNomeResponsavel').style.color = 'red';
+                    document.getElementById('vch_responsavel').style.borderColor = 'red';
+                    return false;
+                }
 
-            //     if ((nome_completo.length == 1) && (idade <18)) {
-            //         $("#msg").trigger("click");
-            //         $("#msg_text").text("Nome do Responsável está incompleto!");
-            //         document.getElementById('labelNomeResponsavel').style.color = 'red';
-            //         document.getElementById('vch_responsavel').style.borderColor = 'red';
-            //         return false;
-            //     }
-            // }
+                if ((nome_completo.length == 1) && (idade <18)) {
+                    $("#msg").trigger("click");
+                    $("#msg_text").text("Nome do Responsável está incompleto!");
+                    document.getElementById('labelNomeResponsavel').style.color = 'red';
+                    document.getElementById('vch_responsavel').style.borderColor = 'red';
+                    return false;
+                }
+            }
         
         
         //     //######################################################################    
@@ -794,6 +834,26 @@ $documentos =  pg_fetch_all($result);
             // compara se a data informada é maior que a data atual
             // e retorna true ou false
             return date >= today ? true : false;
+        }
+
+        function habilitarRadio(radio) {
+            if (radio.value == 0) {
+                document.getElementById('vch_orgaopublico').setAttribute("disabled", "disabled");
+                document.getElementById('vch_orgaopublico').value = '';
+                // Controla os campos obrigatórios.                 
+                document.getElementById('spanAsteristicoMae').innerText = '*';
+                document.getElementById('spanAsteristicoResp').innerText = '*';
+                document.getElementById('spanAsteristicoOrgao').innerText = '';
+
+
+            } else {
+                document.getElementById('vch_orgaopublico').removeAttribute("disabled");
+                document.getElementById('vch_orgaopublico').value = '';
+                // Controla os campos obrigatórios. 
+                document.getElementById('spanAsteristicoMae').innerText = '';
+                document.getElementById('spanAsteristicoResp').innerText = '';
+                document.getElementById('spanAsteristicoOrgao').innerText = '*';
+            }
         }
 
 
