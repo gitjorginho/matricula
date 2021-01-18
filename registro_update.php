@@ -1,13 +1,14 @@
+
+
 <?php
 session_start();
-require_once('upload_doc_aluno.php');
-
 header("Content-Type: text/html;  charset=ISO-8859-1", true);
 require_once ('conexao.php');
 
 $conexao = new Conexao();
 $conn = $conexao->conn();
-
+// var_dump($_POST);
+// die('fsdf');
 
 $codigo_aluno       =$_POST['vch_codigo'];
 $nome_aluno         =strtoupper($_POST['vch_nome']);
@@ -72,45 +73,9 @@ $telefone = trim($telefone);
 		$sql_auditoria = "INSERT INTO reserva.auditoriausuarioaluno
 		(nome_usuario, id_alunoreserva, descricao, data_modificacao, acoes)
 		VALUES('PROPRIO ALUNO',$codigo_aluno, 'atulizar dados pelo proprio aluno', now(), '$acoes')";
+		
+		
 		$result = pg_query($conn,$sql_auditoria);
-
-
-		 //salvar o registro de documentos cadastrado e faz o upload das imagens
-		 	 
-		 $arrDadosDoc = uploadImagemDocAluno($_FILES);
-
-		  $bResultInsertDocumento  = true; 
-		  foreach($arrDadosDoc as $documento ){
-			
-			$seFrenteVerso = explode('-',$documento['nome_documento']);
-			if ($seFrenteVerso[2] == 'FRENTE' ){
-			   $ctipoDocumento = 'F';
-			}else if ($seFrenteVerso[2] == 'VERSO'){
-			   $ctipoDocumento = 'V';
-			}else{
-			   $ctipoDocumento = 'U';
-			}
-			 
-			$enderecoServidor = 'https://listadeesperaseduc.camacari.ba.gov.br/';
-	  
-			$sqlInsertDocumentos = "INSERT INTO reserva.documentoalunoreserva
-			(id_alunoreserva, id_documentoreserva, nome_documento, caminho_documento,tipo_documento)
-			VALUES($codigo_aluno, {$documento['id_documentoreserva']} , '{$documento['nome_documento']}', '$enderecoServidor{$documento['caminho_documento']}', '$ctipoDocumento');
-			"; 
-			//die($sqlInsertDocumentos)  ;
-			  $resultInsertDocumento = pg_query($conn,$sqlInsertDocumentos);
-			
-			//se alguma insercao deu errado marca a variaVEL FALSE  
-			if($resultInsertDocumento == false){
-				$bResultInsertDocumento = false;
-			}
-		   
-		}
-
-
-
-
-
             
 
 
