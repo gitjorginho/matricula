@@ -24,7 +24,7 @@ if (isset($_POST['vch_endereco'])) {
     header('Location: ficha_cadastro_opcao.php');
 }
 
-$sql_documento = "select id_documentoreserva, TRIM(ed02_c_descr) AS ed02_c_descr,obrigatorio  from reserva.documentoreserva dr
+$sql_documento = "select id_documentoreserva, TRIM(ed02_c_descr) AS ed02_c_descr,obrigatorio,frenteverso  from reserva.documentoreserva dr
 join documentacao as ds on dr.ed02_i_codigo = ds.ed02_i_codigo";
 $result = pg_query($conn,$sql_documento);
 $documentos =  pg_fetch_all($result);
@@ -34,11 +34,10 @@ $documentos =  pg_fetch_all($result);
     <br>
     <h2 class="text-center">Documentos Necessários</h2>
     <form id="ficha" enctype="multipart/form-data" method="post" action="ficha_cadastro_upload_imagem_doc_proc.php">
-
           <?php 
             foreach($documentos as $documento){?>
-            
-            <?php if($documento['obrigatorio'] == 'S'){?>
+          
+            <?php if($documento['frenteverso'] == 'S'){?>
                 <br>
                 <div class="card card-body">
                 <div class="form-row">
@@ -81,8 +80,6 @@ $documentos =  pg_fetch_all($result);
                 <button type="button" id="ProsseguirEndereco" class="btn btn-success col-md-2" onClick="Javascript:GravarForm(document.Form);"> Prosseguir</button>
             </div>
       </div>
-    
-    
     </form>
 
 <script type="text/javascript">
@@ -94,6 +91,13 @@ $documentos =  pg_fetch_all($result);
     {
         $result = valida();
         if ($result != false) {
+            
+            
+            
+            
+            
+            
+            
             document.forms["ficha"].submit();
         }
     }

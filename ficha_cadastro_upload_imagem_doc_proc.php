@@ -55,7 +55,7 @@ foreach ($_FILES as $key => $value){
                 $dadosNomeDoc =  $dadosDoc[1].'-'.$dadosDoc[2];
                 array_push($arrDocumentoAluno,array("id_documentoreserva"=>$dadosDoc[0],"nome_documento"=>$input.$novoNome,"caminho_documento"=> $destino));             
             }
-            //else
+            else
             // echo 'Erro ao salvar o arquivo. Aparentemente você não tem permissão de escrita.<br />';
                
        
