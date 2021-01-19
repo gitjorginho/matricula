@@ -110,14 +110,26 @@ $localidades = pg_fetch_all($result);
 //}
 
 //carregar tipos de documento do banco
-$sql_documento = "select *  from reserva.documentoreserva dr
-join documentacao as ds on dr.ed02_i_codigo = ds.ed02_i_codigo
-where dr.id_documentoreserva  not in(
-    select id_documentoreserva  from reserva.documentoalunoreserva where id_alunoreserva = $codigo
-    )";
+// $sql_documento = "select *  from reserva.documentoreserva dr
+// join documentacao as ds on dr.ed02_i_codigo = ds.ed02_i_codigo
+// where dr.id_documentoreserva  not in(
+//     select id_documentoreserva  from reserva.documentoalunoreserva where id_alunoreserva = $codigo
+//     )";
+
+//carregar tipos de documento do banco
+$sql_documento = "
+select ed02_c_descr, reserva.documentoreserva.* 
+from docaluno
+join documentacao on ed49_i_documentacao = documentacao.ed02_i_codigo
+join reserva.documentoreserva on reserva.documentoreserva.ed02_i_codigo = documentacao.ed02_i_codigo
+where ed49_i_aluno = {$aluno['ed47_i_codigo']} and id_documentoreserva not in (select id_documentoreserva from reserva.documentoalunoreserva where id_alunoreserva = {$aluno['id_alunoreserva']})
+";
+
 
 $result = pg_query($conn,$sql_documento);
 $documentos =  pg_fetch_all($result);
+
+//die(var_dump($documentos))
 
 ?>
 
@@ -352,7 +364,7 @@ $documentos =  pg_fetch_all($result);
                 </div>
 
             </div>
-            <?php if ($aluno['matriculado'] != true){ ?> 
+            <?php //if ($aluno['matriculado'] != true){ ?> 
             <br>
             <br>
             <hr>
@@ -363,12 +375,13 @@ $documentos =  pg_fetch_all($result);
             
           <?php 
             if ($documentos == false){
-                echo "<h4 class='text-center'>todos os documentos já foram enviados.</h4>";
+                echo "<h4 class='text-center'>Todos os documentos já foram enviados. </h4>";
+                echo "<h5 class='text-center' style='color:#28A745;'>Aguarde analise e contato para comparecimento.</h5>";
             }
-            
+            //die(var_dump($documentos));
             foreach($documentos as $documento){?>
           
-            <?php if($documento['frenteverso'] == 'S'){?>
+            <?php  if($documento['frenteverso'] == 'S'){?>
                 <br>
                 <div class="card card-body">
                 <div class="form-row">
@@ -400,7 +413,7 @@ $documentos =  pg_fetch_all($result);
 
            
 
-           <?php } }?>
+           <?php } //}?>
 
 
            
@@ -416,10 +429,10 @@ $documentos =  pg_fetch_all($result);
 
 
 
+            <!-- <br>
             <br>
-            <br>
-            <hr>
-            <h3>Opção de Cadastro de Lista de Espera</h3>
+            <hr> -->
+            <!-- <h3>Opção de Cadastro de Lista de Espera</h3>
             <br>
             <br>
 
@@ -438,9 +451,9 @@ $documentos =  pg_fetch_all($result);
                             $('#cp_serie').val('<?php echo $aluno['ed221_i_serie'] ?>');
                         </script>
             
-            </div>
+            </div> -->
             
-            <div class="form-group col-md-8">
+            <!-- <div class="form-group col-md-8">
                             
                         <label for="">Escola Pretendida</label>
                         <select  id="escola" name="escola" class="custom-select">
@@ -452,29 +465,12 @@ $documentos =  pg_fetch_all($result);
                 <script>
                     $('#escola').val('<?php echo $aluno['ed56_i_escola'] ?>');
                 </script>
-            </div>
+            </div> -->
 
-            <!--
-        <div class="form-group">
-            <div class="row">
-                <div class="col-9">
-                    <label for="">Escolha uma turma para o ano letivo 2020:</label>
-                    <select  required id="cp_turmas" name="turma" class="custom-select">
-                        <option></option>
-                        <?php //foreach ($turmas as $turma) {
-                        //echo '<option value=' . $turma['ed57_i_codigo'] . '>' . 'Turma: ' . $turma['turma'] . "- Serie: " . $turma['serie'] . '- Turno: ' . $turma['turno'] . "</option>";
-                        //  }
-                        ?>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <script>
-            $('#cp_turmas').val(<?php //echo $matricula_reserva['reserva_turma'] 
-                                ?>);
-        </script>
-      <br>
-        <br>-->
+            <br>
+            <br>
+            <br>
+            <br>
 
 
             <hr>
