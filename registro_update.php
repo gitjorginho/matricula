@@ -79,7 +79,7 @@ $telefone = trim($telefone);
 
 		 //salvar o registro de documentos cadastrado e faz o upload das imagens
 		 	 
-		 $arrDadosDoc = uploadImagemDocAluno($_FILES);
+		 $arrDadosDoc = uploadImagemDocAluno($_FILES,$codigo_aluno);
 
 		  $bResultInsertDocumento  = true; 
 		  foreach($arrDadosDoc as $documento ){
