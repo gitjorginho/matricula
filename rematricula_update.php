@@ -24,7 +24,10 @@ $status = pg_fetch_all($result);
 
 
 
-$sql_aluno = "select (
+$sql_aluno = "select 
+(select true from docaluno where ed49_i_aluno = ed47_i_codigo limit 1) as pendencia_doc_sge,
+(select true from confirmacaorematricula where edu01_aluno = ed47_i_codigo) as confirmacao_rematricula,
+(
 	select (case when ed60_i_codigo = null then false else true end) matriculado
 	from matricula 
 	inner join turma on ed57_i_codigo = ed60_i_turma
@@ -117,6 +120,9 @@ $localidades = pg_fetch_all($result);
 //     )";
 
 //carregar tipos de documento do banco
+
+
+
 $sql_documento = "
 select ed02_c_descr, reserva.documentoreserva.* 
 from docaluno
@@ -124,7 +130,6 @@ join documentacao on ed49_i_documentacao = documentacao.ed02_i_codigo
 join reserva.documentoreserva on reserva.documentoreserva.ed02_i_codigo = documentacao.ed02_i_codigo
 where ed49_i_aluno = {$aluno['ed47_i_codigo']} and id_documentoreserva not in (select id_documentoreserva from reserva.documentoalunoreserva where id_alunoreserva = {$aluno['id_alunoreserva']})
 ";
-
 
 $result = pg_query($conn,$sql_documento);
 $documentos =  pg_fetch_all($result);
@@ -364,7 +369,7 @@ $documentos =  pg_fetch_all($result);
                 </div>
 
             </div>
-            <?php //if ($aluno['matriculado'] != true){ ?> 
+            <?php if ($aluno['pendencia_doc_sge'] == true){ ?> 
             <br>
             <br>
             <hr>
@@ -374,6 +379,7 @@ $documentos =  pg_fetch_all($result);
 
             
           <?php 
+            
             if ($documentos == false){
                 echo "<h4 class='text-center'>Todos os documentos já foram enviados. </h4>";
                 echo "<h5 class='text-center' style='color:#28A745;'>Aguarde analise e contato para comparecimento.</h5>";
@@ -413,7 +419,7 @@ $documentos =  pg_fetch_all($result);
 
            
 
-           <?php } //}?>
+           <?php } }?>
 
 
            
@@ -485,8 +491,21 @@ $documentos =  pg_fetch_all($result);
                         <!-- <button type="submit" class="btn btn-success col btn-block" href="">
                             Imprimir Comprovante Lista de Espera
                         </button> -->
-                        <button type="submit" class="btn btn-success col btn-block" onclick="return valida()" href="">Salvar e Imprimir Comprovante Lista de Espera
-                        </button>
+                        
+                        <?php
+                            
+                            if( ($aluno['pendencia_doc_sge'] == true &&  $documentos == false) || $aluno['confirmacao_rematricula'] == true){
+                             $desabilita_botao_rematricula = 'disabled';
+                            }else
+                             $desabilita_botao_rematricula = '';
+                            
+                             if($aluno['confirmacao_rematricula'] == true){
+                                echo "<h6 class='text-center' style='color:#28A745' > Solicitação de rematricula já confirmada !</h6>";
+                             }    
+
+                        ?>
+
+                        <button  <?php  echo $desabilita_botao_rematricula; ?> type="submit" class="btn btn-success col btn-block" onclick="return valida()" href="">Confirmação de rematricula</button>
                     </div>
                     <div class="col-2"></div>
                 </div>
