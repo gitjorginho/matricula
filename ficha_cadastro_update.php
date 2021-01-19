@@ -174,7 +174,7 @@ $documentos =  pg_fetch_all($result);
                 <div class="row">
                     <div class="col-md-3">
                         <label for="sdt_nascimento" id="labelDataNascimento" >Data Nascimento:</label>
-                        <input required   class="form-control" onchange="salvaNomeDoCampoModificado(this)" type="text" name="sdt_nascimento" id="sdt_nascimento" value="<?php echo $datando ?>">
+                        <input required   class="form-control" onchange="salvaNomeDoCampoModificado(this);testaIdade(this.value);" type="text" name="sdt_nascimento" id="sdt_nascimento" value="<?php echo $datando ?>">
                     </div>
                     <div class="col-md-3">
                         <label for="cp_sexo" id="labelSexo">Sexo:</label>
@@ -248,7 +248,7 @@ $documentos =  pg_fetch_all($result);
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12">
-                        <label for="exampleInputEmail1">Responsável:</label>
+                        <label id="labelNomeResponsavel" for="">Nome do responsável:</label>
                         <!-- <span id="spanAsteristicoResp">*</span> -->
                         <input  class="form-control "  onchange="salvaNomeDoCampoModificado(this)"  type="text" name="vch_responsavel" id="vch_responsavel" value="<?php echo $aluno['ed47_c_nomeresp'] ?>" onkeyup="this.value = this.value.toUpperCase();">
                     </div>
@@ -257,7 +257,7 @@ $documentos =  pg_fetch_all($result);
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12">
-                        <label for="exampleInputEmail1" id="labelEmail">Email do Aluno:</label>
+                        <label for="exampleInputEmail1" id="labelEmail">Email do Responsavel:</label>
                         <input   class="form-control "  onchange="salvaNomeDoCampoModificado(this)"  type="text" name="vch_email_responsavel" id="vch_responsavel" value="<?php echo $aluno['email_resp'] ?>" >
                     </div>
                 </div>
@@ -265,7 +265,7 @@ $documentos =  pg_fetch_all($result);
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-5">
-                        <label for="exampleInputEmail">CPF do Aluno:</label>
+                        <label id ="labelCpf" for="">CPF do Responsavel:</label>
                         <input  class="form-control" type="text"  onchange="salvaNomeDoCampoModificado(this)"  name="vch_cpf" id="vch_cpf" value="<?php echo $aluno['ed47_v_cpf'] ?>">
 
                     </div>
@@ -543,6 +543,24 @@ $documentos =  pg_fetch_all($result);
 
     <script type="text/javascript">
       
+
+    testaIdade($('#sdt_nascimento').val());
+    
+    function testaIdade(data){
+           let idade = calculaIdade(data);
+                console.log(idade);
+                
+            if (idade < 18){
+                document.getElementById('vch_responsavel').removeAttribute("disabled");
+                document.getElementById('labelEmail').innerText = 'Email do Responsável';
+                document.getElementById('labelCpf').innerText = 'CPF do Responsável';
+            }else{
+                document.getElementById('vch_responsavel').setAttribute("disabled", "disabled");
+                document.getElementById('labelEmail').innerText = 'Email do Aluno';
+                document.getElementById('labelCpf').innerText = 'CPF do Aluno';
+            }
+    }
+
     function validaImagem(ficheiro){
          
         var extensoes = [".pdf", ".jpeg", ".jpg", ".png", ".tif", ".gif"];
@@ -854,6 +872,7 @@ $documentos =  pg_fetch_all($result);
                 }
             }
         }
+       return idade;
        }
 
      
