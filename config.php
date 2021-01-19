@@ -6,6 +6,15 @@
 $ambiente = 'homologacao';
 
 
+//Estabeleçe o tamanha max da imagem para upload de documento
+$tamanhoImagemUploadDocumentoAluno = '4000000'; // ex. 4000000 = 4mb
+
+
+
+
+
+
+
 function isProduction(){
 
     global $ambiente; 

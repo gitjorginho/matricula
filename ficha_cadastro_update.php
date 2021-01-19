@@ -1,6 +1,7 @@
 <?php
 ini_set('display_errors', 0);
 session_start();
+require_once('config.php');
 
 
 
@@ -192,20 +193,7 @@ $documentos =  pg_fetch_all($result);
                     $serie = pg_fetch_all($result);
                     ?>
 
-                    <div class="col-md-3">
-                        <label for="cp_serie">Série:</label>
-                        <select  class="custom-select" id="cp_serie" name="vch_serie" >
-                            <option selected></option>
-                            <?php
-                            foreach ($serie as $serie_selec) {
-                                echo '<option value=' . $serie_selec['ed11_i_codigo'] . '>' . $serie_selec['ed11_c_descr'] . "</option>";
-                            }
-                            ?>
-                        </select>
-                        <script>
-                            $('#cp_serie').val('<?php echo $aluno['ed221_i_serie'] ?>');
-                        </script>
-                    </div>
+                    
 
                 </div>
             </div>
@@ -326,7 +314,6 @@ $documentos =  pg_fetch_all($result);
                         <input required value="<?php echo $aluno['ed47_v_ender'] ?>"   name="vch_endereco" class="form-control" id="ender" type="text" readonly>
                         <label for="exampleInputEmail1" class="labelNome">Complemento</label>
                         <input  value="<?php echo $aluno['ed47_v_compl'] ?>" onchange="salvaNomeDoCampoModificado(this)" name="vch_complemento" class="form-control" type="text" >
-
                     </div>
                     <div class="col-md-3">
                         <label for="exampleInputEmail1" class="labelNome">Número:</label>
@@ -375,6 +362,10 @@ $documentos =  pg_fetch_all($result);
 
             
           <?php 
+            if ($documentos == false){
+                echo "<h4 class='text-center'>todos os documentos já foram enviados.</h4>";
+            }
+            
             foreach($documentos as $documento){?>
           
             <?php if($documento['frenteverso'] == 'S'){?>
@@ -383,11 +374,11 @@ $documentos =  pg_fetch_all($result);
                 <div class="form-row">
                         <div class="col-md-6">
                             <label for=""><?php echo $documento['ed02_c_descr'].' (FRETE)'  ?></label>
-                            <input type="file" name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-FRENTE-'?>" class="form-control">            
+                            <input type="file" <?php  echo $documento['obrigatorio'] == 'S'?'required':'' ?> onchange='validaImagem(this);' name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-FRENTE-'?>" class="form-control">            
                         </div>  
                         <div class="col-md-6">
                             <label for=""><?php echo $documento['ed02_c_descr'].' (VERSO)'  ?></label>
-                            <input type="file" name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-VERSO-'?>" class="form-control">            
+                            <input type="file" <?php  echo $documento['obrigatorio'] == 'S'?'required':'' ?> onchange='validaImagem(this);' name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-VERSO-'?>" class="form-control">            
                         </div>  
                         
                 </div> 
@@ -400,7 +391,7 @@ $documentos =  pg_fetch_all($result);
                     <div class="form-row">
                             <div class="col-md-12">
                                 <label for=""><?php echo $documento['ed02_c_descr']  ?></label>
-                                <input type="file" name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-UNICO-'?>" class="form-control">            
+                                <input type="file" <?php  echo $documento['obrigatorio'] == 'S'?'required':'' ?> onchange='validaImagem(this);' name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-UNICO-'?>" class="form-control">            
                             </div>  
                             
                     </div> 
@@ -432,10 +423,25 @@ $documentos =  pg_fetch_all($result);
             <br>
             <br>
 
-
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-9">
+            <div class="form-group col-md-4">
+            
+                        <label for="cp_serie">Série:</label>
+                        <select  class="custom-select " id="cp_serie" name="vch_serie" >
+                            <option selected></option>
+                            <?php
+                            foreach ($serie as $serie_selec) {
+                                echo '<option value=' . $serie_selec['ed11_i_codigo'] . '>' . $serie_selec['ed11_c_descr'] . "</option>";
+                            }
+                            ?>
+                        </select>
+                        <script>
+                            $('#cp_serie').val('<?php echo $aluno['ed221_i_serie'] ?>');
+                        </script>
+            
+            </div>
+            
+            <div class="form-group col-md-8">
+                            
                         <label for="">Escola Pretendida</label>
                         <select  id="escola" name="escola" class="custom-select">
                             <option readonly value=""></option>
@@ -443,8 +449,6 @@ $documentos =  pg_fetch_all($result);
                                 <option value="<?php echo $escola['codigo'] ?>"><?php echo $escola['escola'] ?></option>
                             <?php } ?>
                         </select>
-                    </div>
-                </div>
                 <script>
                     $('#escola').val('<?php echo $aluno['ed56_i_escola'] ?>');
                 </script>
@@ -518,7 +522,7 @@ $documentos =  pg_fetch_all($result);
         Abrir modal de demonstração
     </button>
     <!-- Modal -->
-    <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal_msg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -539,6 +543,35 @@ $documentos =  pg_fetch_all($result);
 
     <script type="text/javascript">
       
+    function validaImagem(ficheiro){
+         
+        var extensoes = [".pdf", ".jpeg", ".jpg", ".png", ".tif", ".gif"];
+        var fnome = ficheiro.value;
+        var extficheiro = fnome.substr(fnome.lastIndexOf('.'));
+        if(extensoes.indexOf(extficheiro) >= 0){
+            if(!(ficheiro.files[0].size > <?php echo $tamanhoImagemUploadDocumentoAluno ?>)){
+                $(ficheiro).removeClass('is-invalid').addClass('is-valid');
+                return true;
+            } else {
+               //mostra menssagem 
+               $("#msg_text").text("Arquivo demasiado grande !");
+               $('#modal_msg').modal('show');
+               $(ficheiro).addClass('is-invalid');
+               // remover ficheiro
+                ficheiro.value = "";
+            }
+        } else {
+            
+            $("#msg_text").text("Extensao inválida: "+ extficheiro);
+            $('#modal_msg').modal('show');
+            $(ficheiro).addClass('is-invalid');
+            // remover ficheiro
+            ficheiro.value = "";
+        }
+        return false;
+}
+
+
         function salvaNomeDoCampoModificado(element){
           if (typeof(window.acoes) =="undefined"){
                 window.acoes = [];
