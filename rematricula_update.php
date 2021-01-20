@@ -369,7 +369,7 @@ $documentos =  pg_fetch_all($result);
                 </div>
 
             </div>
-            <?php if ($aluno['pendencia_doc_sge'] == true){ ?> 
+            <?php if ($aluno['pendencia_doc_sge'] = true){ ?> 
             <br>
             <br>
             <hr>
@@ -578,7 +578,7 @@ $documentos =  pg_fetch_all($result);
 
     function validaImagem(ficheiro){
          
-        var extensoes = [".pdf", ".jpeg", ".jpg", ".png", ".tif", ".gif"];
+        var extensoes = [".pdf", ".jpeg", ".jpg",".JPG", ".png",".PNG", ".tif", ".gif"];
         var fnome = ficheiro.value;
         var extficheiro = fnome.substr(fnome.lastIndexOf('.'));
         if(extensoes.indexOf(extficheiro) >= 0){
