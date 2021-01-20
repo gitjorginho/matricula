@@ -28,7 +28,7 @@ if (isset($_POST['vch_nome_aluno'])) {
 if ($cod_aluno != ''){
 	$sql_matricula = "
 select * from reserva.alunoreserva 
-where id_alunoreserva  = '$cod_aluno' limit 1 ";
+where ed47_i_codigo  = '$cod_aluno' limit 1 ";
 
 $result = pg_query($conn, $sql_matricula);
 $aluno = pg_fetch_assoc($result);
