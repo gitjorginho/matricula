@@ -143,11 +143,10 @@ $documentos =  pg_fetch_all($result);
 
     <br>
     <div class="card-body">
-        <font color="red"><b>ATENÇÃO:</b></font> <i>Para alteração das informações cadastradas, entre em contato através dos emails
-            seduccmie@educa.camacari.ba.gov.br ou seduccmie@camacari.ba.gov.br.</i>
+        <font color="red"><b>ATENÇÃO:</b></font> <i>Para alunos que estudam na ultima etapa, Só seram cadastrado para rematricula quem possuir repetência. Caso contrário séra destinado ao calendário de transferência.</i>
     </div>
     <br>
-    <h3 class="text-center">Dados Cadastrais</h3>
+    <h3 class="text-center">Rematrícula 2021</h3>
     <br>
     <div class="card-body">
         <form method="post"  enctype="multipart/form-data" action="registro_update.php">
