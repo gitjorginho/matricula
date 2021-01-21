@@ -143,11 +143,10 @@ $documentos =  pg_fetch_all($result);
 
     <br>
     <div class="card-body">
-        <font color="red"><b>ATENÇÃO:</b></font> <i>Para alteração das informações cadastradas, entre em contato através dos emails
-            seduccmie@educa.camacari.ba.gov.br ou seduccmie@camacari.ba.gov.br.</i>
+        <font color="red"><b>ATENÇÃO:</b></font> <i>Para alunos que estudam na ultima etapa, Só seram cadastrado para rematricula quem possuir repetência. Caso contrário séra destinado ao calendário de transferência.</i>
     </div>
     <br>
-    <h3 class="text-center">Dados Cadastrais</h3>
+    <h3 class="text-center">Rematrícula 2021</h3>
     <br>
     <div class="card-body">
         <form method="post"  enctype="multipart/form-data" action="registro_update.php">
@@ -369,7 +368,7 @@ $documentos =  pg_fetch_all($result);
                 </div>
 
             </div>
-            <?php if ($aluno['pendencia_doc_sge'] == true){ ?> 
+            <?php if ($aluno['pendencia_doc_sge'] = true){ ?> 
             <br>
             <br>
             <hr>
@@ -393,11 +392,11 @@ $documentos =  pg_fetch_all($result);
                 <div class="form-row">
                         <div class="col-md-6">
                             <label for=""><?php echo $documento['ed02_c_descr'].' (FRETE)'  ?></label>
-                            <input type="file" <?php  echo $documento['obrigatorio'] == 'S'?'required':'' ?> onchange='validaImagem(this);' name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-FRENTE-'?>" class="form-control">            
+                            <input type="file"  accept=".pdf,.jpeg,.jpg,.JPG,.png,.PNG,.tif,.gif" <?php  echo $documento['obrigatorio'] == 'S'?'required':'' ?> onchange='validaImagem(this);' name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-FRENTE-'?>" class="form-control">            
                         </div>  
                         <div class="col-md-6">
                             <label for=""><?php echo $documento['ed02_c_descr'].' (VERSO)'  ?></label>
-                            <input type="file" <?php  echo $documento['obrigatorio'] == 'S'?'required':'' ?> onchange='validaImagem(this);' name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-VERSO-'?>" class="form-control">            
+                            <input type="file" accept=".pdf,.jpeg,.jpg,.JPG,.png,.PNG,.tif,.gif" <?php  echo $documento['obrigatorio'] == 'S'?'required':'' ?> onchange='validaImagem(this);' name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-VERSO-'?>" class="form-control">            
                         </div>  
                         
                 </div> 
@@ -410,7 +409,7 @@ $documentos =  pg_fetch_all($result);
                     <div class="form-row">
                             <div class="col-md-12">
                                 <label for=""><?php echo $documento['ed02_c_descr']  ?></label>
-                                <input type="file" <?php  echo $documento['obrigatorio'] == 'S'?'required':'' ?> onchange='validaImagem(this);' name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-UNICO-'?>" class="form-control">            
+                                <input type="file" accept=".pdf,.jpeg,.jpg,.JPG,.png,.PNG,.tif,.gif" <?php  echo $documento['obrigatorio'] == 'S'?'required':'' ?> onchange='validaImagem(this);' name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-UNICO-'?>" class="form-control">            
                             </div>  
                             
                     </div> 
@@ -578,7 +577,7 @@ $documentos =  pg_fetch_all($result);
 
     function validaImagem(ficheiro){
          
-        var extensoes = [".pdf", ".jpeg", ".jpg", ".png", ".tif", ".gif"];
+        var extensoes = [".pdf", ".jpeg", ".jpg",".JPG", ".png",".PNG", ".tif", ".gif"];
         var fnome = ficheiro.value;
         var extficheiro = fnome.substr(fnome.lastIndexOf('.'));
         if(extensoes.indexOf(extficheiro) >= 0){

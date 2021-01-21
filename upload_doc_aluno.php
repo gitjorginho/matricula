@@ -32,7 +32,7 @@ function uploadImagemDocAluno($files,$id_aluno){
         // Somente imagens, .jpg;.jpeg;.gif;.png
         // Aqui eu enfileiro as extensões permitidas e separo por ';'
         // Isso serve apenas para eu poder pesquisar dentro desta String
-        if (strstr ( '.jpg;.jpeg;.gif;.png;.pdf;.tif', $extensao )) {
+        if (strstr ('.jpg;.JPG;.jpeg;.gif;.png;.PNG;.pdf;.tif', $extensao )) {
             // Cria um nome único para esta imagem
             // Evita que duplique as imagens no servidor.
             // Evita nomes com acentos, espaços e caracteres não alfanuméricos
