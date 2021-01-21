@@ -27,12 +27,18 @@ if (isset($_POST['vch_nome_aluno'])) {
 
 if ($cod_aluno != ''){
 	$sql_matricula = "
-select * from reserva.alunoreserva 
+select (select true from confirmacaorematricula where edu01_aluno = ed47_i_codigo) as confirmacao_rematricula, reserva.alunoreserva.* from reserva.alunoreserva 
 where ed47_i_codigo  = '$cod_aluno' limit 1 ";
 
 $result = pg_query($conn, $sql_matricula);
 $aluno = pg_fetch_assoc($result);
-//die(var_dump($aluno));
+
+if ($aluno['confirmacao_rematricula'] == true ){
+    header('Location:index.php?rematricula=1');
+    die('dfsdf');
+
+}
+
 if (pg_num_rows($result) >= 1) {
     $_SESSION['codigo'] = $aluno['id_alunoreserva'];
     $_SESSION['matriculado'] = 'false';
