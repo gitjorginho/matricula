@@ -179,10 +179,10 @@ $documentos =  pg_fetch_all($result);
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12">
-                        <label for="" id="labelNome">Nome do aluno:</label>
+                        <label for="" id="labelNome" readonly>Nome do aluno:</label>
                          <!-- line old -->
                          <!-- <input required  class="form-control " type="text" name="vch_nome" id="vch_nome" value="<?php echo $aluno['ed47_v_nome'] ?>" onkeyup="this.value = this.value.toUpperCase();" /> -->
-                        <input   class="form-control " onchange="salvaNomeDoCampoModificado(this)" type="text" name="vch_nome" id="vch_nome" value="<?php echo $aluno['ed47_v_nome'] ?>" onkeyup="this.value = this.value.toUpperCase();" />
+                        <input   class="form-control " onchange="salvaNomeDoCampoModificado(this)" type="text" name="vch_nome" id="vch_nome" readonly value="<?php echo $aluno['ed47_v_nome'] ?>" onkeyup="this.value = this.value.toUpperCase();" />
                     </div>
                 </div>
             </div>
@@ -190,11 +190,11 @@ $documentos =  pg_fetch_all($result);
                 <div class="row">
                     <div class="col-md-3">
                         <label for="sdt_nascimento" id="labelDataNascimento" >Data Nascimento:</label>
-                        <input required   class="form-control" onchange="salvaNomeDoCampoModificado(this);testaIdade(this.value);" type="text" name="sdt_nascimento" id="sdt_nascimento" value="<?php echo $datando ?>">
+                        <input required  readonly class="form-control" onchange="salvaNomeDoCampoModificado(this);testaIdade(this.value);" type="text" name="sdt_nascimento" id="sdt_nascimento" value="<?php echo $datando ?>">
                     </div>
                     <div class="col-md-3">
-                        <label for="cp_sexo" id="labelSexo">Sexo:</label>
-                        <select required  class="browser-default custom-select" onchange="salvaNomeDoCampoModificado(this)" name="vch_sexo" id="cp_sexo">
+                        <label for="cp_sexo" id="labelSexo" readonly>Sexo:</label>
+                        <select required disabled  class="browser-default custom-select" onchange="salvaNomeDoCampoModificado(this)" name="vch_sexo" id="cp_sexo">
                             <option selected></option>
                             <option value="M">Masculino</option>
                             <option value="F">Feminino</option>
@@ -248,7 +248,7 @@ $documentos =  pg_fetch_all($result);
                     <div class="col-md-12">
                         <label id="labelOrgaoPublico" for="vch_orgaopublico">Descrição do orgão público:</label><span id="spanAsteristicoOrgao"></span>
                         <!--<input autocomplete="off" class="form-control" type="text" id="vch_orgaopublico" name="vch_orgaopublico" id="vch_orgaopublico" value="<?php echo $vch_orgaopublico ?>" onkeyup="this.value = this.value.toUpperCase();" disabled onKeyPress="mudarCorCampo('labelOrgaoPublico', 'vch_orgaopublico')">-->
-                        <input autocomplete="off" class="form-control" value="<?php echo $aluno['vch_orgaopublico'] ?>" type="text" id="vch_orgaopublico" name="vch_orgaopublico" id="vch_orgaopublico" value="<?php echo $vch_orgaopublico ?>"  onKeyPress="mudarCorCampo('labelOrgaoPublico', 'vch_orgaopublico');return letras();">
+                        <input autocomplete="off" readonly class="form-control" value="<?php echo $aluno['vch_orgaopublico'] ?>" type="text" id="vch_orgaopublico" name="vch_orgaopublico" id="vch_orgaopublico" value="<?php echo $vch_orgaopublico ?>"  onKeyPress="mudarCorCampo('labelOrgaoPublico', 'vch_orgaopublico');return letras();">
                     </div>
                 </div>
             </div>
@@ -257,7 +257,7 @@ $documentos =  pg_fetch_all($result);
                     <div class="col-md-12">
                         <label>Nome da Mãe:</label>
                         <!-- <span id="spanAsteristicoMae">*</span> -->
-                        <input   class="form-control " onchange="salvaNomeDoCampoModificado(this)" type="text" name="vch_mae" id="vch_mae" value="<?php echo $aluno['ed47_v_mae'] ?>" onkeyup="this.value = this.value.toUpperCase();">
+                        <input   class="form-control " onchange="salvaNomeDoCampoModificado(this)" type="text" name="vch_mae" id="vch_mae" readonly value="<?php echo $aluno['ed47_v_mae'] ?>" onkeyup="this.value = this.value.toUpperCase();">
                     </div>
                 </div>
             </div>
@@ -266,7 +266,7 @@ $documentos =  pg_fetch_all($result);
                     <div class="col-md-12">
                         <label id="labelNomeResponsavel" for="">Nome do responsável:</label>
                         <!-- <span id="spanAsteristicoResp">*</span> -->
-                        <input  class="form-control "  onchange="salvaNomeDoCampoModificado(this)"  type="text" name="vch_responsavel" id="vch_responsavel" value="<?php echo $aluno['ed47_c_nomeresp'] ?>" onkeyup="this.value = this.value.toUpperCase();">
+                        <input  class="form-control "  onchange="salvaNomeDoCampoModificado(this)"  type="text" name="vch_responsavel" id="vch_responsavel" readonly value="<?php echo $aluno['ed47_c_nomeresp'] ?>" onkeyup="this.value = this.value.toUpperCase();">
                     </div>
                 </div>
             </div>
@@ -274,7 +274,7 @@ $documentos =  pg_fetch_all($result);
                 <div class="row">
                     <div class="col-md-12">
                         <label for="exampleInputEmail1" id="labelEmail">Email do Responsavel:</label>
-                        <input   class="form-control "  onchange="salvaNomeDoCampoModificado(this)"  type="text" name="vch_email_responsavel" id="vch_responsavel" value="<?php echo $aluno['email_resp'] ?>" >
+                        <input   class="form-control "  onchange="salvaNomeDoCampoModificado(this)"  type="text" name="vch_email_responsavel" id="vch_responsavel" readonly value="<?php echo $aluno['email_resp'] ?>" >
                     </div>
                 </div>
             </div>
@@ -282,7 +282,7 @@ $documentos =  pg_fetch_all($result);
                 <div class="row">
                     <div class="col-md-5">
                         <label id ="labelCpf" for="">CPF do Responsavel:</label>
-                        <input  class="form-control" type="text"  onchange="salvaNomeDoCampoModificado(this)"  name="vch_cpf" id="vch_cpf" value="<?php echo $aluno['ed47_v_cpf'] ?>">
+                        <input  class="form-control" type="text"  onchange="salvaNomeDoCampoModificado(this)"  name="vch_cpf" id="vch_cpf" readonly value="<?php echo $aluno['ed47_v_cpf'] ?>">
 
                     </div>
                 </div>
@@ -293,7 +293,7 @@ $documentos =  pg_fetch_all($result);
                 <div class="row">
                     <div class="col-md-5">
                         <label for="examleInputEmail1" class="labelNome">Telefone:</label>
-                        <input  value="<?php echo $aluno['ed47_v_telef'] ?>"  onchange="salvaNomeDoCampoModificado(this)"  name="vch_telefone" id="vch_telefone" class="form-control" type="text">
+                        <input  value="<?php echo $aluno['ed47_v_telef'] ?>"  onchange="salvaNomeDoCampoModificado(this)"  name="vch_telefone" id="vch_telefone" readonly class="form-control" type="text">
                     </div>
 
                 </div>
@@ -310,7 +310,7 @@ $documentos =  pg_fetch_all($result);
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12">
-                        <input  class="form-control" type="text" id="cp_texto" autocomplete="off">
+                        <input  class="form-control" type="text" id="cp_texto" readonly autocomplete="off">
                         <select onclick="pegarValores()" id="resposta" style="width: 640px; margin-left: 0px;display: none;font-size: 10px" name="vch_endereco" multiple="multiple"></select>
                     </div>
                 </div>
@@ -327,15 +327,15 @@ $documentos =  pg_fetch_all($result);
                 <div class="row">
                     <div class="col-md-9">
                         <label for="exampleInputEmail1">Endereço:</label>
-                        <input required value="<?php echo $aluno['ed47_v_ender'] ?>"   name="vch_endereco" class="form-control" id="ender" type="text" readonly>
+                        <input required value="<?php echo $aluno['ed47_v_ender'] ?>"   name="vch_endereco" class="form-control" id="ender" readonly type="text" readonly>
                         <label for="exampleInputEmail1" class="labelNome">Complemento</label>
-                        <input  value="<?php echo $aluno['ed47_v_compl'] ?>" onchange="salvaNomeDoCampoModificado(this)" name="vch_complemento" class="form-control" type="text" >
+                        <input  value="<?php echo $aluno['ed47_v_compl'] ?>" onchange="salvaNomeDoCampoModificado(this)" name="vch_complemento" readonly class="form-control" type="text" >
                     </div>
                     <div class="col-md-3">
                         <label for="exampleInputEmail1" class="labelNome">Número:</label>
-                        <input required value="<?php echo $aluno['ed47_c_numero'] ?>"  onchange="salvaNomeDoCampoModificado(this)" name="vch_numero" class="form-control .form-control-nome" type="text">
+                        <input required value="<?php echo $aluno['ed47_c_numero'] ?>"  onchange="salvaNomeDoCampoModificado(this)" name="vch_numero" readonly class="form-control .form-control-nome" type="text">
                         <label for="" class="labelNome">Cep:</label>
-                        <input name="vch_cep" value="<?php echo $aluno['ed47_v_cep'] ?>" class="form-control" id="vch_cep" type="text" readonly>
+                        <input name="vch_cep" value="<?php echo $aluno['ed47_v_cep'] ?>" class="form-control" id="vch_cep" readonly type="text" readonly>
                     </div>
                 </div>
 
@@ -343,9 +343,9 @@ $documentos =  pg_fetch_all($result);
                 <div class="row">
                     <div class="col-md-6">
                         <label for="exampleInputEmail1">Bairro:</label>
-                        <input required value="<?php echo $aluno['ed47_v_bairro'] ?>" name="vch_bairro" id="vch_bairro" class="form-control" type="text" readonly>
+                        <input required value="<?php echo $aluno['ed47_v_bairro'] ?>" name="vch_bairro" id="vch_bairro" readonly class="form-control" type="text" readonly>
                         <label for="exampleInputEmail1">Localidade:</label>
-                        <select  class="custom-select" id="cp_localidades" name="vch_localidade">
+                        <select disabled class="custom-select" id="cp_localidades" name="vch_localidade">
                             <option></option>
                             <?php
                             foreach ($localidades as $localidade) {
@@ -479,7 +479,7 @@ $documentos =  pg_fetch_all($result);
 
 
             <hr>
-            <h3>Comprovante Lista de Espera</h3>
+            <h3>Comprovante rematrícula</h3>
             <br>
             <br>
             <div class="form-group">
@@ -504,7 +504,7 @@ $documentos =  pg_fetch_all($result);
 
                         ?>
 
-                        <button  <?php  echo $desabilita_botao_rematricula; ?> type="submit" class="btn btn-success col btn-block" onclick="return valida()" href="">Confirmação de rematricula</button>
+                        <button  <?php  echo $desabilita_botao_rematricula; ?> type="submit" class="btn btn-success col btn-block" onclick="return valida()" href="">Confirmação de rematrícula</button>
                     </div>
                     <div class="col-2"></div>
                 </div>
@@ -540,7 +540,7 @@ $documentos =  pg_fetch_all($result);
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Portal Lista de Espera </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Portal rematrícula</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                         <span aria-hidden="true">&times;</span>
                     </button>
