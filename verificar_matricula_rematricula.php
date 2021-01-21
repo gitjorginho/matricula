@@ -27,43 +27,43 @@ if (isset($_POST['vch_nome_aluno'])) {
 
 if ($cod_aluno != ''){
 	$sql_matricula = "
-select (select true from confirmacaorematricula where edu01_aluno = ed47_i_codigo) as confirmacao_rematricula, reserva.alunoreserva.* from reserva.alunoreserva 
-where ed47_i_codigo  = '$cod_aluno' limit 1 ";
+    select (select true from confirmacaorematricula where edu01_aluno = ed47_i_codigo) as confirmacao_rematricula, reserva.alunoreserva.*, ap.ed79_i_serie,ac.ed56_i_escola from reserva.alunoreserva left join escola.alunocurso ac on ed47_i_codigo = ac.ed56_i_aluno join escola.alunopossib ap on ac.ed56_i_codigo = ap.ed79_i_alunocurso
+    where ed47_i_codigo  = '$cod_aluno' limit 1 ";
 
-$result = pg_query($conn, $sql_matricula);
-$aluno = pg_fetch_assoc($result);
+    $result = pg_query($conn, $sql_matricula);
+    $aluno = pg_fetch_assoc($result);
 
-if ($aluno['confirmacao_rematricula'] == true ){
-    header('Location:index.php?rematricula=1');
-    die('dfsdf');
-
+    if ($aluno['confirmacao_rematricula'] == true ){
+        header('Location:index.php?rematricula=1');
+    }
+    else{
+        if (pg_num_rows($result) >= 1) {
+            $_SESSION['codigo'] = $aluno['id_alunoreserva'];
+            $_SESSION['matriculado'] = 'false';
+            $_SESSION['escola'] = 'true';
+            header('Location:rematricula_update.php');
+        }
+        else {
+            header('Location:index.php?not_found=1');
+        }
+    }
 }
+else{
+    $sql_matricula = "
+    select * from reserva.alunoreserva 
+    where ed47_v_nome ilike '%$nome_aluno%' and ed47_c_nomeresp ilike '%$vch_nome_resp%' and ed47_d_nasc  = '$data_nasc' limit 1 ";
 
-if (pg_num_rows($result) >= 1) {
-    $_SESSION['codigo'] = $aluno['id_alunoreserva'];
-    $_SESSION['matriculado'] = 'false';
-    $_SESSION['escola'] = 'true';
-    header('Location:rematricula_update.php');
-} else {
-    header('Location:index.php?not_found=1');
-}
-}else{
-
-$sql_matricula = "
-select * from reserva.alunoreserva 
-where ed47_v_nome ilike '%$nome_aluno%' and ed47_c_nomeresp ilike '%$vch_nome_resp%' and ed47_d_nasc  = '$data_nasc' limit 1 ";
-
-$result = pg_query($conn, $sql_matricula);
-$aluno = pg_fetch_assoc($result);
-//die(var_dump($aluno));
-if (pg_num_rows($result) >= 1) {
-    $_SESSION['codigo'] = $aluno['id_alunoreserva'];
-    $_SESSION['matriculado'] = 'false';
-    $_SESSION['escola'] = 'true';
-    header('Location:rematricula_update.php');
-} else {
-    header('Location:index.php?not_found=1');
-}
+    $result = pg_query($conn, $sql_matricula);
+    $aluno = pg_fetch_assoc($result);
+    //die(var_dump($aluno));
+    if (pg_num_rows($result) >= 1) {
+        $_SESSION['codigo'] = $aluno['id_alunoreserva'];
+        $_SESSION['matriculado'] = 'false';
+        $_SESSION['escola'] = 'true';
+        header('Location:rematricula_update.php');
+    } else {
+        header('Location:index.php?not_found=1');
+    }
 }
 
 function dateToDatabase($date)
@@ -72,10 +72,3 @@ function dateToDatabase($date)
     $date_to_database = "$date[0]-$date[1]-$date[2]";
     return $date_to_database;
 }
-
-
-
-
-
-
-
