@@ -9,7 +9,7 @@ if (isset($_GET['id_alunoreserva'])) {
 
 <div class="centr">
     <br>
-    <h2 class="text-center">Lista de Espera</h2>
+    <h2 class="text-center">Rematrícula 2021</h2>
     <br>
     <form method="post" action="verificar_matricula_rematricula.php">
         <div class="card-body">
