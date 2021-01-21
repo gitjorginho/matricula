@@ -107,7 +107,6 @@ $serie = pg_fetch_assoc($result);
 $turma = trim($serie['ed11_c_descr']);
 
 $oPdf = new FPDF();
-
 $oPdf->AliasNbPages();
 $oPdf->setfillcolor(235);
 $oPdf->addPage('P', 'A4');
