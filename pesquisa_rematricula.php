@@ -97,8 +97,8 @@ if (isset($_GET['id_alunoreserva'])) {
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    N√£o foi poss√≠vel localizar aluno! Verifique se os dados est√£o corretos.
+                <div class="modal-body" id='msg_modal'>
+                   
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary col-md-3" data-dismiss="modal">OK</button>
@@ -145,9 +145,13 @@ if (isset($_GET['id_alunoreserva'])) {
     <!--VERIFICA SE A BUSCA DO ALUNO RETORNOU VAZIA E IMPRIME MENSAGEM RELACIONADA A ISTO -->
     <?php if (isset($_GET['not_found'])) { ?>
         <script>
+            $('#msg_modal').text( 'N„o foi possi≠vel localizar aluno! Verifique se os dados est„o corretos.');  
             $('#modalMessagem').fadeIn().modal('show');
         </script>
     <?php } ?>
+
+   
+
 
 
     <script>
