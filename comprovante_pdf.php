@@ -114,36 +114,40 @@ $oPdf->addPage('P', 'A4');
 $oPdf->Image('img/Cabecalho_pdf.png',3,3,210);
 $oPdf->SetXY(20,40);
 $oPdf->SetFont('arial','b',8);
-$oPdf->Text('140','23', 'Status: '.trim($aluno['status_abrev']));
+$oPdf->Text('140','23', 'Corfimação de rematricula relaizada.'); //.trim($aluno['status_abrev']));
 $oPdf->Text('140','27', $data_atual );
 
 $oPdf->SetXY(20,70);
 $oPdf->SetFont('arial','b',14);
-$oPdf->Text('77','50','Lista de Espera');
+$oPdf->Text('77','50','Rematrícula 2021');
 
 $oPdf->SetFont('arial','',10);
 //$oPdf->MultiCell(170,5,"Atesto, para os devidos fins, que o aluno(a) {$nome_aluno}, está com a reserva de matrícula para {$turma['serie']}, $tipoensino, turno {$turma['turno']}, para o calendário 2020, na instituição de ensino {$escola_nome['escola']}.");
-$oPdf->MultiCell(170,5,"Atesto, para os devidos fins, que o aluno(a) {$nome_aluno},  nascido (a) em $dtsnas, filho (a) legítimo (a) de $nome_mae, está no cadastro de lista de espera sob o número $codigo_espera, na Unidade Escolar $escola, para o calendário 2020 e inscrito na Etapa: $turma.");
+//$oPdf->MultiCell(170,5,"Atesto, para os devidos fins, que o aluno(a) {$nome_aluno},  nascido (a) em $dtsnas, filho (a) legítimo (a) de $nome_mae, está no cadastro de lista de espera sob o número $codigo_espera, na Unidade Escolar $escola, para o calendário 2020 e inscrito na Etapa: $turma.");
+$oPdf->MultiCell(170,5,"Atesto, para os devidos fins, que o aluno(a) {$nome_aluno},  nascido (a) em $dtsnas, filho (a) legítimo (a) de $nome_mae, confirma rematrícula para Unidade Escola: $escola. Caso o aluno possua pendencia na documentação,a Unidade Escolar entrará em contato, ou será apresentado em 72 horas após avaliação.");
 //inscrito na Etapa: {$serie['ed11_c_descr']}
 
 $oPdf->SetXY(20,130);
-$oPdf->MultiCell(170,5,"Para realizar o processo de matrícula são necessárias as seguintes documentações:");
-$oPdf->SetXY(30,140);
-$oPdf->MultiCell(180,5,"1. Histórico escolar (original) ou atestado escolar com validade de 60 dias; ");
-$oPdf->SetXY(30,145);
-$oPdf->MultiCell(180,5,"2. Certidão de Registro Civil ou RG;");
-$oPdf->SetXY(30,150);
-$oPdf->MultiCell(180,5,"3. Comprovante de residência;");
-$oPdf->SetXY(30,155);
-$oPdf->MultiCell(180,5,"4. Duas fotos 3x4 recentes;");
-$oPdf->SetXY(30,160);
-$oPdf->MultiCell(180,5,"5. Cartão de vacina (para educação infantil e anos iniciais);");
-$oPdf->SetXY(30,165);
-$oPdf->MultiCell(180,5,"6. Cartão do Sistema Único de Saúde (SUS).");
+// $oPdf->MultiCell(170,5,"Para realizar o processo de matrícula são necessárias as seguintes documentações:");
+// $oPdf->SetXY(30,140);
+// $oPdf->MultiCell(180,5,"1. Histórico escolar (original) ou atestado escolar com validade de 60 dias; ");
+// $oPdf->SetXY(30,145);
+// $oPdf->MultiCell(180,5,"2. Certidão de Registro Civil ou RG;");
+// $oPdf->SetXY(30,150);
+// $oPdf->MultiCell(180,5,"3. Comprovante de residência;");
+// $oPdf->SetXY(30,155);
+// $oPdf->MultiCell(180,5,"4. Duas fotos 3x4 recentes;");
+// $oPdf->SetXY(30,160);
+// $oPdf->MultiCell(180,5,"5. Cartão de vacina (para educação infantil e anos iniciais);");
+// $oPdf->SetXY(30,165);
+// $oPdf->MultiCell(180,5,"6. Cartão do Sistema Único de Saúde (SUS).");
 
 $oPdf->SetXY(20,95);
 $oPdf->SetFont('arial','b',10);
-$oPdf->MultiCell(170,5,"A LISTA DE ESPERA NÃO SE CARACTERIZA COMO EFETIVAÇÃO DE MATRÍCULA, ESTÁ SUJEITO A DISPONIBILIDADE DE VAGA.");
+//$oPdf->MultiCell(170,5,"A LISTA DE ESPERA NÃO SE CARACTERIZA COMO EFETIVAÇÃO DE MATRÍCULA, ESTÁ SUJEITO A DISPONIBILIDADE DE VAGA.");
+//$oPdf->MultiCell(170,5,"A LISTA DE ESPERA NÃO SE CARACTERIZA COMO EFETIVAÇÃO DE MATRÍCULA, ESTÁ SUJEITO A DISPONIBILIDADE DE VAGA.");
+
+$oPdf->MultiCell(170,5,"");
 $oPdf->SetXY(20,260);
 $oPdf->SetFont('arial','b',10);
 $oPdf->MultiCell(170,5,"A inserção dos dados do candidato e seu respectivo responsável foi realizada de forma voluntária e declaratória. A Secretaria de Educação não se responsabiliza pela veracidade dos dados informados no momento da inscrição.");
