@@ -392,11 +392,11 @@ $documentos =  pg_fetch_all($result);
                 <div class="form-row">
                         <div class="col-md-6">
                             <label for=""><?php echo $documento['ed02_c_descr'].' (FRETE)'  ?></label>
-                            <input type="file"  accept=".pdf,.jpeg,.jpg,.JPG,.png,.PNG,.tif,.gif" <?php  echo $documento['obrigatorio'] == 'S'?'required':'' ?> onchange='validaImagem(this);' name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-FRENTE-'?>" class="form-control">            
+                            <input type="file"  accept=".pdf,.jpeg,.jpg,.JPG,.png,.PNG,.tif,.gif"  onchange='validaImagem(this);' name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-FRENTE-'?>" class="form-control">            
                         </div>  
                         <div class="col-md-6">
                             <label for=""><?php echo $documento['ed02_c_descr'].' (VERSO)'  ?></label>
-                            <input type="file" accept=".pdf,.jpeg,.jpg,.JPG,.png,.PNG,.tif,.gif" <?php  echo $documento['obrigatorio'] == 'S'?'required':'' ?> onchange='validaImagem(this);' name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-VERSO-'?>" class="form-control">            
+                            <input type="file" accept=".pdf,.jpeg,.jpg,.JPG,.png,.PNG,.tif,.gif"  onchange='validaImagem(this);' name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-VERSO-'?>" class="form-control">            
                         </div>  
                         
                 </div> 
@@ -409,7 +409,7 @@ $documentos =  pg_fetch_all($result);
                     <div class="form-row">
                             <div class="col-md-12">
                                 <label for=""><?php echo $documento['ed02_c_descr']  ?></label>
-                                <input type="file" accept=".pdf,.jpeg,.jpg,.JPG,.png,.PNG,.tif,.gif" <?php  echo $documento['obrigatorio'] == 'S'?'required':'' ?> onchange='validaImagem(this);' name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-UNICO-'?>" class="form-control">            
+                                <input type="file" accept=".pdf,.jpeg,.jpg,.JPG,.png,.PNG,.tif,.gif"  onchange='validaImagem(this);' name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-UNICO-'?>" class="form-control">            
                             </div>  
                             
                     </div> 
