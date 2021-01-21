@@ -39,7 +39,7 @@ if (pg_num_rows($result) >= 1) {
     $_SESSION['escola'] = 'true';
     header('Location:rematricula_update.php');
 } else {
-    header('Location:pesquisa_rematricula.php?not_found=1');
+    header('Location:index.php?not_found=1');
 }
 }else{
 
@@ -56,7 +56,7 @@ if (pg_num_rows($result) >= 1) {
     $_SESSION['escola'] = 'true';
     header('Location:rematricula_update.php');
 } else {
-    header('Location:pesquisa_rematricula.php?not_found=1');
+    header('Location:index.php?not_found=1');
 }
 }
 
