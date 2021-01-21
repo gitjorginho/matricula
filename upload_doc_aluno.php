@@ -6,7 +6,7 @@ header("Content-Type: text/html;  charset=ISO-8859-1", true);
  * Upload de imagens
  ******/
  
-function uploadImagemDocAluno($files){
+function uploadImagemDocAluno($files,$id_aluno){
     $arrDocumentoAluno = array();
 
     foreach ($_FILES as $key => $value){
@@ -32,14 +32,14 @@ function uploadImagemDocAluno($files){
         // Somente imagens, .jpg;.jpeg;.gif;.png
         // Aqui eu enfileiro as extensões permitidas e separo por ';'
         // Isso serve apenas para eu poder pesquisar dentro desta String
-        if (strstr ( '.jpg;.jpeg;.gif;.png', $extensao )) {
+        if (strstr ('.jpg;.JPG;.jpeg;.gif;.png;.PNG;.pdf;.tif', $extensao )) {
             // Cria um nome único para esta imagem
             // Evita que duplique as imagens no servidor.
             // Evita nomes com acentos, espaços e caracteres não alfanuméricos
             $novoNome = uniqid ( time () ) . '.' . $extensao;
             
             // nome da pasta para cada aluno
-            $sNomePastaAluno =  str_replace(' ','_',trim($_SESSION['vch_nome']));
+            $sNomePastaAluno =  'aluno'.$id_aluno;
             
             // verifica se a pasta ja existe
            if (!is_dir("imagens_doc_aluno/$sNomePastaAluno")){

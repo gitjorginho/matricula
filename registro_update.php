@@ -8,7 +8,7 @@ require_once ('conexao.php');
 $conexao = new Conexao();
 $conn = $conexao->conn();
 
-
+$codigo_aluno_sge = $_POST['vch_codigo_sge'];
 $codigo_aluno       =$_POST['vch_codigo'];
 $nome_aluno         =strtoupper($_POST['vch_nome']);
 $sexo_aluno         =$_POST['vch_sexo'];
@@ -19,6 +19,7 @@ $email_responsavel  =$_POST['vch_email_responsavel'];
 $cpf_responsavel    =$_POST['vch_cpf'];
 $endereco           =$_POST['vch_endereco'];
 $complemento        =$_POST['vch_complemento'];
+$orgaopublico 		=$_POST['vch_orgaopublico'];
 $bairro             =$_POST['vch_bairro'];
 $localidade         =$_POST['vch_localidade'];
 $telefone           =$_POST['vch_telefone'];
@@ -59,7 +60,8 @@ $telefone = trim($telefone);
 		municipio='$cidade', 
 		email_resp='$email_responsavel',
 		ed47_v_cpf='$cpf_responsavel',
-		ed47_i_localidade='$localidade' 
+		ed47_i_localidade='$localidade', 
+		vch_orgaopublico='$orgaopublico' 
 		WHERE id_alunoreserva = $codigo_aluno ";
 		$result = pg_query($conn,$sql_update_aluno);
 		 
@@ -75,37 +77,71 @@ $telefone = trim($telefone);
 		$result = pg_query($conn,$sql_auditoria);
 
 
-		 //salvar o registro de documentos cadastrado e faz o upload das imagens
-		 	 
-		 $arrDadosDoc = uploadImagemDocAluno($_FILES);
+		
+		
+		
+		
+		
+		 
+		$sql_se_tem_pendencia = "select true as pendencia_doc_sge from docaluno where ed49_i_aluno = $codigo_aluno_sge limit 1" ;
+		$result = pg_query($conn,$sql_se_tem_pendencia);		
+		$pendencia = pg_fetch_assoc($result);
+		
+        if($pendencia['pendencia_doc_sge'] == true){
+		//salvar o registro de documentos cadastrado e faz o upload das imagens
+			$arrDadosDoc = uploadImagemDocAluno($_FILES,$codigo_aluno);
 
-		  $bResultInsertDocumento  = true; 
-		  foreach($arrDadosDoc as $documento ){
-			
-			$seFrenteVerso = explode('-',$documento['nome_documento']);
-			if ($seFrenteVerso[2] == 'FRENTE' ){
-			   $ctipoDocumento = 'F';
-			}else if ($seFrenteVerso[2] == 'VERSO'){
-			   $ctipoDocumento = 'V';
-			}else{
-			   $ctipoDocumento = 'U';
-			}
+			$bResultInsertDocumento  = true; 
+			foreach($arrDadosDoc as $documento ){
+			  
+			  $seFrenteVerso = explode('-',$documento['nome_documento']);
+			  if ($seFrenteVerso[2] == 'FRENTE' ){
+				 $ctipoDocumento = 'F';
+			  }else if ($seFrenteVerso[2] == 'VERSO'){
+				 $ctipoDocumento = 'V';
+			  }else{
+				 $ctipoDocumento = 'U';
+			  }
+			   
+			  $enderecoServidor = 'https://listadeesperaseduc.camacari.ba.gov.br/';
+		
+			  $sqlInsertDocumentos = "INSERT INTO reserva.documentoalunoreserva
+			  (id_alunoreserva, id_documentoreserva, nome_documento, caminho_documento,tipo_documento)
+			  VALUES($codigo_aluno, {$documento['id_documentoreserva']} , '{$documento['nome_documento']}', '$enderecoServidor{$documento['caminho_documento']}', '$ctipoDocumento');
+			  "; 
+			  
+				$resultInsertDocumento = pg_query($conn,$sqlInsertDocumentos);
+			  
+			  //se alguma insercao deu errado marca a variaVEL FALSE  
+			  if($resultInsertDocumento == false){
+				  $bResultInsertDocumento = false;
+			  }
 			 
-			$enderecoServidor = 'https://listadeesperaseduc.camacari.ba.gov.br/';
-	  
-			$sqlInsertDocumentos = "INSERT INTO reserva.documentoalunoreserva
-			(id_alunoreserva, id_documentoreserva, nome_documento, caminho_documento,tipo_documento)
-			VALUES($codigo_aluno, {$documento['id_documentoreserva']} , '{$documento['nome_documento']}', '$enderecoServidor{$documento['caminho_documento']}', '$ctipoDocumento');
-			"; 
-			//die($sqlInsertDocumentos)  ;
-			  $resultInsertDocumento = pg_query($conn,$sqlInsertDocumentos);
+		  }
+		}  else{
 			
-			//se alguma insercao deu errado marca a variaVEL FALSE  
-			if($resultInsertDocumento == false){
-				$bResultInsertDocumento = false;
-			}
-		   
-		}
+			$sql_turma_anterior_aluno = "select ed57_i_escola,ed57_i_calendario,ed57_i_codigo from matricula 
+			join turma on ed57_i_codigo = ed60_i_turma
+			join calendario on ed57_i_calendario = ed52_i_codigo
+			where ed60_i_aluno = {$codigo_aluno_sge} and ed52_i_ano = 2020 and ed60_c_situacao in ('MATRICULADO','APROVADO')
+			order by ed60_d_datamatricula desc
+			limit 1";
+			
+			$result = pg_query($conn,$sql_turma_anterior_aluno);
+            $arrDadosTurmaAnterior = pg_fetch_assoc($result);  			 
+		
+			$sqlInsertConfirmacaoRematricula = "
+			INSERT INTO escola.confirmacaorematricula
+			(edu01_escola, edu01_calendario, edu01_turma, edu01_aluno, edu01_criado_em)
+			VALUES({$arrDadosTurmaAnterior['ed57_i_escola']}, {$arrDadosTurmaAnterior['ed57_i_calendario']}, {$arrDadosTurmaAnterior['ed57_i_codigo']}, {$codigo_aluno_sge}, now());
+			";
+            $resultInsertConfirmacaoRematricula = pg_query($conn,$sqlInsertConfirmacaoRematricula);
+        }
+
+		
+		
+		 	 
+		
 
 
 
