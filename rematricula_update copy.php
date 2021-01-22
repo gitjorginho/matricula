@@ -163,8 +163,8 @@ $documentos =  pg_fetch_all($result);
                 </div>
             </div>
             <div class="form_group">
-            <!-- <label for="exampleInputEmail1 ">Status:</label> -->
-                        <select style="display:none" disabled class="custom-select" id="alunostatusreserva_id">
+            <label for="exampleInputEmail1 ">Status:</label>
+                        <select disabled class="custom-select" id="alunostatusreserva_id">
                                 <?php
                                 foreach ($status as $sta) {
                                     echo "<option value='{$sta['id']}'>{$sta['status_descr']}</option>";
@@ -243,15 +243,15 @@ $documentos =  pg_fetch_all($result);
                 </div>
             </div>     -->
             <!--<br>-->
-            <!-- <div class="form-group"> -->
-                <!-- <div class="row"> -->
-                    <!-- <div class="col-md-12"> -->
-                        <!-- <label id="labelOrgaoPublico" for="vch_orgaopublico">Descrição do orgão público:</label><span id="spanAsteristicoOrgao"></span> -->
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label id="labelOrgaoPublico" for="vch_orgaopublico">Descrição do orgão público:</label><span id="spanAsteristicoOrgao"></span>
                         <!--<input autocomplete="off" class="form-control" type="text" id="vch_orgaopublico" name="vch_orgaopublico" id="vch_orgaopublico" value="<?php echo $vch_orgaopublico ?>" onkeyup="this.value = this.value.toUpperCase();" disabled onKeyPress="mudarCorCampo('labelOrgaoPublico', 'vch_orgaopublico')">-->
-                        <input type="hidden"  autocomplete="off" readonly class="form-control" value="<?php echo $aluno['vch_orgaopublico'] ?>" type="text" id="vch_orgaopublico" name="vch_orgaopublico" id="vch_orgaopublico" value="<?php echo $vch_orgaopublico ?>"  onKeyPress="mudarCorCampo('labelOrgaoPublico', 'vch_orgaopublico');return letras();">
-                    <!-- </div> -->
-                <!-- </div> -->
-            <!-- </div> -->
+                        <input   autocomplete="off" readonly class="form-control" value="<?php echo $aluno['vch_orgaopublico'] ?>" type="text" id="vch_orgaopublico" name="vch_orgaopublico" id="vch_orgaopublico" value="<?php echo $vch_orgaopublico ?>"  onKeyPress="mudarCorCampo('labelOrgaoPublico', 'vch_orgaopublico');return letras();">
+                    </div>
+                </div>
+            </div>
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12">
@@ -264,25 +264,25 @@ $documentos =  pg_fetch_all($result);
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12">
-                        <!-- <label id="labelNomeResponsavel" for="">Nome do responsável:</label> -->
+                        <label id="labelNomeResponsavel" for="">Nome do responsável:</label>
                         <!-- <span id="spanAsteristicoResp">*</span> -->
-                        <input  type="hidden" class="form-control "  onchange="salvaNomeDoCampoModificado(this)"  type="text" name="vch_responsavel" id="vch_responsavel" readonly value="<?php echo $aluno['ed47_c_nomeresp'] ?>" onkeyup="this.value = this.value.toUpperCase();">
+                        <input  class="form-control "  onchange="salvaNomeDoCampoModificado(this)"  type="text" name="vch_responsavel" id="vch_responsavel" readonly value="<?php echo $aluno['ed47_c_nomeresp'] ?>" onkeyup="this.value = this.value.toUpperCase();">
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12">
-                        <!-- <label for="exampleInputEmail1" id="labelEmail">Email do Responsavel:</label> -->
-                        <input type="hidden"   class="form-control "  onchange="salvaNomeDoCampoModificado(this)"  type="text" name="vch_email_responsavel" id="vch_responsavel" readonly value="<?php echo $aluno['email_resp'] ?>" >
+                        <label for="exampleInputEmail1" id="labelEmail">Email do Responsavel:</label>
+                        <input   class="form-control "  onchange="salvaNomeDoCampoModificado(this)"  type="text" name="vch_email_responsavel" id="vch_responsavel" readonly value="<?php echo $aluno['email_resp'] ?>" >
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-5">
-                        <!-- <label id ="labelCpf" for="">CPF do Responsavel:</label> -->
-                        <input  type="hidden" class="form-control" type="text"  onchange="salvaNomeDoCampoModificado(this)"  name="vch_cpf" id="vch_cpf" readonly value="<?php echo $aluno['ed47_v_cpf'] ?>">
+                        <label id ="labelCpf" for="">CPF do Responsavel:</label>
+                        <input  class="form-control" type="text"  onchange="salvaNomeDoCampoModificado(this)"  name="vch_cpf" id="vch_cpf" readonly value="<?php echo $aluno['ed47_v_cpf'] ?>">
 
                     </div>
                 </div>
@@ -292,33 +292,33 @@ $documentos =  pg_fetch_all($result);
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-5">
-                        <!-- <label for="examleInputEmail1" class="labelNome">Telefone:</label> -->
-                        <input type="hidden"  value="<?php echo $aluno['ed47_v_telef'] ?>"  onchange="salvaNomeDoCampoModificado(this)"  name="vch_telefone" id="vch_telefone" readonly class="form-control" type="text">
+                        <label for="examleInputEmail1" class="labelNome">Telefone:</label>
+                        <input  value="<?php echo $aluno['ed47_v_telef'] ?>"  onchange="salvaNomeDoCampoModificado(this)"  name="vch_telefone" id="vch_telefone" readonly class="form-control" type="text">
                     </div>
 
                 </div>
             </div>
 
-            <!-- <br> -->
-            <!-- <br> -->
-            <!-- <hr> -->
-            <!-- <h3 class="text-center">Endereço</h3> -->
-            <!-- <br> -->
-            <!-- <br> -->
+            <br>
+            <br>
+            <hr>
+            <h3 class="text-center">Endereço</h3>
+            <br>
+            <br>
 
-            <!-- Pesquisa de Endereço: -->
+            Pesquisa de Endereço:
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12">
-                        <input type="hidden" class="form-control" type="text" id="cp_texto" readonly autocomplete="off">
+                        <input  class="form-control" type="text" id="cp_texto" readonly autocomplete="off">
                         <select onclick="pegarValores()" id="resposta" style="width: 640px; margin-left: 0px;display: none;font-size: 10px" name="vch_endereco" multiple="multiple"></select>
                     </div>
                 </div>
             </div>
 
 
-            <!-- <br> -->
-            <!-- <br /> -->
+            <br>
+            <br />
 
 
             <div class="form-group">
@@ -326,26 +326,26 @@ $documentos =  pg_fetch_all($result);
             
                 <div class="row">
                     <div class="col-md-9">
-                        <!-- <label for="exampleInputEmail1">Endereço:</label> -->
-                        <input type="hidden" required value="<?php echo $aluno['ed47_v_ender'] ?>"   name="vch_endereco" class="form-control" id="ender" readonly type="text" readonly>
-                        <!-- <label for="exampleInputEmail1" class="labelNome">Complemento</label> -->
-                        <input  type="hidden" value="<?php echo $aluno['ed47_v_compl'] ?>" onchange="salvaNomeDoCampoModificado(this)" name="vch_complemento" readonly class="form-control" type="text" >
+                        <label for="exampleInputEmail1">Endereço:</label>
+                        <input required value="<?php echo $aluno['ed47_v_ender'] ?>"   name="vch_endereco" class="form-control" id="ender" readonly type="text" readonly>
+                        <label for="exampleInputEmail1" class="labelNome">Complemento</label>
+                        <input  value="<?php echo $aluno['ed47_v_compl'] ?>" onchange="salvaNomeDoCampoModificado(this)" name="vch_complemento" readonly class="form-control" type="text" >
                     </div>
                     <div class="col-md-3">
-                        <!-- <label for="exampleInputEmail1" class="labelNome">Número:</label> -->
-                        <input type="hidden" required value="<?php echo $aluno['ed47_c_numero'] ?>"  onchange="salvaNomeDoCampoModificado(this)" name="vch_numero" readonly class="form-control .form-control-nome" type="text">
-                        <!-- <label for="" class="labelNome">Cep:</label> -->
-                        <input type="hidden" name="vch_cep" value="<?php echo $aluno['ed47_v_cep'] ?>" class="form-control" id="vch_cep" readonly type="text" readonly>
+                        <label for="exampleInputEmail1" class="labelNome">Número:</label>
+                        <input required value="<?php echo $aluno['ed47_c_numero'] ?>"  onchange="salvaNomeDoCampoModificado(this)" name="vch_numero" readonly class="form-control .form-control-nome" type="text">
+                        <label for="" class="labelNome">Cep:</label>
+                        <input name="vch_cep" value="<?php echo $aluno['ed47_v_cep'] ?>" class="form-control" id="vch_cep" readonly type="text" readonly>
                     </div>
                 </div>
 
 
                 <div class="row">
                     <div class="col-md-6">
-                        <!-- <label for="exampleInputEmail1">Bairro:</label> -->
-                        <input type="hidden" required value="<?php echo $aluno['ed47_v_bairro'] ?>" name="vch_bairro" id="vch_bairro" readonly class="form-control" type="text" readonly>
-                        <!-- <label for="exampleInputEmail1">Localidade:</label> -->
-                        <select style="display:none" disabled class="custom-select" id="cp_localidades" name="vch_localidade">
+                        <label for="exampleInputEmail1">Bairro:</label>
+                        <input required value="<?php echo $aluno['ed47_v_bairro'] ?>" name="vch_bairro" id="vch_bairro" readonly class="form-control" type="text" readonly>
+                        <label for="exampleInputEmail1">Localidade:</label>
+                        <select disabled class="custom-select" id="cp_localidades" name="vch_localidade">
                             <option></option>
                             <?php
                             foreach ($localidades as $localidade) {
@@ -361,16 +361,16 @@ $documentos =  pg_fetch_all($result);
 
                     <div class="col-md-6">
 
-                        <!-- <label for="exampleInputEmail1" class="labelNome">Cidade</label> -->
-                        <input type="hidden" required value="<?php echo $aluno['municipio'] ?>" name="vch_cidade" id="vch_cidade" class="form-control" type="text" readonly>
+                        <label for="exampleInputEmail1" class="labelNome">Cidade</label>
+                        <input required value="<?php echo $aluno['municipio'] ?>" name="vch_cidade" id="vch_cidade" class="form-control" type="text" readonly>
 
                     </div>
                 </div>
 
             </div>
             <?php if ($aluno['pendencia_doc_sge'] = true){ ?> 
-            <!-- <br> -->
-            <!-- <br> -->
+            <br>
+            <br>
             <hr>
             <h3 class="text-center">Documentos</h3>
             <br>
