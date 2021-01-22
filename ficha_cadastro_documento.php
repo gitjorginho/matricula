@@ -30,7 +30,7 @@ $result = pg_query($conn,$sql_documento);
 $documentos =  pg_fetch_all($result);
 
 ?>
-<div class="centr">
+<div>
     <br>
     <h2 class="text-center">Documentos Necessários</h2>
     <form id="ficha" enctype="multipart/form-data" method="post" action="ficha_cadastro_upload_imagem_doc_proc.php">
@@ -43,11 +43,11 @@ $documentos =  pg_fetch_all($result);
                 <div class="form-row">
                         <div class="col-md-6">
                             <label for=""><?php echo $documento['ed02_c_descr'].' (FRETE)'  ?></label>
-                            <input type="file" required  name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-FRENTE-'?>" class="form-control">            
+                            <input type="file" name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-FRENTE-'?>" <?php echo ($documento['obrigatorio'] == 'S' ? 'required' : '')?> class="form-control" accept="image/*,.pdf" data-max-size="32154">
                         </div>  
                         <div class="col-md-6">
                             <label for=""><?php echo $documento['ed02_c_descr'].' (VERSO)'  ?></label>
-                            <input type="file" name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-VERSO-'?>" class="form-control">            
+                            <input type="file" name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-VERSO-'?>" <?php echo ($documento['obrigatorio'] == 'S' ? 'required' : '')?> class="form-control" accept="image/*,.pdf" data-max-size="32154">            
                         </div>  
                         
                 </div> 
@@ -60,7 +60,7 @@ $documentos =  pg_fetch_all($result);
                     <div class="form-row">
                             <div class="col-md-12">
                                 <label for=""><?php echo $documento['ed02_c_descr']  ?></label>
-                                <input type="file" name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-UNICO-'?>" class="form-control">            
+                                <input type="file" name="<?php echo $documento['id_documentoreserva'].'-'.$documento['ed02_c_descr'].'-UNICO-'?>" <?php echo ($documento['obrigatorio'] == 'S' ? 'required' : '')?> class="form-control" accept="image/*,.pdf" data-max-size="32154">            
                             </div>  
                             
                     </div> 
@@ -108,9 +108,24 @@ $documentos =  pg_fetch_all($result);
 
     function valida()
     {
-
+        var isOk = true;
+        $('input[type=file]').each(function(index){
+            if(typeof this.files[index] !== 'undefined'){
+                alert('entrei');
+                var maxSize = parseInt($(this).attr('max-size'),10),
+                size = this.files[0].size;
+                isOk = maxSize > size;
+                if(isOk == true){
+                    alert('teste');
+                    $("#msg").trigger("click");
+                    $("#msg_text").text("Tamanho do documento maior que 4Mb");
+                    $(this).style.borderColor = 'red';
+                }
+                return isOk;
+            }
+        });
+        return isOk;
     }
-
 </script>
 
 
