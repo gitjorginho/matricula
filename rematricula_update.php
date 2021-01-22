@@ -560,6 +560,12 @@ $documentos =  pg_fetch_all($result);
 
     testaIdade($('#sdt_nascimento').val());
     
+
+    <?php if(isset($_GET['not_matricula'])){ ?> 
+               $("#msg_text").text("Aluno não tem nenhum registro de matricula do ano anterior.");
+               $('#modal_msg').modal('show');
+    <?php }?>
+
     function testaIdade(data){
            let idade = calculaIdade(data);
                 console.log(idade);
