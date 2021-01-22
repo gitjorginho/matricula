@@ -157,7 +157,7 @@ if (isset($_GET['id_alunoreserva'])) {
 
     <?php if (isset($_GET['ultimaetapa'])) {  ?>
         <script>
-            $('#msg_modal').text( 'Aluno não pode confirmar rematricula! Entre em contato da Unidade Escolar ou Secretaria de Educação. ');  
+            $('#msg_modal').text( 'Aluno não pode confirmar rematrícula devido ser o último ano na unidade escolar! Em caso de dúvida entre em contato com a unidade escolar ou secretaria de educação');  
             $('#modalMessagem').fadeIn().modal('show');
         </script>
     <?php } ?>
