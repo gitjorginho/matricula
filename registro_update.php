@@ -34,14 +34,6 @@ $_SESSION['vch_serie'] = $serie;
 $telefone = str_replace(['(',')','-'],'',$telefone);
 $telefone = trim($telefone);
 
-//		$sql_insert_monitoramentomatriculareserva = "insert into monitoramentomatriculareserva
-//		(mmr_acao, mmr_campos, mmr_dataregistro, mmr_idaluno) values ('Atualizou',
-//		'Nome: $nome_aluno - Endereco: $endereco - Bairro: $bairro -
-//		Cep: $cep - Nome Responsavel: $nome_responsavel - Nome da Mae: $nome_mae - Sexo: $sexo_aluno -
-//		Nascimento: $data_nascimento - Localidade: $codigo_localidade - Telefone: $telefone -
-//		Numero: $numero - Cpf responsavel: $cpf_responsavel','now', $codigo_aluno);";
-//		$monitoramentoreserva = pg_query($conn, $sql_insert_monitoramentomatriculareserva);
-		//ed47_i_localidade=$codigo_localidade
 		
 		//salva alteracao aluno
 		$sql_update_aluno ="
@@ -75,21 +67,10 @@ $telefone = trim($telefone);
 		(nome_usuario, id_alunoreserva, descricao, data_modificacao, acoes)
 		VALUES('PROPRIO ALUNO',$codigo_aluno, 'atulizar dados pelo proprio aluno', now(), '$acoes')";
 		$result = pg_query($conn,$sql_auditoria);
-
-
+	
+ 
 		
-		
-		
-		
-		
-		 
-		$sql_se_tem_pendencia = "select true as pendencia_doc_sge from docaluno where ed49_i_aluno = $codigo_aluno_sge limit 1" ;
-		$result = pg_query($conn,$sql_se_tem_pendencia);		
-		$pendencia = pg_fetch_assoc($result);
-		
-        if($pendencia['pendencia_doc_sge'] == true){
-		//salvar o registro de documentos cadastrado e faz o upload das imagens
-			$arrDadosDoc = uploadImagemDocAluno($_FILES,$codigo_aluno);
+		$arrDadosDoc = uploadImagemDocAluno($_FILES,$codigo_aluno);
 
 			$bResultInsertDocumento  = true; 
 			foreach($arrDadosDoc as $documento ){
@@ -118,77 +99,40 @@ $telefone = trim($telefone);
 			  }
 			 
 		  }
-		}  else{
-			
-			$sql_turma_anterior_aluno = "select ed57_i_escola,ed57_i_calendario,ed57_i_codigo from matricula 
+
+			$ano_anterior = date("Y",strtotime(date("Y-m-d")."- 1 year"));	
+            
+			$sql_turma_anterior_aluno = "
+			select ed57_i_escola,ed57_i_calendario,ed57_i_codigo from matricula 
 			join turma on ed57_i_codigo = ed60_i_turma
 			join calendario on ed57_i_calendario = ed52_i_codigo
-			where ed60_i_aluno = {$codigo_aluno_sge} and ed52_i_ano = 2020 and ed60_c_situacao in ('MATRICULADO','APROVADO')
+			where ed60_i_aluno = {$codigo_aluno_sge} and ed52_i_ano = $ano_anterior and ed60_c_situacao in ('MATRICULADO','APROVADO')
 			order by ed60_d_datamatricula desc
 			limit 1";
 			
 			$result = pg_query($conn,$sql_turma_anterior_aluno);
             $arrDadosTurmaAnterior = pg_fetch_assoc($result);  			 
 		
-			$sqlInsertConfirmacaoRematricula = "
-			INSERT INTO escola.confirmacaorematricula
-			(edu01_escola, edu01_calendario, edu01_turma, edu01_aluno, edu01_criado_em)
-			VALUES({$arrDadosTurmaAnterior['ed57_i_escola']}, {$arrDadosTurmaAnterior['ed57_i_calendario']}, {$arrDadosTurmaAnterior['ed57_i_codigo']}, {$codigo_aluno_sge}, now());
-			";
-            $resultInsertConfirmacaoRematricula = pg_query($conn,$sqlInsertConfirmacaoRematricula);
-        }
+			if (pg_num_rows($result) >= 0){
 
-		
-		
-		 	 
-		
-
-
-
-
-
-            
-
-
+				$sqlInsertConfirmacaoRematricula = "
+				INSERT INTO escola.confirmacaorematricula
+				(edu01_escola, edu01_calendario, edu01_turma, edu01_aluno, edu01_criado_em)
+				VALUES({$arrDadosTurmaAnterior['ed57_i_escola']}, {$arrDadosTurmaAnterior['ed57_i_calendario']}, {$arrDadosTurmaAnterior['ed57_i_codigo']}, {$codigo_aluno_sge}, now());
+				";
+			
+				$resultInsertConfirmacaoRematricula = pg_query($conn,$sqlInsertConfirmacaoRematricula);
+			}else{
+				header('Location:rematricula_update.php?not_matricula=');
+				die(); 	
+			}
 
         // chama a pagina de comprovante
-                $_SESSION['vch_nome'] = trim($nome_aluno);
-				$_SESSION['escola'] = $escola;
-				header('Location:comprovante.php');
+        $_SESSION['vch_nome'] = trim($nome_aluno);
+        $_SESSION['escola'] = $escola;
+		header('Location:comprovante.php');
 
 
-//		$sql_if_reserva = "select * from matriculareserva where reserva_aluno = {$codigo_aluno}";
-//		$result = pg_query($conn,$sql_if_reserva);
-//		//die ($sql_update_aluno);
-//		if(pg_num_rows($result) == 0){
-//		$sql_reserva="
-//		INSERT INTO matriculareserva (reserva_cpfresponsavel,reserva_aluno,reserva_turma,reserva_data)
-//		VALUES ('$cpf_responsavel',$codigo_aluno,'$serie',now());
-//		";
-//			if(pg_query($conn,$sql_reserva)){
-//				$_SESSION['vch_nome'] = trim($nome_aluno);
-//				//$_SESSION['turma'] = $turma;
-//				//$_SESSION['escola'] = $escola;
-//				header('Location:comprovante.php');
-//				}else{
-//					echo "Não foi possível concluir a operação";
-//					 }
-//			}else{
-//				$sql_reserva="
-//				UPDATE matriculareserva
-//				SET reserva_turma = '$serie', reserva_cpfresponsavel='$cpf_responsavel'
-//				WHERE reserva_aluno= $codigo_aluno;
-//				";
-//				//die ("Aluno: ".$sql_update_aluno."  Reserva: ".$sql_reserva);
-//		if(pg_query($conn,$sql_reserva)){
-//				$_SESSION['vch_nome'] = trim($nome_aluno);
-//				//$_SESSION['turma'] = $turma;
-//				//$_SESSION['escola'] = $escola;
-//				header('Location:comprovante.php');
-//			}else{
-//				echo "Não foi possível concluir a operação";
-//				}
-//				}
 
 function dateToDatabase($date)
 {

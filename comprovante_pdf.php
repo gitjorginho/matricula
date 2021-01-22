@@ -84,6 +84,14 @@ if ($aluno['ed47_i_codigo'] != ''){
 
 }
 
+$sql_documentacao = "select trim(ed02_c_descr) ed02_c_descr   from docaluno 
+join documentacao on ed49_i_documentacao =  ed02_i_codigo
+where ed49_i_aluno = {$aluno['ed47_i_codigo']} ";
+
+    $result = pg_query($conn, $sql_documentacao);
+    $arrDocumentoaluno = pg_fetch_all($result);
+    
+
 //die(var_dump($aluno));
 
 $nome_aluno = trim($aluno['ed47_v_nome']);
@@ -129,8 +137,16 @@ $oPdf->MultiCell(170,5,"Atesto, para os devidos fins, que o aluno(a) {$nome_alun
 $oPdf->SetXY(20,130);
 // $oPdf->MultiCell(170,5,"Para realizar o processo de matrícula são necessárias as seguintes documentações:");
 // $oPdf->SetXY(30,140);
-// $oPdf->MultiCell(180,5,"1. Histórico escolar (original) ou atestado escolar com validade de 60 dias; ");
-// $oPdf->SetXY(30,145);
+
+ $oPdf->MultiCell(170,5,"Documentacao Pendente:");
+ $oPdf->SetXY(30,140);
+
+
+foreach ($arrDocumentoaluno as $documento){
+    $oPdf->MultiCell(180,5,'* '.$documento['ed02_c_descr']);
+    $oPdf->SetXY(30,145);
+}
+  
 // $oPdf->MultiCell(180,5,"2. Certidão de Registro Civil ou RG;");
 // $oPdf->SetXY(30,150);
 // $oPdf->MultiCell(180,5,"3. Comprovante de residência;");
