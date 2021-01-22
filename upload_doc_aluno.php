@@ -43,7 +43,7 @@ function uploadImagemDocAluno($files,$id_aluno){
             
             // verifica se a pasta ja existe
            if (!is_dir("imagens_doc_aluno/$sNomePastaAluno")){
-                mkdir("imagens_doc_aluno/$sNomePastaAluno", 0700);
+                mkdir("imagens_doc_aluno/$sNomePastaAluno", 0777);
             }        
                         // Concatena a pasta com o nome
                 $destino = "imagens_doc_aluno/$sNomePastaAluno/$input.$novoNome";

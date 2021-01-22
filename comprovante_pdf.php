@@ -121,7 +121,7 @@ $oPdf->addPage('P', 'A4');
 $oPdf->Image('img/Cabecalho_pdf.png',3,3,210);
 $oPdf->SetXY(20,40);
 $oPdf->SetFont('arial','b',8);
-$oPdf->Text('140','23', 'Corfimação de rematricula relaizada.'); //.trim($aluno['status_abrev']));
+$oPdf->Text('140','23', 'Confirmação de rematrícula realizada.'); //.trim($aluno['status_abrev']));
 $oPdf->Text('140','27', $data_atual );
 
 $oPdf->SetXY(20,70);
@@ -131,14 +131,14 @@ $oPdf->Text('77','50','Rematrícula 2021');
 $oPdf->SetFont('arial','',10);
 //$oPdf->MultiCell(170,5,"Atesto, para os devidos fins, que o aluno(a) {$nome_aluno}, está com a reserva de matrícula para {$turma['serie']}, $tipoensino, turno {$turma['turno']}, para o calendário 2020, na instituição de ensino {$escola_nome['escola']}.");
 //$oPdf->MultiCell(170,5,"Atesto, para os devidos fins, que o aluno(a) {$nome_aluno},  nascido (a) em $dtsnas, filho (a) legítimo (a) de $nome_mae, está no cadastro de lista de espera sob o número $codigo_espera, na Unidade Escolar $escola, para o calendário 2020 e inscrito na Etapa: $turma.");
-$oPdf->MultiCell(170,5,"Atesto, para os devidos fins, que o aluno(a) {$nome_aluno},  nascido (a) em $dtsnas, filho (a) legítimo (a) de $nome_mae, confirma rematrícula para Unidade Escola: $escola. Caso o aluno possua pendencia na documentação,a Unidade Escolar entrará em contato, ou será apresentado em 72 horas após avaliação.");
+$oPdf->MultiCell(170,5,"Atesto, para os devidos fins, que o aluno(a) {$nome_aluno},  nascido (a) em $dtsnas, filho (a) legítimo (a) de $nome_mae, confirma rematrícula para Unidade Escolar: $escola. Caso o aluno possua pendência na documentação, a Unidade Escolar entrará em contato, ou será apresentado em 72 horas após avaliação.");
 //inscrito na Etapa: {$serie['ed11_c_descr']}
 
 $oPdf->SetXY(20,130);
 // $oPdf->MultiCell(170,5,"Para realizar o processo de matrícula são necessárias as seguintes documentações:");
 // $oPdf->SetXY(30,140);
 
- $oPdf->MultiCell(170,5,"Documentacao Pendente:");
+ $oPdf->MultiCell(170,5,"Documentação Pendente:");
  $oPdf->SetXY(30,140);
 
 
