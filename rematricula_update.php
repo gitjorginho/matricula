@@ -492,8 +492,8 @@ $documentos =  pg_fetch_all($result);
                         </button> -->
                         
                         <?php
-                            
-                            if( ($aluno['pendencia_doc_sge'] == true &&  $documentos == false) || $aluno['confirmacao_rematricula'] == true){
+                            //($aluno['pendencia_doc_sge'] == true &&  $documentos == false) 
+                            if($aluno['confirmacao_rematricula'] == true){
                             $desabilita_botao_rematricula = 'disabled';
                             }else
                              $desabilita_botao_rematricula = '';
