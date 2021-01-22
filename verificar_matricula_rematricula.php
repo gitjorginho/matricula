@@ -33,45 +33,45 @@ if ($cod_aluno != ''){
     $result = pg_query($conn, $sql_matricula);
     $aluno = pg_fetch_assoc($result);
 
-    if ($aluno['confirmacao_rematricula'] == true ){
-        header('Location:index.php?rematricula=1');
+    if (pg_num_rows($result) == 0) {
+        header('Location:index.php?not_found=1');
     }
     else{
-        $sql_etapaescola = "
-        select
-            s2.ed11_i_codigo as idserie
-        from
-            escola.turma t,
-            escola.turmaserieregimemat t2,
-            escola.serieregimemat s,
-            escola.serie s2
-        where
-            t.ed57_i_escola = {$aluno['idescola']}
-            and t.ed57_i_calendario = {$aluno['idcalendario']}
-            and t.ed57_i_base = {$aluno['idbase']}
-            and t2.ed220_i_turma = t.ed57_i_codigo
-            and t2.ed220_i_serieregimemat = s.ed223_i_codigo
-            and s.ed223_i_serie = s2.ed11_i_codigo
-        order by
-            s2.ed11_c_descr desc
-        limit 1;";
-    
-        $result = pg_query($conn, $sql_etapaescola);
-        $etapaescola = pg_fetch_assoc($result);
-        if($aluno['idserie'] == $etapaescola['idserie']){
-            header('Location:index.php?ultimaetapa=1');
+        if ($aluno['confirmacao_rematricula'] == true ){
+            header('Location:index.php?rematricula=1');
         }
         else{
-            if (pg_num_rows($result) >= 1) {
+            $sql_etapaescola = "
+            select
+                s2.ed11_i_codigo as idserie
+            from
+                escola.turma t,
+                escola.turmaserieregimemat t2,
+                escola.serieregimemat s,
+                escola.serie s2
+            where
+                t.ed57_i_escola = {$aluno['idescola']}
+                and t.ed57_i_calendario = {$aluno['idcalendario']}
+                and t.ed57_i_base = {$aluno['idbase']}
+                and t2.ed220_i_turma = t.ed57_i_codigo
+                and t2.ed220_i_serieregimemat = s.ed223_i_codigo
+                and s.ed223_i_serie = s2.ed11_i_codigo
+            order by
+                s2.ed11_c_descr desc
+            limit 1;";
+        
+            $result = pg_query($conn, $sql_etapaescola);
+            $etapaescola = pg_fetch_assoc($result);
+            if($aluno['idserie'] == $etapaescola['idserie']){
+                header('Location:index.php?ultimaetapa=1');
+            }
+            else{
                 $_SESSION['codigo'] = $aluno['id_alunoreserva'];
                 $_SESSION['matriculado'] = 'false';
                 $_SESSION['escola'] = 'true';
                 header('Location:rematricula_update.php');
-            }
-            else {
-                header('Location:index.php?not_found=1');
-            }
-        }   
+            }   
+        }
     }
 }
 else{

@@ -63,7 +63,6 @@ if (isset($_GET['id_alunoreserva'])) {
         </div>
     </form>
 
-
     <!-- Botão para acionar modal -->
     <button id="msg" type="button" style="display: none" class="btn btn-primary" data-toggle="modal" data-target="#modalExemplo">
         Abrir modal de demonstração
@@ -137,7 +136,6 @@ if (isset($_GET['id_alunoreserva'])) {
                     .fail(function (jqXHR, textStatus, msg) {
                         alert('Busca de turmas falhou !');
                     });
-
         });
 
     </script>
@@ -150,10 +148,16 @@ if (isset($_GET['id_alunoreserva'])) {
         </script>
     <?php } ?>
 
-
     <?php if (isset($_GET['rematricula'])) {  ?>
         <script>
             $('#msg_modal').text( 'Aluno com rematricula confirmada! Aguarde contato da Unidade Escolar ou Secretaria de Educação. ');  
+            $('#modalMessagem').fadeIn().modal('show');
+        </script>
+    <?php } ?>
+
+    <?php if (isset($_GET['ultimaetapa'])) {  ?>
+        <script>
+            $('#msg_modal').text( 'Aluno não pode confirmar rematricula! Entre em contato da Unidade Escolar ou Secretaria de Educação. ');  
             $('#modalMessagem').fadeIn().modal('show');
         </script>
     <?php } ?>
@@ -199,8 +203,6 @@ if (isset($_GET['id_alunoreserva'])) {
             }
         }
     </script>
-
-
 
     <?php if (isset($_GET['alunocadastrado'])) { ?>
         <script>
