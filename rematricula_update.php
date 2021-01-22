@@ -156,9 +156,15 @@ $documentos =  pg_fetch_all($result);
                         <label for="exampleInputEmail1">Código:</label>
                         <input class="form-control" type="text" name="vch_codigo" id="vch_codigo" readonly value="<?php echo $aluno['id_alunoreserva'] ?>" />
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label for="exampleInputEmail1 ">Código SGE:</label>
                         <input class="form-control" type="text" name="vch_codigo_sge" id="vch_codigo" readonly value="<?php echo $aluno['ed47_i_codigo'] ?>" />
+                    </div>
+                    <div class="col-md-8">
+                        <label for="" id="labelNome" readonly>Nome do aluno:</label>
+                         <!-- line old -->
+                         <!-- <input required  class="form-control " type="text" name="vch_nome" id="vch_nome" value="<?php echo $aluno['ed47_v_nome'] ?>" onkeyup="this.value = this.value.toUpperCase();" /> -->
+                        <input   class="form-control " onchange="salvaNomeDoCampoModificado(this)" type="text" name="vch_nome" id="vch_nome" readonly value="<?php echo $aluno['ed47_v_nome'] ?>" onkeyup="this.value = this.value.toUpperCase();" />
                     </div>
                 </div>
             </div>
@@ -178,20 +184,6 @@ $documentos =  pg_fetch_all($result);
             </div>
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-12">
-                        <label for="" id="labelNome" readonly>Nome do aluno:</label>
-                         <!-- line old -->
-                         <!-- <input required  class="form-control " type="text" name="vch_nome" id="vch_nome" value="<?php echo $aluno['ed47_v_nome'] ?>" onkeyup="this.value = this.value.toUpperCase();" /> -->
-                        <input   class="form-control " onchange="salvaNomeDoCampoModificado(this)" type="text" name="vch_nome" id="vch_nome" readonly value="<?php echo $aluno['ed47_v_nome'] ?>" onkeyup="this.value = this.value.toUpperCase();" />
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-3">
-                        <label for="sdt_nascimento" id="labelDataNascimento" >Data Nascimento:</label>
-                        <input required  readonly class="form-control" onchange="salvaNomeDoCampoModificado(this);testaIdade(this.value);" type="text" name="sdt_nascimento" id="sdt_nascimento" value="<?php echo $datando ?>">
-                    </div>
                     <!-- <div class="col-md-3">
                         <label for="cp_sexo" id="labelSexo" readonly>Sexo:</label>
                         <select required disabled  class="browser-default custom-select" onchange="salvaNomeDoCampoModificado(this)" name="vch_sexo" id="cp_sexo">
@@ -254,7 +246,12 @@ $documentos =  pg_fetch_all($result);
             <!-- </div> -->
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-4">
+                        <label for="sdt_nascimento" id="labelDataNascimento" >Data Nascimento:</label>
+                        <input required  readonly class="form-control" onchange="salvaNomeDoCampoModificado(this);testaIdade(this.value);" type="text" name="sdt_nascimento" id="sdt_nascimento" value="<?php echo $datando ?>">
+                    </div>
+
+                    <div class="col-md-8">
                         <label>Nome da Mãe:</label>
                         <!-- <span id="spanAsteristicoMae">*</span> -->
                         <input   class="form-control " onchange="salvaNomeDoCampoModificado(this)" type="text" name="vch_mae" id="vch_mae" readonly value="<?php echo $aluno['ed47_v_mae'] ?>" onkeyup="this.value = this.value.toUpperCase();">
