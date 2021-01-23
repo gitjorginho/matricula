@@ -13,7 +13,7 @@ if (isset($_GET['id_alunoreserva'])) {
     <br>
     <form method="post" action="verificar_matricula_rematricula.php">
         <div class="card-body">
-            <i>-Caro aluno, favor informar o código de inscrição presente no Comprovante de Lista de Espera.</i>
+            <i>Favor informar o código de inscrição presente no Comprovante de Lista de Espera.</i>
         </div>
         <div class="form-group">
             <div class="row">
@@ -37,26 +37,26 @@ if (isset($_GET['id_alunoreserva'])) {
         </div>
         <div class="form-group">
             <div class="row">
+                <div class="col-md-4">
+                    <label for="exampleInputEmail1" id="labelDataNascimento">Data de Nascimento do aluno:</label>
+                    <input class="form-control" type="text" name="vch_data_nasc" id="vch_datanasc_edit" onKeyPress="mudarCorCampo('labelDataNascimento', 'vch_datanasc_edit')" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
                 <div class="col-md-8">
                     <label for="exampleInputEmail1">Nome do Responsável:</label>
                     <input onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" name="vch_nome_resp" />
                 </div>
 
             </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-md-4">
-                    <label for="exampleInputEmail1" id="labelDataNascimento">Data Nascimento do aluno:</label>
-                    <input class="form-control" type="text" name="vch_data_nasc" id="vch_datanasc_edit" onKeyPress="mudarCorCampo('labelDataNascimento', 'vch_datanasc_edit')" />
-                </div>
-            </div>
-        </div>
+        </div>        
         <br>
         <div class="form-group">
             <div class="row">
                 <div class="col">
-                    <input class="btn btn-success col-3" type="submit" onclick="return validar()" value="Enviar">
+                    <input class="btn btn-success col-3" type="submit" onclick="return validar()" value="Pesquisar">
                     <input class="form-control" type="hidden" name="vch_cod_aluno" id="vch_cod_aluno" value="<?php echo $id_alunoreserva; ?>"/>  
                 </div>
             </div>

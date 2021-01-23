@@ -38,7 +38,15 @@ if ($cod_aluno != ''){
     }
     else{
         if ($aluno['confirmacao_rematricula'] == true ){
-            header('Location:index.php?rematricula=1');
+            //header('Location:index.php?rematricula=1');
+            
+            //SQL para buscar alunos no banco do SGE (alunos em código no reserva matrícula)
+
+            //Caso não exista, redirecionar para header('Location:index.php?rematricula=1');
+
+            //Caso exista redirecionar para uma nova página que é igual a página de formulário de solicitação de rematrícula. (rematricula_update.php -> rematricula_update_SGE.php)
+            //
+
         }
         else{
             $sql_etapaescola = "
@@ -88,7 +96,12 @@ else{
         $_SESSION['escola'] = 'true';
         header('Location:rematricula_update.php');
     } else {
-        header('Location:index.php?not_found=1');
+        //header('Location:index.php?not_found=1');
+        //Mesmo select de cima ($sql_matricula) mas buscando do SGE. 
+        //Se não encontrar -> levar para header('Location:index.php?rematricula=1');
+        //Caso encontre, levar para a página nova de edição (rematricula_update.php -> rematricula_update_SGE.php)
+
+        
     }
 }
 
