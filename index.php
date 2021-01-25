@@ -106,6 +106,37 @@ if (isset($_GET['id_alunoreserva'])) {
         </div>
     </div>
 
+    <!-- Aviso no carregamento da página -->
+    <div class="modal fade" id="modalCarregamento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">    
+            <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Para iniciar, tenha em mãos os seguintes dados</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        1 - NOME COMPLETO;<br>
+                        2 - DATA DE NASCIMENTO;<br>
+                        3 - NOME COMPLETO DO RESPONSÁVEL;<br>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fim de aviso no carregamento da página -->
+
+    <!-- Acionamento modal de carregamento -->    
+
+    <?php if (!isset($_GET['not_found']) && !isset($_GET['rematricula']) && !isset($_GET['ultimaetapa'])) { ?>
+        <script>
+            $('#modalCarregamento').modal('show');
+        </script>
+    <?php } ?>
+
+    <!-- Fim de acionamento modal de carregamento -->
+
     <script>
         $('#vch_datanasc_edit').mask('00/00/0000');
 
