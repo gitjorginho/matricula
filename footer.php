@@ -1,7 +1,7 @@
 </div>
 </div>
 
-<div class="footer footer_medium" style="height: 80px;">
+<div class="footer footer_medium" style="height: 120px;">
     <div class="footer_center">
         <div class="footer_text">
             <p  style="color:green;font-size:medium">Rua Francisco Drummond, S/N, Centro Administrativo. <br>
@@ -12,6 +12,14 @@
             <p style="color:green;font-size:medium">
                 <img src="img/telefone.png" class="img-responsive" alt="">&nbsp&nbspMatrícula Atende: 9 8796-8484<br>
                 <img src="img/email.png" class="img-responsive" alt="">&nbsp&nbspe-mail: atendimento@seduc.com.br
+            </p>
+        </div>
+    </div>
+    <div class="footer_center" style="justify-content: center;display: flex;">
+        <div class="footer_text" style="justify-content: center;display: flex;">
+            <br>
+            <p style="color:green;font-size:medium;justify-content: center;display: flex;">
+                Powered by <a href="https://www.jcl-tecnologia.com.br/"> JCL Tecnologia</a> 
             </p>
         </div>
     </div>
@@ -32,6 +40,9 @@
     <div class="footer_text" style="margin-bottom: 10px; margin-left: 20px;">
         <p class="" style="color:green ">Rua Francisco Drummond, S/N, Centro Administrativo. >
             CEP 42.800-000 | Camaçari - Bahia - Brasil<br>2020 Prefeitura Municipal de Camaçari.</p>
+        <p style="color:green;font-size:medium;justify-content: center;display: flex;">
+            Powered by <a href="https://www.jcl-tecnologia.com.br/"> JCL Tecnologia</a> 
+        </p>
     </div>
 </div>
 
