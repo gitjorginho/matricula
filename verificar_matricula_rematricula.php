@@ -33,7 +33,10 @@ if ($cod_aluno != ''){
     $result = pg_query($conn, $sql_matricula);
     $aluno = pg_fetch_assoc($result);
 
+    
+
     if (pg_num_rows($result) == 0) {
+
         //header('Location:index.php?not_found=1');
         //SQL para buscar alunos no banco do SGE (alunos sem código no reserva matrícula)
         $sql_aluno_sge = "select (select true 
@@ -53,7 +56,9 @@ if ($cod_aluno != ''){
 
         //Caso não exista, redirecionar para header('Location:index.php?rematricula=1');
         if (pg_num_rows($result) == 0) {
-            header('Location:index.php?not_found=1');
+            //header('Location:index.php?not_found=1');
+          $_SESSION['not_found'] = true;
+          header('Location:index.php');
         }
         //Caso exista, realizar as etapas seguintes e redirecionar para uma nova página que é igual a página de formulário de solicitação de rematrícula. (rematricula_update.php -> rematricula_update_SGE.php)
         //TO-DO - melhorar esse método para não existir o mesmo código em dois pontos diferentes do script.
@@ -99,9 +104,15 @@ if ($cod_aluno != ''){
         }   
 
     }
+    
     else{
         if ($aluno['confirmacao_rematricula'] == true ){
-            header('Location:index.php?rematricula=1');           
+            //header('Location:index.php?rematricula=1');           
+            //$_SESSION['codigo'] = $aluno['id_alunoreserva'];
+            $_SESSION['codigo'] = $aluno['ed47_i_codigo'];
+            $_SESSION['rematricula'] = true;
+            header('Location:index.php');
+
         }
         else{
             $sql_etapaescola = "
@@ -126,7 +137,8 @@ if ($cod_aluno != ''){
             $result = pg_query($conn, $sql_etapaescola);
             $etapaescola = pg_fetch_assoc($result);
             if($aluno['idserie'] == $etapaescola['idserie']){
-                header('Location:index.php?ultimaetapa=1');
+               $_SESSION['ultimaetapa'] = true; 
+               header('Location:index.php');
             }
             else{
                 $_SESSION['codigo'] = $aluno['id_alunoreserva'];

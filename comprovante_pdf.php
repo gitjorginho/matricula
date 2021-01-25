@@ -11,7 +11,6 @@ $sql_data_inscricao = "select * from reserva.auditoriareserva where id_alunorese
 $result = pg_query($conn, $sql_data_inscricao);
 $auditoria = pg_fetch_assoc($result);
 
-
 $data_atual = "Data de Inscrição: ".date("d/m/Y H:i:s", strtotime("{$auditoria['adr_d_data']}"));
 
 $sql_aluno =" 
@@ -46,15 +45,18 @@ $result = pg_query($conn, $sql_aluno);
 $aluno = pg_fetch_assoc($result);
 
 $sql_escola = "
-    select 
-        ed18_c_nome as escola 
+    select escola.*, j14_nome rua, j13_descr bairro  
     from escola 
+    inner join bairro  on  bairro.j13_codi = escola.ed18_i_bairro
+    inner join ruas  on  ruas.j14_codigo = escola.ed18_i_rua
+    inner join censouf  on  censouf.ed260_i_codigo = escola.ed18_i_censouf
+    inner join censomunic  on  censomunic.ed261_i_codigo = escola.ed18_i_censomunic
     where 
         ed18_i_codigo = {$aluno['escola']}";
 
 $result = pg_query($conn, $sql_escola);
-$escola = pg_fetch_assoc($result);
-$escola = trim($escola['escola']);
+$dadosEscola = pg_fetch_assoc($result);
+$escola = trim($dadosEscola['ed18_c_nome']);
 
 //echo $sql_escola; 
 
@@ -88,12 +90,9 @@ $sql_documentacao = "select trim(ed02_c_descr) ed02_c_descr   from docaluno
 join documentacao on ed49_i_documentacao =  ed02_i_codigo
 where ed49_i_aluno = {$aluno['ed47_i_codigo']} ";
 
-    $result = pg_query($conn, $sql_documentacao);
-    $arrDocumentoaluno = pg_fetch_all($result);
+    $resultDoc = pg_query($conn, $sql_documentacao);
+    $arrDocumentoaluno = pg_fetch_all($resultDoc);
     
-
-//die(var_dump($aluno));
-
 $nome_aluno = trim($aluno['ed47_v_nome']);
 $nome_mae = trim($aluno['ed47_v_mae']);
 if($nome_mae == ''){
@@ -118,11 +117,16 @@ $oPdf = new FPDF();
 $oPdf->AliasNbPages();
 $oPdf->setfillcolor(235);
 $oPdf->addPage('P', 'A4');
-$oPdf->Image('img/Cabecalho_pdf.png',3,3,210);
+$oPdf->Image('img/Cabecalho_pdf.png',10,10,190);
+
 $oPdf->SetXY(20,40);
 $oPdf->SetFont('arial','b',8);
-$oPdf->Text('140','23', 'Confirmação de rematrícula realizada.'); //.trim($aluno['status_abrev']));
-$oPdf->Text('140','27', $data_atual );
+$oPdf->Text('135','28', 'Confirmação de rematrícula realizada.'); //.trim($aluno['status_abrev']));
+$oPdf->Text('135','32', $data_atual );
+$oPdf->SetFont('arial','b',8);
+$oPdf->Text('40','18', trim($dadosEscola['ed18_c_nome']));
+$oPdf->SetFont('arial','',8);
+$oPdf->Text('40','22', trim($dadosEscola['rua']).', '.$dadosEscola['ed18_i_numero'].'-'.trim($dadosEscola['bairro']));
 
 $oPdf->SetXY(20,70);
 $oPdf->SetFont('arial','b',14);
@@ -138,13 +142,14 @@ $oPdf->SetXY(20,130);
 // $oPdf->MultiCell(170,5,"Para realizar o processo de matrícula são necessárias as seguintes documentações:");
 // $oPdf->SetXY(30,140);
 
+if (pg_num_rows($resultDoc) > 0){
  $oPdf->MultiCell(170,5,"Documentação Pendente:");
  $oPdf->SetXY(30,140);
 
-
-foreach ($arrDocumentoaluno as $documento){
-    $oPdf->MultiCell(180,5,'* '.$documento['ed02_c_descr']);
-    $oPdf->SetXY(30,145);
+    foreach ($arrDocumentoaluno as $documento){
+        $oPdf->MultiCell(180,5,'* '.$documento['ed02_c_descr']);
+        $oPdf->SetXY(30,145);
+    }
 }
   
 // $oPdf->MultiCell(180,5,"2. Certidão de Registro Civil ou RG;");
