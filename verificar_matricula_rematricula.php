@@ -90,7 +90,9 @@ if ($cod_aluno != ''){
 
             $etapaescola = pg_fetch_assoc($result);
             if($aluno['idserie'] == $etapaescola['idserie']){
-                header('Location:index.php?ultimaetapa=1');
+                //header('Location:index.php?ultimaetapa=1');
+                $_SESSION['ultimaetapa'] = true; 
+                header('Location:index.php');
             }
             else
             {
@@ -108,8 +110,8 @@ if ($cod_aluno != ''){
     else{
         if ($aluno['confirmacao_rematricula'] == true ){
             //header('Location:index.php?rematricula=1');           
-            //$_SESSION['codigo'] = $aluno['id_alunoreserva'];
-            $_SESSION['codigo'] = $aluno['ed47_i_codigo'];
+            $_SESSION['codigo'] = $aluno['id_alunoreserva'];
+            //$_SESSION['codigo'] = $aluno['ed47_i_codigo'];
             $_SESSION['rematricula'] = true;
             header('Location:index.php');
 
