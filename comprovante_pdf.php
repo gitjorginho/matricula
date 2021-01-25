@@ -88,11 +88,11 @@ $sql_documentacao = "select trim(ed02_c_descr) ed02_c_descr   from docaluno
 join documentacao on ed49_i_documentacao =  ed02_i_codigo
 where ed49_i_aluno = {$aluno['ed47_i_codigo']} ";
 
-    $result = pg_query($conn, $sql_documentacao);
-    $arrDocumentoaluno = pg_fetch_all($result);
+    $resultDoc = pg_query($conn, $sql_documentacao);
+    $arrDocumentoaluno = pg_fetch_all($resultDoc);
     
 
-//die(var_dump($aluno));
+
 
 $nome_aluno = trim($aluno['ed47_v_nome']);
 $nome_mae = trim($aluno['ed47_v_mae']);
@@ -138,13 +138,14 @@ $oPdf->SetXY(20,130);
 // $oPdf->MultiCell(170,5,"Para realizar o processo de matrícula são necessárias as seguintes documentações:");
 // $oPdf->SetXY(30,140);
 
+if (pg_num_rows($resultDoc) > 0){
  $oPdf->MultiCell(170,5,"Documentação Pendente:");
  $oPdf->SetXY(30,140);
 
-
-foreach ($arrDocumentoaluno as $documento){
-    $oPdf->MultiCell(180,5,'* '.$documento['ed02_c_descr']);
-    $oPdf->SetXY(30,145);
+    foreach ($arrDocumentoaluno as $documento){
+        $oPdf->MultiCell(180,5,'* '.$documento['ed02_c_descr']);
+        $oPdf->SetXY(30,145);
+    }
 }
   
 // $oPdf->MultiCell(180,5,"2. Certidão de Registro Civil ou RG;");

@@ -1,4 +1,5 @@
 <?php
+session_start();
 $banner_passo = 0;
 require_once('header.php');
 
@@ -141,21 +142,27 @@ if (isset($_GET['id_alunoreserva'])) {
     </script>
 
     <!--VERIFICA SE A BUSCA DO ALUNO RETORNOU VAZIA E IMPRIME MENSAGEM RELACIONADA A ISTO -->
-    <?php if (isset($_GET['not_found'])) { ?>
+    <?php if (isset($_SESSION['not_found'])) {
+        unset($_SESSION['not_found']);
+        ?>
         <script>
             $('#msg_modal').text( ' Não foi possível localizar aluno! Verifique se os dados estão corretos.');
             $('#modalMessagem').fadeIn().modal('show');
         </script>
     <?php } ?>
 
-    <?php if (isset($_GET['rematricula'])) {  ?>
+    <?php if (isset($_SESSION['rematricula'])) {  
+        unset($_SESSION['rematricula']);
+        ?>
         <script>
-            $('#msg_modal').text( 'Aluno com rematricula confirmada! Aguarde contato da Unidade Escolar ou Secretaria de Educação. ');  
+            $('#msg_modal').html( 'Aluno com rematricula confirmada! Aguarde contato da Unidade Escolar ou Secretaria de Educação. <br> <br> <a href="comprovante.php"><button class="btn btn-secondary text-center">Imprimir Comprovante</button></a>');  
             $('#modalMessagem').fadeIn().modal('show');
         </script>
     <?php } ?>
 
-    <?php if (isset($_GET['ultimaetapa'])) {  ?>
+    <?php if (isset($_SESSION['ultimaetapa'])) {  
+        unset($_SESSION['ultimaetapa']);
+        ?>
         <script>
             $('#msg_modal').text( 'Aluno não pode confirmar rematrícula devido ser o último ano na unidade escolar! Em caso de dúvida entre em contato com a unidade escolar ou secretaria de educação');  
             $('#modalMessagem').fadeIn().modal('show');
