@@ -79,10 +79,46 @@ if ($aluno['ed47_i_codigo'] != ''){
 
 }
 
-$sql_documentacao = "select trim(ed02_c_descr) ed02_c_descr   from docaluno 
-join documentacao on ed49_i_documentacao =  ed02_i_codigo
-where ed49_i_aluno = {$aluno['ed47_i_codigo']} ";
+$sql_documentacao_analise = "
+select  
+	trim(ed02_c_descr) ed02_c_descr
+from docaluno
+join documentacao on ed49_i_documentacao = ed02_i_codigo
+where ed49_i_aluno = {$aluno['ed47_i_codigo']}  and ed02_i_codigo  in (
+	select ed02_i_codigo from reserva.documentoalunoreservasge
+	left join reserva.documentoreserva d on d.id_documentoreserva = documentoalunoreservasge.id_documentoreserva
+	where ed47_i_codigo = {$aluno['ed47_i_codigo']}
+    )
 
+";
+
+
+
+
+$result = pg_query($conn, $sql_documentacao_analise);
+if (pg_num_rows($result) == 0)
+{
+    $arrDocumentoAnaliseAluno = null;
+}
+else
+    $arrDocumentoAnaliseAluno = pg_fetch_all($result);
+
+
+
+
+
+$sql_documentacao = "
+select  
+	trim(ed02_c_descr) ed02_c_descr
+from docaluno
+join documentacao on ed49_i_documentacao = ed02_i_codigo
+where ed49_i_aluno = {$aluno['ed47_i_codigo']}  and ed02_i_codigo  not in (
+	select ed02_i_codigo from reserva.documentoalunoreservasge
+	left join reserva.documentoreserva d on d.id_documentoreserva = documentoalunoreservasge.id_documentoreserva
+	where ed47_i_codigo = {$aluno['ed47_i_codigo']}
+    )
+
+";   
     $result = pg_query($conn, $sql_documentacao);
     if (pg_num_rows($result) == 0)
     {
@@ -90,9 +126,8 @@ where ed49_i_aluno = {$aluno['ed47_i_codigo']} ";
     }
     else
         $arrDocumentoaluno = pg_fetch_all($result);
-    
+       
 
-//die(var_dump($aluno));
 
 $nome_aluno = trim($aluno['ed47_v_nome']);
 $nome_mae = trim($aluno['ed47_v_mae']);
@@ -100,18 +135,12 @@ if($nome_mae == ''){
 	$nome_mae = "Não informado";
 }
 
+
+
 $dtsnas = date('d/m/Y', strtotime($aluno['ed47_d_nasc']));
 $codigo_espera = $aluno['codigo'];
-//$sql_serie = "
-//    select 
-//        ed11_c_descr 
-//    from serie 
-//    where 
-//        ed11_i_codigo = {$aluno['ed221_i_serie']}
-//    ";
 
-//$result = pg_query($conn, $sql_serie);			
-//$serie = pg_fetch_assoc($result);
+
 $turma = 'A';//trim($serie['ed11_c_descr']);
 
 $oPdf = new FPDF();
@@ -138,14 +167,31 @@ $oPdf->SetXY(20,130);
 // $oPdf->MultiCell(170,5,"Para realizar o processo de matrícula são necessárias as seguintes documentações:");
 // $oPdf->SetXY(30,140);
 
- $oPdf->MultiCell(170,5,"Documentação Pendente:");
- $oPdf->SetXY(30,140);
-
+ 
 if (!is_null($arrDocumentoaluno))
 {
+    $oPdf->SetFont('arial','b',11);
+    $oPdf->Cell(170,5,"Documentação Pendente:",0,2);
+    $oPdf->SetFont('arial','',11);
+    
     foreach ($arrDocumentoaluno as $documento){
-        $oPdf->MultiCell(180,5,'* '.$documento['ed02_c_descr']);
-        $oPdf->SetXY(30,145);
+        $oPdf->Cell(180,5,'* '.$documento['ed02_c_descr'],0,2);
+        
+    }
+
+}
+
+$oPdf->Cell(170,5,"",0,2);
+
+if (!is_null($arrDocumentoAnaliseAluno))
+{
+    $oPdf->SetFont('arial','b',11);
+    $oPdf->Cell(170,5,"Documentação em Analise:",0,2);
+    $oPdf->SetFont('arial','',11);
+    
+    foreach ($arrDocumentoAnaliseAluno as $documento){
+        $oPdf->Cell(180,5,'* '.$documento['ed02_c_descr'],0,2);
+        
     }
 
 }
