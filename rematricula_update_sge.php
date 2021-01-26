@@ -139,13 +139,28 @@ $documentos =  pg_fetch_all($result);
                     </div>
                 </div>
             </div>            
-                              
-            <?php if ($aluno['pendencia_doc_sge'] = true){ ?> 
+            
+            <?php
+              if ($aluno['pendencia_doc_sge'] == false) {
+            ?>
+            <hr>
+            <h3 class="text-center">Documentos pendentes</h3>
+            <h5 class='text-center' style='color:#28A745;'>Aluno sem pendência(s) de documento(s) registrada(s) na unidade escolar.</h5>
+            <br>
+            <br>
+            <?php
+              }
+            ?>
+
+
+
+
+            <?php if ($aluno['pendencia_doc_sge'] == true){ ?> 
             <!-- <br> -->
             <!-- <br> -->
             <hr>
             <h3 class="text-center">Documentos pendentes</h3>
-            <h4>Anexar documentos pendentes abaixo, caso não tenha o documento em mãos, verificar com a unidade escolar uma data para entrega</h4>
+            <h5>Anexar documento(s) pendente(s) abaixo, caso não tenha o(s) documento(s) em mãos, verificar com a unidade escolar uma data para entrega!</h5>
             <br>
             <br>
 

@@ -120,7 +120,7 @@ if (isset($_GET['id_alunoreserva'])) {
                     </div>
                     <div class="modal-body">
                         1 - NOME COMPLETO DO ALUNO;<br>
-                        2 - DATA DE NASCIMENTO;<br>
+                        2 - DATA DE NASCIMENTO DO ALUNO;<br>
                         3 - NOME COMPLETO DA MÃE;<br>
                     </div>
             </div>
