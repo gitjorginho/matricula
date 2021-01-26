@@ -10,22 +10,22 @@ if (isset($_GET['id_alunoreserva'])) {
 
 <div class="centr">
     <br>
-    <h2 class="text-center">Rematr√≠cula 2021</h2>
+    <h2 class="text-center">RematrÌcula 2021</h2>
     <br>
     <form method="post" action="verificar_matricula_rematricula.php">
         <div class="card-body">
-            <i>Favor informar o c√≥digo de inscri√ß√£o presente no Comprovante de Lista de Espera.</i>
+            <i>Favor informar o cÛdigo de inscriÁ„o presente no Comprovante de Lista de Espera.</i>
         </div>
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4">
-                    <label for="exampleInputEmail1">C√≥digo do Aluno: (SER√Å REMOVIDO EM PRODU√á√ÉO)</label>
+                    <label for="exampleInputEmail1">CÛdigo do Aluno: (SER¡ REMOVIDO EM PRODU«√O)</label>
                     <input class="form-control" type="text" name="cod_aluno" id="cod_aluno" />
                 </div>
             </div>
         </div>
         <div class="card-body">
-            <i>-Caso n√£o tenha em m√£os o c√≥digo de inscri√ß√£o, favor preencher os campos abaixo.</i>
+            <i>-Caso n„o tenha em m„os o cÛdigo de inscriÁ„o, favor preencher os campos abaixo.</i>
         </div>
 
         <div class="form-group">
@@ -47,7 +47,7 @@ if (isset($_GET['id_alunoreserva'])) {
         <div class="form-group">
             <div class="row">
                 <div class="col-md-8">
-                    <label for="exampleInputEmail1">Nome da m√£e:</label>
+                    <label for="exampleInputEmail1">Nome da m„e:</label>
                     <input onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" name="vch_nome_resp" />
                 </div>
 
@@ -64,9 +64,9 @@ if (isset($_GET['id_alunoreserva'])) {
         </div>
     </form>
 
-    <!-- Bot√£o para acionar modal -->
+    <!-- Bot„o para acionar modal -->
     <button id="msg" type="button" style="display: none" class="btn btn-primary" data-toggle="modal" data-target="#modalExemplo">
-        Abrir modal de demonstra√ß√£o
+        Abrir modal de demonstraÁ„o
     </button>
     <!-- Modal -->
     <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -108,13 +108,13 @@ if (isset($_GET['id_alunoreserva'])) {
     </div>
 
     
-    <!-- Aviso no carregamento da p√°gina -->
+    <!-- Aviso no carregamento da p·gina -->
     <div class="modal fade" id="modalCarregamento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">    
             <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Para iniciar, tenha em m√£os os seguintes dados</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Para iniciar, tenha em m„os os seguintes dados</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -122,12 +122,12 @@ if (isset($_GET['id_alunoreserva'])) {
                     <div class="modal-body">
                         1 - NOME COMPLETO DO ALUNO;<br>
                         2 - DATA DE NASCIMENTO DO ALUNO;<br>
-                        3 - NOME COMPLETO DA M√ÉE;<br>
+                        3 - NOME COMPLETO DA M√E;<br>
                     </div>
             </div>
         </div>
     </div>
-    <!-- Fim de aviso no carregamento da p√°gina -->
+    <!-- Fim de aviso no carregamento da p·gina -->
 
     <!-- Acionamento modal de carregamento -->    
 
@@ -179,7 +179,7 @@ if (isset($_GET['id_alunoreserva'])) {
         unset($_SESSION['not_found']);
         ?>
         <script>
-            $('#msg_modal').text( ' N√£o foi poss√≠vel localizar aluno! Verifique se os dados est√£o corretos.');
+            $('#msg_modal').text( ' N„o foi possÌvel localizar aluno! Verifique se os dados est„o corretos.');
             $('#modalMessagem').fadeIn().modal('show');
         </script>
     <?php } ?>
@@ -197,7 +197,7 @@ if (isset($_GET['id_alunoreserva'])) {
         unset($_SESSION['ultimaetapa']);
         ?>
         <script>
-            $('#msg_modal').text( 'Aluno n√£o pode confirmar rematr√≠cula devido ser o √∫ltimo ano na unidade escolar! Em caso de d√∫vida entre em contato com a unidade escolar ou secretaria de educa√ß√£o');  
+            $('#msg_modal').text( 'Aluno n„o pode confirmar rematrÌcula devido ser o ˙ltimo ano na unidade escolar! Em caso de d˙vida entre em contato com a unidade escolar ou secretaria de educaÁ„o');  
             $('#modalMessagem').fadeIn().modal('show');
         </script>
     <?php } ?>
@@ -227,7 +227,7 @@ if (isset($_GET['id_alunoreserva'])) {
 
             if (nome_completo.length == 1) {
                 $("#msg").trigger("click");
-                $("#msg_text").text("Nome do aluno est√° incompleto!");
+                $("#msg_text").text("Nome do aluno est· incompleto!");
                 document.getElementById('labelDataNascimento').style.color = 'red';
                 document.getElementById('sdt_nascimento').style.borderColor = 'red';
                 return false;
@@ -246,9 +246,9 @@ if (isset($_GET['id_alunoreserva'])) {
 
     <?php if (isset($_GET['alunocadastrado'])) { ?>
         <script>
-            //alert('Aluno j√° cadastrado, vc pode consultar os dados aqui.');
+            //alert('Aluno j· cadastrado, vc pode consultar os dados aqui.');
             $('#msg').trigger('click');
-            $('#msg_text').text("Aluno j√° cadastrado! N√∫mero da reserva: " + document.getElementById('vch_cod_aluno').value + "");
+            $('#msg_text').text("Aluno j· cadastrado! N˙mero da reserva: " + document.getElementById('vch_cod_aluno').value + "");
         </script>
     <?php } ?>
     <?php require_once('footer.php'); ?>
