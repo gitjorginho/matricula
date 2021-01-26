@@ -14,7 +14,7 @@ if (isset($_GET['id_alunoreserva'])) {
     <br>
     <form method="post" action="verificar_matricula_rematricula.php">
         <div class="card-body">
-            <i>Favor informar o código de inscrição presente no Comprovante de Lista de Espera.</i>
+            <i>Favor informar o código (SERÁ REMOVIDO EM PRODUÇÃO)</i>
         </div>
         <div class="form-group">
             <div class="row">
