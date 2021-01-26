@@ -75,6 +75,12 @@ $idade = floor((((($hoje - $nascimento) / 60) / 60) / 24) / 365.25);
 
 
 //Verificar documentação pendente para a rematrícula. Por não ser mais obrigatório, não é necessário checar se já foi enviado. A rematrícula já é sinal de que não precisa carregar essas informações.
+
+
+
+
+
+
 $sql_documento = "select d2.ed02_i_codigo,
                          d2.ed02_c_descr,
                          d3.id_documentoreserva,
@@ -87,6 +93,23 @@ $sql_documento = "select d2.ed02_i_codigo,
                      and d3.ed02_i_codigo = d2.ed02_i_codigo 
                      and d.ed49_i_aluno = {$aluno['ed47_i_codigo']}";
 
+$sql_documento = "
+select  
+      d.ed02_i_codigo,
+      ed02_c_descr,
+      id_documentoreserva,
+      obrigatorio,
+      frenteverso
+from docaluno
+join documentacao d on ed49_i_documentacao = d.ed02_i_codigo
+join reserva.documentoreserva rd on rd.ed02_i_codigo  = d.ed02_i_codigo 
+where ed49_i_aluno = {$aluno['ed47_i_codigo']} and d.ed02_i_codigo  not in (
+	select ed02_i_codigo from reserva.documentoalunoreservasge
+	left join reserva.documentoreserva d on d.id_documentoreserva = documentoalunoreservasge.id_documentoreserva
+	where ed47_i_codigo = {$aluno['ed47_i_codigo']}
+    )
+";
+                     //die($sql_documento);
 $result = pg_query($conn,$sql_documento);
 $documentos =  pg_fetch_all($result);
 

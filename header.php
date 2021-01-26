@@ -29,6 +29,12 @@ header("Content-Type: text/html;  charset=ISO-8859-1", true);
         </div>
     </div>
 
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link active" href="Manual Portal de matrícula v 1.0-1.pdf">Manual de Usuário</a>
+        </li>
+    </ul>
+
     <!--<div class="nav_bar">
         <div class="nav_bar_center">
                 <nav class="navbar navbar-expand-lg navbar-light mynav" style="background-color: #02CA74; z-index:500; ">
