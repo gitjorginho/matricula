@@ -178,11 +178,12 @@ else{
         $sql_matricula_sge = "select a.ed47_i_codigo
                                 from escola.aluno a
                                where a.ed47_v_nome ilike '%$nome_aluno%' 
-                                 and a.ed47_c_nomeresp ilike '%$vch_nome_resp%' 
+                                 and a.ed47_v_mae ilike '%$vch_nome_resp%' 
                                  and a.ed47_d_nasc  = '$data_nasc' 
                                limit 1;";
+                               //die($sql_matricula_sge);
         //Buscando
-        $result = pg_query($conn, $sql_matricula);
+        $result = pg_query($conn, $sql_matricula_sge);        
         
         //Caso encontre, levar para a página nova de edição (rematricula_update.php -> rematricula_update_SGE.php)
         if (pg_num_rows($result) >= 1)
@@ -198,7 +199,9 @@ else{
         //Se não encontrar -> levar para header('Location:index.php?rematricula=1');
         else
         {
-            header('Location:index.php?not_found=1');
+            //header('Location:index.php?not_found=1');
+            $_SESSION['not_found'] = true;
+            header('Location:index.php');
         }
 
         
@@ -210,6 +213,8 @@ else{
 function dateToDatabase($date)
 {
     $date = explode('/', $date);
-    $date_to_database = "$date[0]-$date[1]-$date[2]";
+    //$date_to_database = "$date[0]-$date[1]-$date[2]";
+    $date_to_database = "$date[2]-$date[1]-$date[0]";
+    //var_dump($date_to_database);
     return $date_to_database;
 }
