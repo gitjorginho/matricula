@@ -14,7 +14,7 @@ if (isset($_GET['id_alunoreserva'])) {
     <br>
     <form method="post" action="verificar_matricula_rematricula.php">
         <div class="card-body">
-            <i>-Caro aluno, favor informar o código de inscrição presente no Comprovante de Lista de Espera.</i>
+            <i>Favor informar o código de inscrição presente no Comprovante de Lista de Espera.</i>
         </div>
         <div class="form-group">
             <div class="row">
@@ -38,26 +38,26 @@ if (isset($_GET['id_alunoreserva'])) {
         </div>
         <div class="form-group">
             <div class="row">
+                <div class="col-md-4">
+                    <label for="exampleInputEmail1" id="labelDataNascimento">Data de Nascimento do aluno:</label>
+                    <input class="form-control" type="text" name="vch_data_nasc" id="vch_datanasc_edit" onKeyPress="mudarCorCampo('labelDataNascimento', 'vch_datanasc_edit')" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
                 <div class="col-md-8">
                     <label for="exampleInputEmail1">Nome do Responsável:</label>
                     <input onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" name="vch_nome_resp" />
                 </div>
 
             </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-md-4">
-                    <label for="exampleInputEmail1" id="labelDataNascimento">Data Nascimento do aluno:</label>
-                    <input class="form-control" type="text" name="vch_data_nasc" id="vch_datanasc_edit" onKeyPress="mudarCorCampo('labelDataNascimento', 'vch_datanasc_edit')" />
-                </div>
-            </div>
-        </div>
+        </div>        
         <br>
         <div class="form-group">
             <div class="row">
                 <div class="col">
-                    <input class="btn btn-success col-3" type="submit" onclick="return validar()" value="Enviar">
+                    <input class="btn btn-success col-3" type="submit" onclick="return validar()" value="Pesquisar">
                     <input class="form-control" type="hidden" name="vch_cod_aluno" id="vch_cod_aluno" value="<?php echo $id_alunoreserva; ?>"/>  
                 </div>
             </div>
@@ -106,6 +106,37 @@ if (isset($_GET['id_alunoreserva'])) {
             </div>
         </div>
     </div>
+
+    <!-- Aviso no carregamento da página -->
+    <div class="modal fade" id="modalCarregamento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">    
+            <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Para iniciar, tenha em mãos os seguintes dados</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        1 - NOME COMPLETO;<br>
+                        2 - DATA DE NASCIMENTO;<br>
+                        3 - NOME COMPLETO DO RESPONSÁVEL;<br>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fim de aviso no carregamento da página -->
+
+    <!-- Acionamento modal de carregamento -->    
+
+    <?php if (!isset($_GET['not_found']) && !isset($_GET['rematricula']) && !isset($_GET['ultimaetapa'])) { ?>
+        <script>
+            $('#modalCarregamento').modal('show');
+        </script>
+    <?php } ?>
+
+    <!-- Fim de acionamento modal de carregamento -->
 
     <script>
         $('#vch_datanasc_edit').mask('00/00/0000');
