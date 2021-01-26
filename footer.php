@@ -10,8 +10,8 @@
         </div>
         <div class="footer_text_direito">
             <p style="color:green;font-size:medium">
-                <img src="img/telefone.png" class="img-responsive" alt="">&nbsp&nbspMatrícula Atende: 9 8796-8484<br>
-                <img src="img/email.png" class="img-responsive" alt="">&nbsp&nbspe-mail: atendimento@seduc.com.br
+                <img src="img/telefone.png" class="img-responsive" alt="">&nbsp&nbspMatrícula Atende: 71 - 98796-8484<br>
+                <img src="img/email.png" class="img-responsive" alt="">&nbsp&nbspe-mail: matricula.2021@educa.camacari.ba.gov.br
             </p>
         </div>
     </div>
@@ -19,7 +19,7 @@
         <div class="footer_text" style="justify-content: center;display: flex;">
             <br>
             <p style="color:green;font-size:medium;justify-content: center;display: flex;">
-                Powered by <a href="https://www.jcl-tecnologia.com.br/"> JCL Tecnologia</a> 
+                Powered by &nbsp&nbsp<a href="https://www.jcl-tecnologia.com.br/"> JCL Tecnologia</a> 
             </p>
         </div>
     </div>

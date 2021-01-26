@@ -121,9 +121,9 @@ $documentos =  pg_fetch_all($result);
 
 
     <br>
-    <div class="card-body">
+    <!--<div class="card-body">
         <font color="red"><b>ATENÇÃO:</b></font> <i>Para alunos que estudam na ultima etapa, Só seram cadastrado para rematricula quem possuir repetência. Caso contrário séra destinado ao calendário de transferência.</i>
-    </div>
+    </div>-->
     <br>
     <h3 class="text-center">Rematrícula 2021</h3>
     <br>
@@ -151,7 +151,7 @@ $documentos =  pg_fetch_all($result);
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="sdt_nascimento" id="labelDataNascimento" >Data Nascimento:</label>
+                        <label for="sdt_nascimento" id="labelDataNascimento" >Data de nascimento:</label>
                         <input required  readonly class="form-control" onchange="salvaNomeDoCampoModificado(this);testaIdade(this.value);" type="text" name="sdt_nascimento" id="sdt_nascimento" value="<?php echo $datando ?>">
                     </div>
 
@@ -162,12 +162,28 @@ $documentos =  pg_fetch_all($result);
                     </div>
                 </div>
             </div>            
-                              
-            <?php if ($aluno['pendencia_doc_sge'] = true){ ?> 
+            
+            <?php
+              if ($aluno['pendencia_doc_sge'] == false) {
+            ?>
+            <hr>
+            <h3 class="text-center">Documentos pendentes</h3>
+            <h5 class='text-center' style='color:#28A745;'>Aluno sem pendência(s) de documento(s) registrada(s) na unidade escolar.</h5>
+            <br>
+            <br>
+            <?php
+              }
+            ?>
+
+
+
+
+            <?php if ($aluno['pendencia_doc_sge'] == true){ ?> 
             <!-- <br> -->
             <!-- <br> -->
             <hr>
-            <h3 class="text-center">Documentos</h3>
+            <h3 class="text-center">Documentos pendentes</h3>
+            <h5>Anexar documento(s) pendente(s) abaixo, caso não tenha o(s) documento(s) em mãos, verificar com a unidade escolar uma data para entrega!</h5>
             <br>
             <br>
 

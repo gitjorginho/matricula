@@ -113,14 +113,18 @@ body {
     */
     display: block;
   margin-left: auto;
-  margin-right: auto;
+  /* Para centralizar a imagem da tela inicial, remove o margin-right: auto; ou coloca width: 50%; */
+  /* margin-right: auto;*/
   width: 75%;
 }
 
 .img_header {
     width: 100%;
     height: 253px;
-    background: #1B5C3C;
+    /* Cor do portal de reserva de matrícula */
+    /* background: #1B5C3C; */
+    /* Nova cor solicitada para o portal de rematrícula */
+    background: #63BF7E;
 }
 
 .img_center {

@@ -4,6 +4,7 @@ require_once('upload_doc_aluno.php');
 
 header("Content-Type: text/html;  charset=ISO-8859-1", true);
 require_once ('conexao.php');
+require_once('email.php');
 
 $conexao = new Conexao();
 $conn = $conexao->conn();
@@ -123,6 +124,28 @@ $nome_mae           =$_POST['vch_mae'];
 				";
 			
 				$resultInsertConfirmacaoRematricula = pg_query($conn,$sqlInsertConfirmacaoRematricula);
+
+				//Inserção na nova tabela de auditoria do sistema de reserva para atender aos alunos que não possuem código no sistema de reserva.
+				if (pg_affected_rows($resultInsertConfirmacaoRematricula))
+				{
+					$sqlInsertAuditoriaRematriculaReserva = "INSERT INTO reserva.auditoriareservasge
+															(ed47_i_codigo, adr_v_acao, adr_v_informacao)
+															VALUES({$codigo_aluno_sge}, 'REMATRICULA REALIZADA', '');";
+
+					$result = pg_query($conn,$sqlInsertAuditoriaRematriculaReserva);
+
+					if (pg_affected_rows($result))
+					{
+						//enviar email com a confirmação da rematrícula
+						$mensagem = 'Rematrícula do aluno (código) ' . $codigo_aluno_sge . ' realizada com sucesso.';
+						envialEmail($mensagem,'gustavo.araujo@jcl-tecnologia.com.br','','');
+					}
+					else
+					{
+						//enviar e-mail para mim
+					}
+				}
+
 			}else{
 				header('Location:rematricula_update_sge.php?not_matricula=');
 				die(); 	

@@ -25,7 +25,7 @@ header("Content-Type: text/html;  charset=ISO-8859-1", true);
 
     <div class="img_header">
         <div class="img_center_top">
-            <img class="img-responsive" src="img/teste_2.jpeg" width="1000" />
+            <img class="img-responsive" src="img/banner_final.png" width="1000" />
         </div>
     </div>
 
