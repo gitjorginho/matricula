@@ -131,7 +131,9 @@ $oPdf->Text('77','50','Rematrícula 2021');
 $oPdf->SetFont('arial','',10);
 //$oPdf->MultiCell(170,5,"Atesto, para os devidos fins, que o aluno(a) {$nome_aluno}, está com a reserva de matrícula para {$turma['serie']}, $tipoensino, turno {$turma['turno']}, para o calendário 2020, na instituição de ensino {$escola_nome['escola']}.");
 //$oPdf->MultiCell(170,5,"Atesto, para os devidos fins, que o aluno(a) {$nome_aluno},  nascido (a) em $dtsnas, filho (a) legítimo (a) de $nome_mae, está no cadastro de lista de espera sob o número $codigo_espera, na Unidade Escolar $escola, para o calendário 2020 e inscrito na Etapa: $turma.");
-$oPdf->MultiCell(170,5,"Atesto, para os devidos fins, que o aluno(a) {$nome_aluno},  nascido (a) em $dtsnas, filho (a) legítimo (a) de $nome_mae, confirma rematrícula para Unidade Escolar: $escola. Caso o aluno possua pendência na documentação, a Unidade Escolar entrará em contato, ou será apresentado em 72 horas após avaliação.");
+//$oPdf->MultiCell(170,5,"Atesto, para os devidos fins, que o aluno(a) {$nome_aluno},  nascido (a) em $dtsnas, filho (a) legítimo (a) de $nome_mae, confirma rematrícula para Unidade Escolar: $escola. Caso o aluno possua pendência na documentação, a Unidade Escolar entrará em contato, ou será apresentado em 72 horas após avaliação.");
+//Requisito conversado para entrada em produção
+$oPdf->MultiCell(170,5,"Atesto, para os devidos fins, que o aluno(a) {$nome_aluno},  nascido (a) em $dtsnas, filho (a) legítimo (a) de $nome_mae, confirma rematrícula para Unidade Escolar: $escola.");
 //inscrito na Etapa: {$serie['ed11_c_descr']}
 
 $oPdf->SetXY(20,130);

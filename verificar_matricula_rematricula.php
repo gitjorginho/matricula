@@ -47,7 +47,8 @@ if ($cod_aluno != ''){
                                  ac.ed56_i_escola as idescola, 
                                  ac.ed56_i_calendario as idcalendario, 
                                  ac.ed56_i_base as idbase 
-                            from escola.aluno a left join escola.alunocurso ac on a.ed47_i_codigo = ac.ed56_i_aluno 
+                            from escola.aluno a 
+                            left join escola.alunocurso ac on a.ed47_i_codigo = ac.ed56_i_aluno 
                             join escola.alunopossib ap on ac.ed56_i_codigo = ap.ed79_i_alunocurso
                            where ed47_i_codigo  = '$cod_aluno' 
                            limit 1;";

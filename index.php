@@ -19,7 +19,7 @@ if (isset($_GET['id_alunoreserva'])) {
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4">
-                    <label for="exampleInputEmail1">Código do Aluno:</label>
+                    <label for="exampleInputEmail1">Código do Aluno: (SERÁ REMOVIDO EM PRODUÇÃO)</label>
                     <input class="form-control" type="text" name="cod_aluno" id="cod_aluno" />
                 </div>
             </div>
@@ -31,15 +31,15 @@ if (isset($_GET['id_alunoreserva'])) {
         <div class="form-group">
             <div class="row">
                 <div class="col-md-8">
-                    <label for="exampleInputEmail1" id="labelNomeAluno">Nome do Aluno:</label>
+                    <label for="exampleInputEmail1" id="labelNomeAluno">Nome do aluno:</label>
                     <input onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" name="vch_nome_aluno" id="vch_nome_aluno" onKeyPress="mudarCorCampo('labelNomeAluno', 'vch_nome_aluno')" />
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="row">
-                <div class="col-md-4">
-                    <label for="exampleInputEmail1" id="labelDataNascimento">Data de Nascimento do aluno:</label>
+                <div class="col-md-6">
+                    <label for="exampleInputEmail1" id="labelDataNascimento">Data de nascimento do aluno:</label>
                     <input class="form-control" type="text" name="vch_data_nasc" id="vch_datanasc_edit" onKeyPress="mudarCorCampo('labelDataNascimento', 'vch_datanasc_edit')" />
                 </div>
             </div>
@@ -47,7 +47,7 @@ if (isset($_GET['id_alunoreserva'])) {
         <div class="form-group">
             <div class="row">
                 <div class="col-md-8">
-                    <label for="exampleInputEmail1">Nome do Responsável:</label>
+                    <label for="exampleInputEmail1">Nome da mãe:</label>
                     <input onkeyup="this.value = this.value.toUpperCase();" class="form-control" type="text" name="vch_nome_resp" />
                 </div>
 
@@ -119,9 +119,9 @@ if (isset($_GET['id_alunoreserva'])) {
                         </button>
                     </div>
                     <div class="modal-body">
-                        1 - NOME COMPLETO;<br>
+                        1 - NOME COMPLETO DO ALUNO;<br>
                         2 - DATA DE NASCIMENTO;<br>
-                        3 - NOME COMPLETO DO RESPONSÁVEL;<br>
+                        3 - NOME COMPLETO DA MÃE;<br>
                     </div>
             </div>
         </div>
@@ -187,7 +187,7 @@ if (isset($_GET['id_alunoreserva'])) {
         unset($_SESSION['rematricula']);
         ?>
         <script>
-            $('#msg_modal').html( 'Aluno com rematricula confirmada! Aguarde contato da Unidade Escolar ou Secretaria de Educação. <br> <br> <a href="comprovante.php"><button class="btn btn-secondary text-center">Imprimir Comprovante</button></a>');  
+            $('#msg_modal').html( 'Aluno com rematricula confirmada!<br> <br> <a href="comprovante.php"><button class="btn btn-secondary text-center">Imprimir Comprovante</button></a>');  
             $('#modalMessagem').fadeIn().modal('show');
         </script>
     <?php } ?>

@@ -98,9 +98,9 @@ $documentos =  pg_fetch_all($result);
 
 
     <br>
-    <div class="card-body">
+    <!--<div class="card-body">
         <font color="red"><b>ATENÇÃO:</b></font> <i>Para alunos que estudam na ultima etapa, Só seram cadastrado para rematricula quem possuir repetência. Caso contrário séra destinado ao calendário de transferência.</i>
-    </div>
+    </div>-->
     <br>
     <h3 class="text-center">Rematrícula 2021</h3>
     <br>
@@ -128,7 +128,7 @@ $documentos =  pg_fetch_all($result);
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="sdt_nascimento" id="labelDataNascimento" >Data Nascimento:</label>
+                        <label for="sdt_nascimento" id="labelDataNascimento" >Data de nascimento:</label>
                         <input required  readonly class="form-control" onchange="salvaNomeDoCampoModificado(this);testaIdade(this.value);" type="text" name="sdt_nascimento" id="sdt_nascimento" value="<?php echo $datando ?>">
                     </div>
 
@@ -144,7 +144,8 @@ $documentos =  pg_fetch_all($result);
             <!-- <br> -->
             <!-- <br> -->
             <hr>
-            <h3 class="text-center">Documentos</h3>
+            <h3 class="text-center">Documentos pendentes</h3>
+            <h4>Anexar documentos pendentes abaixo, caso não tenha o documento em mãos, verificar com a unidade escolar uma data para entrega</h4>
             <br>
             <br>
 
