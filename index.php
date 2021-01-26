@@ -107,6 +107,7 @@ if (isset($_GET['id_alunoreserva'])) {
         </div>
     </div>
 
+    
     <!-- Aviso no carregamento da página -->
     <div class="modal fade" id="modalCarregamento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">    
@@ -130,7 +131,7 @@ if (isset($_GET['id_alunoreserva'])) {
 
     <!-- Acionamento modal de carregamento -->    
 
-    <?php if (!isset($_GET['not_found']) && !isset($_GET['rematricula']) && !isset($_GET['ultimaetapa'])) { ?>
+    <?php if (!isset($_SESSION['not_found']) && !isset($_SESSION['rematricula']) && !isset($_SESSION['ultimaetapa'])) { ?>
         <script>
             $('#modalCarregamento').modal('show');
         </script>
