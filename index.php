@@ -25,7 +25,7 @@ if (isset($_GET['id_alunoreserva'])) {
             </div>
         </div>
         <div class="card-body">
-            <i>-Caso não tenha em mãos o código de inscrição, favor preencher os campos abaixo.</i>
+            <i>-Favor preencher os campos abaixo.</i>
         </div>
 
         <div class="form-group">

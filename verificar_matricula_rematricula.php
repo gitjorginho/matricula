@@ -69,11 +69,16 @@ if ($cod_aluno != ''){
 
             //Caso o aluno esteja tentando realizar rematrícula novamente
             if ($aluno['confirmacao_rematricula'] == true ){
-                header('Location:index.php?rematricula=1');           
+                //header('Location:index.php?rematricula=1');           
+                $_SESSION['codigo'] = $aluno['ed47_i_codigo'];
+                //$_SESSION['codigo'] = $aluno['ed47_i_codigo'];
+                $_SESSION['rematricula'] = true;
+                header('Location:index.php');
                 //exit(var_dump($aluno));
             }
-
-            $sql_etapaescola = "select s2.ed11_i_codigo as idserie
+            else
+            {
+                $sql_etapaescola = "select s2.ed11_i_codigo as idserie
                                   from escola.turma t,
                                        escola.turmaserieregimemat t2,
                                        escola.serieregimemat s,
@@ -87,22 +92,24 @@ if ($cod_aluno != ''){
                                  order by s2.ed11_c_descr desc
                                 limit 1;";
 
-            $result = pg_query($conn, $sql_etapaescola);
+                $result = pg_query($conn, $sql_etapaescola);
 
-            $etapaescola = pg_fetch_assoc($result);
-            if($aluno['idserie'] == $etapaescola['idserie']){
-                //header('Location:index.php?ultimaetapa=1');
-                $_SESSION['ultimaetapa'] = true; 
-                header('Location:index.php');
-            }
-            else
-            {
-                //$_SESSION['codigo'] = $aluno['id_alunoreserva']; -> removido pois não existe código de reserva
-                $_SESSION['codigo_sge'] = $aluno['ed47_i_codigo'];
-                $_SESSION['matriculado'] = 'false';
-                $_SESSION['escola'] = 'true';
-                header('Location:rematricula_update_sge.php');
-            }
+                $etapaescola = pg_fetch_assoc($result);
+                if($aluno['idserie'] == $etapaescola['idserie']){
+                    //header('Location:index.php?ultimaetapa=1');
+                    $_SESSION['ultimaetapa'] = true; 
+                    header('Location:index.php');
+                }
+                else
+                {
+                    //$_SESSION['codigo'] = $aluno['id_alunoreserva']; -> removido pois não existe código de reserva
+                    $_SESSION['codigo_sge'] = $aluno['ed47_i_codigo'];
+                    $_SESSION['matriculado'] = 'false';
+                    $_SESSION['escola'] = 'true';
+                    header('Location:rematricula_update_sge.php');
+                }
+
+            }            
 
         }   
 
