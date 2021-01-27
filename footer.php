@@ -31,7 +31,8 @@
     <div class="footer_text_direito" style="margin-top: 10px;">
         <p style="font-size: medium;">
             <img src="img/telefone.png" class="img-responsive" alt="">&nbsp&nbspMatrícula Atende: 9 8796-8484 <br>
-            <img src="img/email.png" class="img-responsive" alt="">&nbsp&nbspe-mail: atendimento@seduc.com.br
+            <!--<img src="img/email.png" class="img-responsive" alt="">&nbsp&nbspe-mail: atendimento@seduc.com.br-->
+            <img src="img/email.png" class="img-responsive" alt="">&nbsp&nbspe-mail: matricula.2021@educa.camacari.ba.gov.br
         </p>
     </div>
 </div>
