@@ -219,18 +219,19 @@ else{
                                                         when ed60_i_codigo = null 
                                                         then false 
                                                           else true 
-                                                        end) matriculado
+                                                        end) aptomatricula
                                                   from matricula 
                                                  inner join turma on ed57_i_codigo = ed60_i_turma 
                                                  inner join calendario on ed57_i_calendario = ed52_i_codigo
                                                  where ed60_i_aluno = {$aluno['ed47_i_codigo']}
                                                    and ed52_i_ano = 2020 
                                                    and ed60_c_situacao = 'MATRICULADO'
+                                                   and ed60_c_concluida = 'N'
                                                  limit 1;";
             $result = pg_query($conn, $sql_aluno_apto_para_rematricula);
             $apto_para_matricula = pg_fetch_assoc($result);
 
-            if ($apto_para_matricula['matriculado'] == true)
+            if ($apto_para_matricula['aptomatricula'] == true)
             {
               $sql_etapaescola = "select s2.ed11_i_codigo as idserie
                                     from escola.turma t,
@@ -269,14 +270,12 @@ else{
               header('Location:index.php');
             }
 
-            $_SESSION['codigo_sge'] = $aluno['ed47_i_codigo'];
-            $_SESSION['matriculado'] = 'false';
-            $_SESSION['escola'] = 'true';
-            header('Location:rematricula_update_sge.php');            
+            //$_SESSION['codigo_sge'] = $aluno['ed47_i_codigo'];
+            //$_SESSION['matriculado'] = 'false';
+            //$_SESSION['escola'] = 'true';
+            //header('Location:rematricula_update_sge.php');            
           }
-
       }      
-
   }
   else
   {//aluno não encontrado na base

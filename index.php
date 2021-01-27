@@ -132,7 +132,7 @@ if (isset($_GET['id_alunoreserva'])) {
     <!-- Acionamento modal de carregamento -->    
 
 
-    <?php if (!isset($_SESSION['not_found']) && !isset($_SESSION['rematricula']) && !isset($_SESSION['ultimaetapa'])) { ?>
+    <?php if (!isset($_SESSION['not_found']) && !isset($_SESSION['rematricula']) && !isset($_SESSION['ultimaetapa']) && !isset($_SESSION['naoapto'])) { ?>
         <script>
             $('#modalCarregamento').modal('show');
         </script>
