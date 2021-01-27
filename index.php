@@ -13,10 +13,10 @@ if (isset($_GET['id_alunoreserva'])) {
     <h2 class="text-center">Rematrícula 2021</h2>
     <br>
     <form method="post" action="verificar_matricula_rematricula.php">
-        <div class="card-body">
+        <div hidden="true" class="card-body">
             <i>Favor informar o código (SERÁ REMOVIDO EM PRODUÇÃO)</i>
         </div>
-        <div class="form-group">
+        <div hidden="true" class="form-group">
             <div class="row">
                 <div class="col-md-4">
                     <label for="exampleInputEmail1">Código do Aluno: (SERÁ REMOVIDO EM PRODUÇÃO)</label>
