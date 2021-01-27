@@ -273,7 +273,7 @@ $documentos =  pg_fetch_all($result);
                 <div class="row">
                     <div class="col-2"></div>
                     <div class="col-md-8">
-                        <a class="btn btn-secondary col-md-12" href="ficha_cadastro.php">Voltar</a>
+                        <a class="btn btn-secondary col-md-12" href="index.php">Voltar</a>
                     </div>
                     <div class="col-2"></div>
                 </div>

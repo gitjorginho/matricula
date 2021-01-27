@@ -4,7 +4,7 @@ require_once('upload_doc_aluno.php');
 
 header("Content-Type: text/html;  charset=ISO-8859-1", true);
 require_once ('conexao.php');
-require_once('email.php');
+require_once('email_sge.php');
 
 $conexao = new Conexao();
 $conn = $conexao->conn();

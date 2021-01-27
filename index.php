@@ -174,7 +174,8 @@ if (isset($_GET['id_alunoreserva'])) {
 
     </script>
 
-    <!--VERIFICA SE A BUSCA DO ALUNO RETORNOU VAZIA E IMPRIME MENSAGEM RELACIONADA A ISTO -->
+    <!--VERIFICA A BUSCA DO ALUNO E IMPRIME MENSAGEM RELACIONADA A ISTO -->
+    <!--Aluno não encontrado-->
     <?php if (isset($_SESSION['not_found'])) {
         unset($_SESSION['not_found']);
         ?>
@@ -184,20 +185,31 @@ if (isset($_GET['id_alunoreserva'])) {
         </script>
     <?php } ?>
 
+    <!--Aluno com rematrícula confirmada-->
     <?php if (isset($_SESSION['rematricula'])) {  
         unset($_SESSION['rematricula']);
         ?>
         <script>
-            $('#msg_modal').html( 'Aluno com rematricula confirmada!<br> <br> <a href="comprovante.php"><button class="btn btn-secondary text-center">Imprimir Comprovante</button></a>');  
+            $('#msg_modal').html( 'Aluno com rematricula confirmada!<br> <br> <a href="comprovante_sge.php"><button class="btn btn-secondary text-center">Imprimir Comprovante</button></a>');  
             $('#modalMessagem').fadeIn().modal('show');
         </script>
     <?php } ?>
 
+    <!--Aluno na última etapa-->
     <?php if (isset($_SESSION['ultimaetapa'])) {  
         unset($_SESSION['ultimaetapa']);
         ?>
         <script>
             $('#msg_modal').text( 'Aluno não pode confirmar rematrícula devido ser o último ano na unidade escolar! Em caso de dúvida entre em contato com a unidade escolar ou secretaria de educação');  
+            $('#modalMessagem').fadeIn().modal('show');
+        </script>
+    <?php } ?>
+    <!--Aluno não apto a realizar matrícula (com status de matrícula diferente de matriculado)-->
+    <?php if (isset($_SESSION['naoapto'])) {  
+        unset($_SESSION['naoapto']);
+        ?>
+        <script>
+            $('#msg_modal').text( 'Rematrícula não pode ser confirmada. Favor entrar em contato com a unidade escolar ou o matrícula atende através do número: (71) 98796-8484');  
             $('#modalMessagem').fadeIn().modal('show');
         </script>
     <?php } ?>
