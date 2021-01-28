@@ -102,61 +102,101 @@ $nome_mae           =$_POST['vch_mae'];
 			 
 		  }
 
-			$ano_anterior = date("Y",strtotime(date("Y-m-d")."- 1 year"));	
-            
-			$sql_turma_anterior_aluno = "
-			select ed57_i_escola,ed57_i_calendario,ed57_i_codigo from matricula 
-			join turma on ed57_i_codigo = ed60_i_turma
-			join calendario on ed57_i_calendario = ed52_i_codigo
-			where ed60_i_aluno = {$codigo_aluno_sge} and ed52_i_ano = $ano_anterior and ed60_c_situacao in ('MATRICULADO','APROVADO')
-			order by ed60_d_datamatricula desc
-			limit 1";
-			
+			//$ano_anterior = date("Y",strtotime(date("Y-m-d")."- 1 year"));
+
+			$sqlJaExisteRematricula = "select true as existeRematricula
+				                         from escola.confirmacaorematricula
+				                        where ed60_i_aluno = {$codigo_aluno_sge}
+				                        limit 1;";
+
 			$result = pg_query($conn,$sql_turma_anterior_aluno);
-            $arrDadosTurmaAnterior = pg_fetch_assoc($result);
-		
-			if (pg_num_rows($result) >= 0){
 
-				$sqlInsertConfirmacaoRematricula = "
-				INSERT INTO escola.confirmacaorematricula
-				(edu01_escola, edu01_calendario, edu01_turma, edu01_aluno, edu01_criado_em)
-				VALUES({$arrDadosTurmaAnterior['ed57_i_escola']}, {$arrDadosTurmaAnterior['ed57_i_calendario']}, {$arrDadosTurmaAnterior['ed57_i_codigo']}, {$codigo_aluno_sge}, now());
-				";
+			if (pg_num_rows($result) >= 0)
+			{
+				$existeRematricula = pg_fetch_assoc($result);
+			}
+			else
+			{
+				$existeRematricula['existeRematricula'] = false;
+			}
 			
-				$resultInsertConfirmacaoRematricula = pg_query($conn,$sqlInsertConfirmacaoRematricula);
 
-				//Inserção na nova tabela de auditoria do sistema de reserva para atender aos alunos que não possuem código no sistema de reserva.
-				if (pg_affected_rows($resultInsertConfirmacaoRematricula))
-				{
-					$sqlInsertAuditoriaRematriculaReserva = "INSERT INTO reserva.auditoriareservasge
-															(ed47_i_codigo, adr_v_acao, adr_v_informacao)
-															VALUES({$codigo_aluno_sge}, 'REMATRICULA REALIZADA', '');";
+			if ($existeRematricula['existeRematricula'] == false)
+			{
+				/*$sql_turma_anterior_aluno = "
+				select ed57_i_escola,ed57_i_calendario,ed57_i_codigo from matricula 
+				join turma on ed57_i_codigo = ed60_i_turma
+				join calendario on ed57_i_calendario = ed52_i_codigo
+				where ed60_i_aluno = {$codigo_aluno_sge} and ed52_i_ano = $ano_anterior and ed60_c_situacao in ('MATRICULADO','APROVADO')
+				order by ed60_d_datamatricula desc
+				limit 1";*/
 
-					$result = pg_query($conn,$sqlInsertAuditoriaRematriculaReserva);
+				$sql_turma_anterior_aluno = "select ed57_i_escola,
+				                                    ed57_i_calendario,
+				                                    ed57_i_codigo 
+				                               from matricula 
+											   join turma on ed57_i_codigo = ed60_i_turma
+											   join calendario on ed57_i_calendario = ed52_i_codigo
+											  where ed60_i_aluno = {$codigo_aluno_sge} 
+											    and ed52_i_ano = 2020 
+											    and ed60_c_situacao in ('MATRICULADO')
+											    and ed60_c_concluida = 'N'
+											    and ed60_c_ativa = 'S'
+											  order by ed60_d_datamatricula desc
+											  limit 1;";
+				
+				$result = pg_query($conn,$sql_turma_anterior_aluno);
+	            $arrDadosTurmaAnterior = pg_fetch_assoc($result);
+			
+				if (pg_num_rows($result) >= 0){
 
-					if (pg_affected_rows($result))
+					$sqlInsertConfirmacaoRematricula = "
+					INSERT INTO escola.confirmacaorematricula
+					(edu01_escola, edu01_calendario, edu01_turma, edu01_aluno, edu01_criado_em)
+					VALUES({$arrDadosTurmaAnterior['ed57_i_escola']}, {$arrDadosTurmaAnterior['ed57_i_calendario']}, {$arrDadosTurmaAnterior['ed57_i_codigo']}, {$codigo_aluno_sge}, now());
+					";
+				
+					$resultInsertConfirmacaoRematricula = pg_query($conn,$sqlInsertConfirmacaoRematricula);
+
+					//Inserção na nova tabela de auditoria do sistema de reserva para atender aos alunos que não possuem código no sistema de reserva.
+					if (pg_affected_rows($resultInsertConfirmacaoRematricula))
 					{
-						//enviar email com a confirmação da rematrícula
-						$mensagem = 'Rematrícula do aluno (código) ' . $codigo_aluno_sge . ' realizada com sucesso.';
-						envialEmail($mensagem,'gustavo.araujo@jcl-tecnologia.com.br','','');
+						$sqlInsertAuditoriaRematriculaReserva = "INSERT INTO reserva.auditoriareservasge
+																(ed47_i_codigo, adr_v_acao, adr_v_informacao)
+																VALUES({$codigo_aluno_sge}, 'REMATRICULA 2021 REALIZADA', '');";
+
+						$result = pg_query($conn,$sqlInsertAuditoriaRematriculaReserva);
+
+						if (pg_affected_rows($result))
+						{
+							//enviar email com a confirmação da rematrícula
+							$mensagem = 'Rematrícula do aluno (código) ' . $codigo_aluno_sge . ' realizada com sucesso.';
+							envialEmail($mensagem,'gustavo.araujo@jcl-tecnologia.com.br','','');
+						}
+						else
+						{
+							//enviar e-mail para mim
+						}
 					}
-					else
-					{
-						//enviar e-mail para mim
-					}
+
+				}else{
+					header('Location:rematricula_update_sge.php?not_matricula=');
+					die(); 	
 				}
 
-			}else{
-				header('Location:rematricula_update_sge.php?not_matricula=');
-				die(); 	
+		        // chama a pagina de comprovante
+		        $_SESSION['vch_nome'] = trim($nome_aluno);
+		        $_SESSION['escola'] = $escola;
+				header('Location:comprovante_sge.php');
 			}
-
-        // chama a pagina de comprovante
-        $_SESSION['vch_nome'] = trim($nome_aluno);
-        $_SESSION['escola'] = $escola;
-		header('Location:comprovante_sge.php');
-
-
+			else
+			{
+				$_SESSION['codigo_sge'] = $codigo_aluno_sge;
+	            $_SESSION['rematricula'] = true;
+	            header('Location:index.php');
+			}	
+            
+			
 
 function dateToDatabase($date)
 {
