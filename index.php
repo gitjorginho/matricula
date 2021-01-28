@@ -198,9 +198,24 @@ if (isset($_GET['id_alunoreserva'])) {
     <!--Aluno na última etapa-->
     <?php if (isset($_SESSION['ultimaetapa'])) {  
         unset($_SESSION['ultimaetapa']);
+
+        $aluno_sge = $_SESSION['codigo_sge'] . ' - ' . $nome_aluno = $_SESSION['nome_aluno'];
+        $etapa = $_SESSION['etapa'];//etapa identificada do aluno
+        $unidade_escolar = $_SESSION['unidade_escolar'];//unidade escolar
+
+        unset($_SESSION['codigo_sge']);
+        unset($_SESSION['nome_aluno']);
+        unset($_SESSION['etapa']);
+        unset($_SESSION['unidade_escolar']);
         ?>
         <script>
-            $('#msg_modal').text( 'Aluno não pode confirmar rematrícula devido ser o último ano na unidade escolar! Em caso de dúvida entre em contato com a unidade escolar ou secretaria de educação');  
+            var aluno_sge = "<?php echo $aluno_sge;?>";
+            var etapa = "<?php echo $etapa;?>";
+            var unidade_escolar = "<?php echo $unidade_escolar;?>";
+            $('#msg_modal').text( 'Nome: ' + aluno_sge + '\n' +
+                                  'Etapa: ' + etapa + '\n' +
+                                  'Unidade escolar: ' + unidade_escolar + '\n' + 
+                                  '.\nA rematrícula não pode ser confirmada on-line. Favor entrar em contato com a unidade escolar para dar continuidade ao processo e logo após poderá gerar o comprovante on-line.');  
             $('#modalMessagem').fadeIn().modal('show');
         </script>
     <?php } ?>

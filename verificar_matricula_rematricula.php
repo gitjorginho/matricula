@@ -159,7 +159,7 @@ if ($cod_aluno != ''){
         }
     }
 }
-else{
+else{//Caso o formulário seja enviado sem o código do aluno. Somente com os campos de nome, nome da mãe e data de nascimento
   //header('Location:index.php?not_found=1');
   //Mesmo select de cima ($sql_matricula) mas buscando do SGE.
   $sql_matricula_sge = "select a.ed47_i_codigo
@@ -181,6 +181,7 @@ else{
                                   from confirmacaorematricula 
                                  where edu01_aluno = ed47_i_codigo) as confirmacao_rematricula, 
                                a.ed47_i_codigo,
+                               a.ed47_v_nome,
                                ap.ed79_i_serie as idserie,
                                ac.ed56_i_escola as idescola, 
                                ac.ed56_i_calendario as idcalendario, 
@@ -233,17 +234,21 @@ else{
 
             if ($apto_para_matricula['aptomatricula'] == true)
             {
-              $sql_etapaescola = "select s2.ed11_i_codigo as idserie
+              $sql_etapaescola = "select s2.ed11_i_codigo as idserie,
+                                         s2.ed11_c_descr,
+                                         e.ed18_c_nome
                                     from escola.turma t,
                                          escola.turmaserieregimemat t2,
                                          escola.serieregimemat s,
-                                         escola.serie s2
+                                         escola.serie s2,
+                                         escola.escola e
                                    where t.ed57_i_escola = {$aluno['idescola']}
                                      and t.ed57_i_calendario = {$aluno['idcalendario']}
                                      and t.ed57_i_base = {$aluno['idbase']}
                                      and t2.ed220_i_turma = t.ed57_i_codigo
                                      and t2.ed220_i_serieregimemat = s.ed223_i_codigo
                                      and s.ed223_i_serie = s2.ed11_i_codigo
+                                     and e.ed18_i_codigo = t.ed57_i_escola
                                    order by s2.ed11_c_descr desc
                                   limit 1;";
 
@@ -252,7 +257,11 @@ else{
               $etapaescola = pg_fetch_assoc($result);
               if($aluno['idserie'] == $etapaescola['idserie']){
                   //header('Location:index.php?ultimaetapa=1');
-                  $_SESSION['ultimaetapa'] = true; 
+                  $_SESSION['ultimaetapa'] = true;
+                  $_SESSION['codigo_sge'] = $aluno['ed47_i_codigo'];//código do aluno
+                  $_SESSION['nome_aluno'] = $aluno['ed47_v_nome'];//nome do aluno
+                  $_SESSION['etapa'] = $etapaescola['ed11_c_descr'];//etapa identificada do aluno
+                  $_SESSION['unidade_escolar'] = $etapaescola['ed18_c_nome'];//unidade escolar 
                   header('Location:index.php');
               }
               else
