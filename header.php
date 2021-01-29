@@ -31,7 +31,7 @@ header("Content-Type: text/html;  charset=ISO-8859-1", true);
 
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link active" href="Manual Portal de matrícula v 1.0-1.pdf">Manual de Usuário</a>
+            <a class="nav-link active" href="Manual Portal de matrícula v 1.0 - ATUALIZADO 29-01-21.pdf">Manual de Usuário</a>
         </li>
     </ul>
 
