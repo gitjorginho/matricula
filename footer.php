@@ -18,9 +18,9 @@
     <div class="footer_center" style="justify-content: center;display: flex;">
         <div class="footer_text" style="justify-content: center;display: flex;">
             <br>
-            <p style="color:green;font-size:medium;justify-content: center;display: flex;">
+            <!--<p style="color:green;font-size:medium;justify-content: center;display: flex;">
                 Powered by &nbsp&nbsp<a href="https://www.jcl-tecnologia.com.br/"> JCL Tecnologia</a> 
-            </p>
+            </p>-->
         </div>
     </div>
 
@@ -41,9 +41,9 @@
     <div class="footer_text" style="margin-bottom: 10px; margin-left: 20px;">
         <p class="" style="color:green ">Rua Francisco Drummond, S/N, Centro Administrativo. >
             CEP 42.800-000 | Camaçari - Bahia - Brasil<br>2020 Prefeitura Municipal de Camaçari.</p>
-        <p style="color:green;font-size:medium;justify-content: center;display: flex;">
+        <!--<p style="color:green;font-size:medium;justify-content: center;display: flex;">
             Powered by <a href="https://www.jcl-tecnologia.com.br/"> JCL Tecnologia</a> 
-        </p>
+        </p>-->
     </div>
 </div>
 
