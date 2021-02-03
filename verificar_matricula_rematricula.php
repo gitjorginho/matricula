@@ -164,8 +164,8 @@ else{//Caso o formulário seja enviado sem o código do aluno. Somente com os ca
   //Mesmo select de cima ($sql_matricula) mas buscando do SGE.
   $sql_matricula_sge = "select a.ed47_i_codigo
                           from escola.aluno a
-                         where a.ed47_v_nome ilike '%$nome_aluno%' 
-                           and a.ed47_v_mae ilike '%$vch_nome_resp%' 
+                         where unaccent(a.ed47_v_nome) ilike unaccent('%$nome_aluno%')
+                           and unaccent(a.ed47_v_mae) ilike unaccent('%$vch_nome_resp%')
                            and a.ed47_d_nasc  = '$data_nasc' 
                          limit 1;";
                          //die($sql_matricula_sge);
